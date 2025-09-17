@@ -4,6 +4,12 @@ export interface IUser {
   // Add other user fields as needed
 }
 
+export interface Course {
+  id: string;
+  name: string;
+  // Additional fields for course
+}
+
 export interface IAuthContext {
   isLoggedIn: boolean;
   login: (username: string, password: string) => Promise<void>;
