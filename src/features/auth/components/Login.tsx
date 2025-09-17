@@ -1,45 +1,73 @@
-import { FormEventHandler, ReactElement, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { FormEventHandler, ReactElement, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { Input } from "./Input";
+import { CustomError } from "../../shared/classes";
 
 export function Login(): ReactElement {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [searchParams] = useSearchParams();
   const { login } = useAuthContext();
   const navigate = useNavigate();
 
+  const isFormValid = username.trim() !== "" && password.trim() !== "";
+
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    await login(username, password);
+    try {
+      await login(username, password);
 
-    const redirectTo = searchParams.get('redirectTo') || '/';
-    navigate(redirectTo, { replace: true });
+      const redirectTo = searchParams.get("redirectTo") || "/";
+      navigate(redirectTo, { replace: true });
+    } catch (err: unknown) {
+      if (err instanceof CustomError) {
+        setError("Fel e-postadress eller lösenord");
+      } else {
+        setError("Något gick fel. Försök igen");
+      }
+    } finally {
+    }
   };
 
   return (
     <main id="login-page" className="g-container">
-      <form className="login-form" onSubmit={handleOnSubmit}>
-        <fieldset>
-          <legend>Login</legend>
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            onChange={(e) => setUsername(e.target.value)}
-            type="text"
+      <div className="login-wrapper">
+        <h1>LMS</h1>
+        <form className="login-form" onSubmit={handleOnSubmit}>
+          <Input
+            label="E-postadress"
+            name="username"
+            type="email"
             value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoFocus={true}
+            disabled={false}
           />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
+          <Input
+            label="Lösenord"
+            name="password"
             type="password"
             value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoFocus={false}
+            disabled={false}
           />
-          <button type="submit">Submit</button>
-        </fieldset>
-      </form>
+
+          {error && <div className="error-message">{error}</div>}
+
+          <Input
+            label="Logga in"
+            name=""
+            value=""
+            type="submit"
+            autoFocus={false}
+            disabled={!isFormValid}
+          />
+        </form>
+      </div>
     </main>
   );
 }
