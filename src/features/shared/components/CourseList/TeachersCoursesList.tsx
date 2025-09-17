@@ -5,28 +5,32 @@ import { useAuthContext } from '../../../auth/hooks/useAuthContext';
 interface Course {
   id: string;
   name: string;
-  // Add other course fields as needed
 }
-
-// TODO:
-// this should later fetch the userID from the auth/context/authProvider.tsx
-// Verify that the user is a teacher before fetching courses
-// but since we dont have the endpoint or EF written for that yet, we will skip that for now.
-// short story: this works when we have EF and the endpoint set up.
 
 export function TeachersCoursesList() {
   const authContext = useAuthContext();
-  const teacherId = authContext?.user?.id ?? '';
+  // Fallback user object for development/testing
+  const teacherId =
+    authContext && authContext.user && typeof authContext.user.id === 'string'
+      ? authContext.user.id
+      : 'teacher@test.com';
+  const userRole =
+    authContext && authContext.user && typeof authContext.user.role === 'string'
+      ? authContext.user.role
+      : 'teacher';
+
   const endpoint = `/api/teachers/${teacherId}/courses`;
   const { data, error, isLoading, requestFunc } = useFetchWithToken<Course[]>(endpoint);
 
   useEffect(() => {
-    if (teacherId) {
+    if (teacherId && userRole === 'teacher') {
       requestFunc();
     }
-  }, [teacherId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [teacherId, userRole]);
 
   if (!teacherId) return <p>No teacher ID found.</p>;
+  if (userRole !== 'teacher') return <p>You are not authorized to view teacher courses.</p>;
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   if (!data || data.length === 0) return <p>No courses found for this teacher.</p>;
