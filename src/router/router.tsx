@@ -1,9 +1,14 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router';
-import { App } from '../features/app';
-import { Login } from '../features/auth/components';
-import { requireAuthLoader } from '../features/auth/loaders';
-import { Companies, Company } from '../features/companies/components';
-import { companiesLoader, companyLoader } from '../features/companies/loaders';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router";
+import { App } from "../features/app";
+import { Login } from "../features/auth/components";
+import { requireAuthLoader } from "../features/auth/loaders";
+import { Companies, Company } from "../features/companies/components";
+import { companiesLoader, companyLoader } from "../features/companies/loaders";
+import { CouseCreate, CourseEdit } from "../features/courses/components";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +23,8 @@ export const router = createBrowserRouter(
           }}
           path="companies/:id"
         />
+        <Route element={<CouseCreate />} path="courses/new"></Route>
+        <Route element={<CourseEdit />} path="courses/:id/edit"></Route>
       </Route>
       <Route element={<Login />} path="/login" />
     </>
