@@ -17,7 +17,10 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
   const [user, setUser] = useState<IUser | undefined>(undefined);
 
   // useLocalStorage works as a useState but it is always hooked up to LS, which means, if another component updates LS, this component will update as well.
-  const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(TOKENS, null);
+  const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
+    TOKENS,
+    null
+  );
 
   async function login(username: string, password: string) {
     try {
@@ -34,7 +37,8 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
       }
     } catch (error) {
       if (error instanceof CustomError) {
-        console.log(error);
+        //console.log(error);
+        throw error;
       }
     }
   }
