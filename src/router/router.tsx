@@ -2,22 +2,16 @@ import { createBrowserRouter, createRoutesFromElements, Route } from 'react-rout
 import { App } from '../features/app';
 import { Login } from '../features/auth/components';
 import { requireAuthLoader } from '../features/auth/loaders';
-import { Companies, Company } from '../features/companies/components';
-import { companiesLoader, companyLoader } from '../features/companies/loaders';
+import { StudentDashboard, TeacherDashboard } from '../features/dashboards/components';
+import { getUserClaimsLoader } from '../features/auth/loaders/getUserClaimsLoader';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       {/* requireAuthLoader is a route guard that protects the App and its child routes. */}
       <Route element={<App />} loader={requireAuthLoader} path="/">
-        <Route element={<Companies />} index loader={companiesLoader} />
-        <Route
-          element={<Company />}
-          loader={({ params }) => {
-            return companyLoader(params.id);
-          }}
-          path="companies/:id"
-        />
+        <Route path="teacher/dashboard" element={<TeacherDashboard />} loader={getUserClaimsLoader}/>
+        <Route path="student/dashboard" element={<StudentDashboard />} loader={getUserClaimsLoader}/>
       </Route>
       <Route element={<Login />} path="/login" />
     </>

@@ -2,6 +2,7 @@ import { redirect, type LoaderFunctionArgs } from 'react-router';
 import { validateOrRefreshTokens } from '../utilities';
 import { TOKENS } from '../constants';
 import { ITokens } from '../types';
+import { getUserClaimsLoader } from './getUserClaimsLoader';
 
 export async function requireAuthLoader({ request }: LoaderFunctionArgs) {
   const raw = localStorage.getItem(TOKENS);
@@ -14,6 +15,15 @@ export async function requireAuthLoader({ request }: LoaderFunctionArgs) {
     if (nextRaw !== raw) {
       localStorage.setItem(TOKENS, nextRaw);
     }
+
+    const data = await getUserClaimsLoader();
+
+    const url = new URL(request.url);
+    if (url.pathname === "/") {
+      if (data.role === "Student") throw redirect("/student/dashboard");
+      if (data.role === "Teacher") throw redirect("/teacher/dashboard");
+    }
+    
     return null; // Let the route through
   }
 
