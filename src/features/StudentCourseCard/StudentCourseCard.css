@@ -1,4 +1,4 @@
-.course-card {
+.student-course-card {
   background: white;
   border-radius: 8px;
   padding: 24px;
@@ -8,25 +8,25 @@
   margin: 1rem auto;
 }
 
-.course-header {
+.student-course-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.course-description {
+.student-course-description {
   margin-top: 4px;
   color: #555;
   overflow-wrap: break-word;
 }
 
-.course-date {
+.student-course-date {
   font-size: 0.9rem;
   color: #777;
   margin-top: 4px;
 }
 
-.course-button {
+.student-course-button {
   background-color: #2563eb;
   color: white;
   border: none;
@@ -34,10 +34,10 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background 0.2s;
+  transition: background-color 0.2s;
 }
 
-.course-button:hover {
+.student-course-button:hover {
   background-color: #1e4ed8;
 }
 
