@@ -1,5 +1,5 @@
 import React from 'react';
-import { StudentCourseCard } from '../StudentCourseCard/StudentCourseCard';
+import { StudentCourseCard } from '../student-course-card/StudentCourseCard';
 
 export const StudentDashboardSection: React.FC = () => (
   <div>
