@@ -9,34 +9,38 @@
   align-items: center;
   justify-content: space-between;
 }
-
 .logo {
+  flex: 0 0 auto;
   font-weight: bold;
   font-size: 1.3rem;
   color: #fff;
   text-decoration: none;
 }
-
+.links {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .links a {
   color: #fff;
   margin-right: 1rem;
   text-decoration: none;
 }
-
+.links a:nth-child(1) {
+  margin-left: 1rem;
+}
 .links a:hover {
   color: #e74c3c
 }
-
 .userSection {
   display: flex;
   align-items: center;
 }
-
 .username {
   margin-right: 1rem;
   font-size: 1rem;
 }
-
 .logoutBtn {
   background: #e74c3c;
   color: #fff;

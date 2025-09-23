@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router';
-import { HeaderNav } from '../shared/components/HeaderNav';
+import { Header } from '../shared/components/Header/Header';
 
 export function App() {
   return (
     <>
-  <HeaderNav />
+  <Header />
       <Outlet />
     </>
   );
