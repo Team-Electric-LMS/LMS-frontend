@@ -10,15 +10,6 @@ export interface Course {
   // Additional fields for course
 }
 
-export interface IStudentCourseInfo {
-  id: string;
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-  teacherName: string;
-}
-
 export interface IAuthContext {
   isLoggedIn: boolean;
   login: (username: string, password: string) => Promise<void>;

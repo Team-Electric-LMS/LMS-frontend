@@ -24,11 +24,6 @@ export const router = createBrowserRouter(
           path="companies/:id"
         />
       </Route>
-      <Route
-        path="student/course"
-        element={<CourseCard />}
-        loader={requireAuthLoader}
-      />
       <Route element={<Login />} path="/login" />
     </>
   )
