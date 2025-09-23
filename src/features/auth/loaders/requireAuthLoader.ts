@@ -16,12 +16,12 @@ export async function requireAuthLoader({ request }: LoaderFunctionArgs) {
       localStorage.setItem(TOKENS, nextRaw);
     }
 
-    const data = await getUserClaimsLoader();
+    const claims = await getUserClaimsLoader();
 
     const url = new URL(request.url);
     if (url.pathname === "/") {
-      if (data.role === "Student") throw redirect("/student/dashboard");
-      if (data.role === "Teacher") throw redirect("/teacher/dashboard");
+      if (claims.role === "Student") throw redirect("/student/dashboard");
+      if (claims.role === "Teacher") throw redirect("/teacher/dashboard");
     }
     
     return null; // Let the route through

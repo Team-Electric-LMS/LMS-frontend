@@ -1,16 +1,10 @@
 import { redirect } from "react-router";
 import { TOKENS } from '../constants';
-import { ITokens } from '../types';
+import { IClaims, ITokens } from '../types';
 import { BASE_URL } from '../../shared/constants';
 
-export interface ClaimsResponse {
-  id: string;
-  email: string;
-  role: "Student" | "Teacher";
-}
 
-
-export async function getUserClaimsLoader() {
+export async function getUserClaimsLoader(): Promise<IClaims>{
   const raw = localStorage.getItem(TOKENS);
   if (!raw) throw redirect("/login");
 
@@ -23,6 +17,5 @@ export async function getUserClaimsLoader() {
 
   if (!res.ok) throw redirect("/login");
 
-  const data: ClaimsResponse = await res.json();
-  return data; 
+  return (await res.json()) as IClaims;
 }
