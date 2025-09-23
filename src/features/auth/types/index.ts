@@ -1,6 +1,7 @@
 export interface IUser {
   id: string;
   role: string;
+  username: string;
   // Add other user fields as needed
 }
 

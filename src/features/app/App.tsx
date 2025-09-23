@@ -1,12 +1,10 @@
 import { Outlet } from 'react-router';
-import { Header } from '../shared/components';
-import { TeachersCoursesList } from '../shared/components/CourseList/TeachersCoursesList';
+import { HeaderNav } from '../shared/components/HeaderNav';
 
 export function App() {
   return (
     <>
-      <Header />
-      <TeachersCoursesList />
+  <HeaderNav />
       <Outlet />
     </>
   );

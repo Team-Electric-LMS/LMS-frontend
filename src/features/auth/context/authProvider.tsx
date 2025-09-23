@@ -22,16 +22,17 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     null
   );
 
-  async function login(username: string, password: string) {
+  async function login(loginUsername: string, password: string) {
     try {
-      const tokens = await loginReq(username, password);
+      const tokens = await loginReq(loginUsername, password);
       setTokens(tokens);
       // Extract user info from access token
       const decoded: any = jwtDecode(tokens.accessToken);
       const id = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
       const role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      if (id && role) {
-        setUser({ id, role });
+      const username = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || decoded["name"];
+      if (id && role && username) {
+        setUser({ id, role, username });
       } else {
         setUser(undefined);
       }
@@ -61,8 +62,9 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
       const decoded: any = jwtDecode(tokens.accessToken);
       const id = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
       const role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      if (id && role) {
-        setUser({ id, role });
+      const username = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || decoded["name"];
+      if (id && role && username) {
+        setUser({ id, role, username });
       } else {
         setUser(undefined);
       }

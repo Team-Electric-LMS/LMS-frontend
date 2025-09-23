@@ -9,11 +9,9 @@ import { requireAuthLoader } from '../features/auth/loaders';
 // AND JUST REMOVE ALL THE COMPANIES STUFF WHEREVER IT IS
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
-      {/* requireAuthLoader is a route guard that protects the App and its child routes. */}
-      <Route element={<App />} loader={requireAuthLoader} path="/" />
-      <Route element={<Dashboard />} path="/dashboard" />
-      <Route element={<Login />} path="/login" />
-    </>
+    <Route element={<App />} path="/">
+      <Route element={<Dashboard />} loader={requireAuthLoader} path="dashboard" />
+      <Route element={<Login />} path="login" />
+    </Route>
   )
 );

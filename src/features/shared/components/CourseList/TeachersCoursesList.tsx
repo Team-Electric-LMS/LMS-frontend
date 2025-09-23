@@ -25,9 +25,11 @@ export function TeachersCoursesList() {
   if (error) return <p className={styles.message}>Error: {error.message}</p>;
   if (!data || data.length === 0) return <p className={styles.message}>No courses found for this teacher.</p>;
 
+  // Sort courses alphabetically and render
+  const sortedCourses = [...data].sort((a, b) => a.name.localeCompare(b.name));
   return (
     <ul className={styles.courseList}>
-      {data.map((course: Course) => (
+      {sortedCourses.map((course: Course) => (
         <CourseListItem key={course.id} course={course} />
       ))}
     </ul>
