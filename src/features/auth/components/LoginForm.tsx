@@ -1,6 +1,6 @@
 import { FormEventHandler, ReactElement, useState } from "react";
 import { CustomError } from "../../shared/classes";
-import { Input } from "./Input";
+import { Input } from "../../shared/components/Input";
 
 interface LoginFormProps {
   onSubmit: (username: string, password: string) => Promise<void>;
