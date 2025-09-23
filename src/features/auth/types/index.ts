@@ -8,7 +8,9 @@ export interface IUser {
 export interface Course {
   id: string;
   name: string;
-  // Additional fields for course
+  description: string;
+  startDate: string; // ISO string or DateOnly
+  endDate: string;   // ISO string or DateOnly
 }
 
 export interface IAuthContext {
