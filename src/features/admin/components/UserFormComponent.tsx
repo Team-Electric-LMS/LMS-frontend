@@ -24,6 +24,7 @@ export function UserForm({
   const [emailAvailable, setEmailAvailable] = useState<boolean | null>(null);
   const [patternOk, setPatternOk] = useState<boolean>(false);
   const [sameEmail, setSameEmail] = useState<boolean>(false);
+  const [emailChanged, setemailChanged] = useState<boolean>(false);
 
   const raw = localStorage.getItem("tokens");
     const tokens = raw ? JSON.parse(raw) : null;
@@ -41,9 +42,8 @@ export function UserForm({
   return emailPattern.test(email);
 }
 
-   
 const handleOnBlur = async (email: string) => {
-
+  setemailChanged(true)
   setPatternOk(validateEmailPattern(email));
   setSameEmail(email == user.email);
 
@@ -147,8 +147,10 @@ const handleOnBlur = async (email: string) => {
             <option value="Student">Student</option>
             <option value="Teacher">Teacher</option>
           </select>
-                {!sameEmail && email !="" && (patternOk ? <p style={{ color: "green" }}> Looks like a real email</p> : <p style={{ color: "red" }}>Please enter a real email</p>)}
-                {!sameEmail && patternOk && (emailAvailable ? <p style={{ color: "green" }}>Email is available</p> : <p style={{ color: "red" }}>Email is already taken</p>)}
+
+          
+                {!sameEmail && emailChanged && (patternOk ? <p style={{ color: "green" }}> Looks like a real email</p> : <p style={{ color: "red" }}>Please check the email</p>)}
+                {!sameEmail && emailChanged && patternOk && (emailAvailable ? <p style={{ color: "green" }}>Email is available</p> : <p style={{ color: "red" }}>Email is already taken</p>)}
                 {sameEmail && <p style={{ color: "green" }}>Keeping the same email.</p> }
                 
           <button type="submit">Submit</button>

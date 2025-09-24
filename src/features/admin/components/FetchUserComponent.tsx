@@ -6,8 +6,18 @@ interface FormProps {
   onFetchedUser: (user: IUpdateUser) => void;
 }
 
+const emptyUser: IUpdateUser = {
+  id:"",
+  userName: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  role: ""
+};
+
 export function FetchForm({ onFetchedUser }: FormProps): ReactElement {
   const [username, setUsername] = useState<string>("");
+  const [notFound, setNotFound] = useState<boolean>(false);
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -17,10 +27,20 @@ export function FetchForm({ onFetchedUser }: FormProps): ReactElement {
 
     if (tokens?.accessToken) {
       try {
-        const updUser: IUpdateUser = await fetchUserByUserName(username, tokens.accessToken);
-        if (updUser.role == null) updUser.role=""
-        console.log("User fetched:", updUser);
-        onFetchedUser(updUser);
+        const updUser: IUpdateUser | null = await fetchUserByUserName(
+          username,
+          tokens.accessToken
+        );
+        if (!updUser) {
+          console.log("User not found");
+          setNotFound(true)
+          onFetchedUser(emptyUser);
+        } else {
+          setNotFound(false)
+          if (updUser.role == null) updUser.role = "";
+          console.log("User fetched:", updUser);
+          onFetchedUser(updUser);
+        }
       } catch (err) {
         console.error("Error fetching user", err);
       }
@@ -38,10 +58,12 @@ export function FetchForm({ onFetchedUser }: FormProps): ReactElement {
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onFocus={() => onFetchedUser(emptyUser)}
             type="text"
             required
           />
           <button type="submit">Submit</button>
+          {notFound && <p style={{ color: "red" }}> User not found</p>}
         </fieldset>
       </form>
     </main>

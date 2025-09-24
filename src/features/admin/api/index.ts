@@ -1,6 +1,6 @@
 import { CustomError } from '../../shared/classes';
 import { BASE_URL } from '../../shared/constants';
-import { IUpdateUser, IRegisterUser } from '../types';
+import { IUpdateUser } from '../types';
 
 export async function RegistrationReq(password: string, email: string, username: string, role: string, firstname: string, lastname: string): Promise<any> {
   const url = `${BASE_URL}/auth`;
@@ -39,7 +39,7 @@ export async function EditUserReq(id: string, email: string, username: string, r
 }
 
 
-export async function fetchUserByUserName(username: string, token: string): Promise<IUpdateUser> {
+export async function fetchUserByUserName(username: string, token: string): Promise<IUpdateUser | null> {
   const url = `${BASE_URL}/users/username/${encodeURIComponent(username)}`;
 
   const res: Response = await fetch(url, {
@@ -48,6 +48,10 @@ export async function fetchUserByUserName(username: string, token: string): Prom
       'Authorization': `Bearer ${token}`,
     },
   });
+
+   if (res.status === 404) {
+    return null;
+  }
   
   if (!res.ok) {
     throw new CustomError(res.status, 'Could not fetch a user');
@@ -72,5 +76,30 @@ export async function checkEmailExists(email: string, token: string): Promise<bo
 
   const data = await res.json();
   console.log("Checked adress:", url, data);
+  return data;
+}
+
+
+export async function assignToCourse(userId: string, courseId: string, unassign: boolean, token: string): Promise<any> {
+  const url = `${BASE_URL}/users/${userId}/assign`;
+  if (unassign)
+    url + `?unassign=true`
+  
+
+  const res: Response = await fetch(url, {
+    method: 'POST',
+     headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      
+    },
+    body: JSON.stringify({ courseId }),
+  });
+ // if (!res.ok) {
+   // throw new Error("Failed to check email");
+ // }
+
+  const data = await res;
+  console.log("Checked adress:", data);
   return data;
 }
