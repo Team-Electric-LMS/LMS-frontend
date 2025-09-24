@@ -13,15 +13,6 @@ export interface Course {
   endDate: string;   // ISO string or DateOnly
 }
 
-export interface IStudentCourseInfo {
-  id: string;
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-}
-
-
 export interface IAuthContext {
   isLoggedIn: boolean;
   login: (username: string, password: string) => Promise<void>;
