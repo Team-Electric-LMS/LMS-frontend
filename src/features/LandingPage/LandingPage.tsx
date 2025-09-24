@@ -7,7 +7,7 @@ export function LandingPage() {
       <div className={styles['landing-page-content']}>
         <h1>Hi and welcome to the LMS</h1>
         <section className={styles['landing-page-section']}>
-          <h2>Current News</h2>
+          <h2>Current LMS News</h2>
           <ul>
             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
             <li>Morbi euismod, urna eu tincidunt consectetur, nisi erat facilisis erat.</li>
