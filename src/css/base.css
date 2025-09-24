@@ -5,6 +5,16 @@
   margin: 0;
 }
 
+/* 
+--base-body-color is being used as the background for the entire application 
+*/
+
+:root {
+  --base-body-color: linear-gradient(135deg, #112f6e 0%, #687d9b 100%);
+}
+
 body {
   font-family: "Roboto", sans-serif;
+  background: var(--base-body-color);
+  height: 100vh;
 }

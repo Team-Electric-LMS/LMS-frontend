@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
             <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
           </div>
         ) : (
-          <button onClick={() => navigate('/login')} className={styles.logoutBtn}>Login</button>
+          <button className={styles.logoutBtn}>Register</button> // TODO: Placeholder for register button
         )}
       </nav>
     </header>
