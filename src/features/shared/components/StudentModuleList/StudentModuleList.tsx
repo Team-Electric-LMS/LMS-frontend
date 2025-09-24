@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAuthContext } from '../../../auth/hooks/useAuthContext';
 import { useFetchWithToken } from '../../hooks/useFetchWithToken';
 import styles from './StudentModuleList.module.css';
-import { Module, CourseWithModules } from '../../../auth/types';
+import { CourseWithModules } from '../../../auth/types';
+import { ModuleList } from './ModuleList';
 import { BASE_URL } from '../../constants';
 
 export const StudentModuleList: React.FC = () => {
@@ -26,19 +27,7 @@ export const StudentModuleList: React.FC = () => {
   return (
     <div>
       {data.modules && data.modules.length > 0 ? (
-        <ul className={styles.moduleList}>
-          {[...data.modules]
-            .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
-            .map((module) => (
-              <li key={module.id} className={styles.moduleItem}>
-                <div><strong>{module.name}</strong></div>
-                <div>{module.description}</div>
-                <div>
-                  <span>Start: {module.startDate}</span> | <span>End: {module.endDate}</span>
-                </div>
-              </li>
-            ))}
-        </ul>
+        <ModuleList modules={data.modules} />
       ) : (
         <p className={styles.message}>No modules found for this course.</p>
       )}
