@@ -51,3 +51,4 @@ export const StudentModuleList: React.FC = () => {
     </div>
   );
 };
+
