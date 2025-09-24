@@ -22,15 +22,9 @@ export const StudentModuleList: React.FC = () => {
   if (error) return <p className={styles.message}>Error: {error.message}</p>;
   if (!data) return <p className={styles.message}>No course found for this student.</p>;
 
+  // Render the list of modules that belong to the student's course
   return (
     <div>
-      <div className={styles.courseCard}>
-        <div className={styles.courseTitle}>{data.name}</div>
-        <div className={styles.courseDescription}>{data.description}</div>
-        <div className={styles.courseDates}>
-          <span>Start: {data.startDate}</span> | <span>End: {data.endDate}</span>
-        </div>
-      </div>
       {data.modules && data.modules.length > 0 ? (
         <ul className={styles.moduleList}>
           {[...data.modules]
