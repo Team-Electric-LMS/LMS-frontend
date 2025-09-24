@@ -1,8 +1,9 @@
 import React from 'react';
+import { StudentModuleList } from '../shared/components/StudentModuleList/StudentModuleList';
+
 
 export const StudentDashboardSection: React.FC = () => (
   <div>
-    {/* Student-specific content goes here */}
-    <p>Welcome, student! This is your dashboard.</p>
+    <StudentModuleList />
   </div>
 );
