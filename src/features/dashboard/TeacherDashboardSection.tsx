@@ -3,7 +3,6 @@ import { TeachersCoursesList } from '../shared/components/CourseList/TeachersCou
 
 export const TeacherDashboardSection: React.FC = () => (
   <>
-    <p>Welcome, teacher! This is your dashboard.</p>
     <TeachersCoursesList />
   </>
 );
