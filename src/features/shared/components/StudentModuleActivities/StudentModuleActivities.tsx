@@ -10,7 +10,7 @@ export function StudentModuleActivities() {
 
   return (
     <div className={styles['student-module-activities-card']}>
-      <h2 className={styles['student-module-activities-title']}>Activities</h2>
+      <h2 className={styles['student-module-activities-title']}>Activities for the module</h2>
 
       {activities.map((activity) => (
         <StudentActivityCard key={activity.id} title={activity.title} />
