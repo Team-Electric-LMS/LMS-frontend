@@ -24,3 +24,9 @@ export interface ITokens {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface IClaims {
+  id: string;
+  email: string;
+  role: "Student" | "Teacher";
+}

@@ -13,7 +13,7 @@ export function Login(): ReactElement {
   // dashboard component will render different things based on role
   const handleOnSubmit = async (username: string, password: string) => {
     await login(username, password);
-    navigate("/dashboard", { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (
