@@ -33,13 +33,10 @@ export function FetchForm({ onFetchedUser }: FormProps): ReactElement {
           tokens.accessToken
         );
         if (!updUser) {
-          console.log("User not found");
           setNotFound(true)
-          onFetchedUser(emptyUser);
         } else {
           setNotFound(false)
           if (updUser.role == null) updUser.role = "";
-          console.log("User fetched:", updUser);
           onFetchedUser(updUser);
         }
       } catch (err) {
@@ -59,7 +56,6 @@ export function FetchForm({ onFetchedUser }: FormProps): ReactElement {
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            onFocus={() => onFetchedUser(emptyUser)}
             type="text"
             required
           />

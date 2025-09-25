@@ -22,22 +22,5 @@
 .user-display li {
   margin: 0.3rem 0;
   font-size: 1rem;
-}
-
-.user-display strong {
   color: #444;
-}
-
-.user-display button {
-  background-color: #3182ce;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.user-display button:hover {
-  background-color: #2563eb;
 }

@@ -46,7 +46,7 @@
 .admin-page .form input,
 .admin-page .form select,
 .admin-page .form button,
-.user-display .for button{
+.user-display .form button{
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 20px;
