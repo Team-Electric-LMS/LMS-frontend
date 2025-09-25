@@ -20,9 +20,9 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
       await onSubmit(username, password);
     } catch (err: unknown) {
       if (err instanceof CustomError) {
-        setError("Fel e-postadress eller lösenord");
+        setError("Invalid email address or password");
       } else {
-        setError("Något gick fel. Försök igen");
+        setError("Something went wrong. Please try again");
       }
     }
   };
@@ -33,7 +33,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
         <h1>LMS</h1>
         <form className="login-form" onSubmit={handleOnSubmit}>
           <Input
-            label="E-postadress"
+            label="Email address"
             name="username"
             type="email"
             value={username}
@@ -46,7 +46,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
             autoComplete="username"
           />
           <Input
-            label="Lösenord"
+            label="Password"
             name="password"
             type="password"
             value={password}
@@ -62,7 +62,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
           {error && <div className="error-message">{error}</div>}
 
           <button type="submit" disabled={!isFormValid}>
-            Logga in
+            Sign in
           </button>
         </form>
       </div>

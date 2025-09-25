@@ -10,7 +10,7 @@ interface AdminState {
   fetch: boolean;
   display: boolean;
   register: boolean;
-  edit: boolean;
+  editMode: boolean;
 }
 
 export function AdminPage(): ReactElement {
@@ -19,7 +19,7 @@ export function AdminPage(): ReactElement {
     fetch: false,
     display: false,
     register: false,
-    edit: false
+    editMode: false
   });
 
   const [fetchedUser, setFetchedUser] = useState<IUser | IRegisterUser>();
@@ -29,14 +29,14 @@ export function AdminPage(): ReactElement {
         <main className="admin-page g-container">
           <h1>Teachers Admin Panel</h1>
           <nav className="nav-panel">
-          <button onClick={() => setAdmin({ ...admin, register: true })} disabled={admin.edit} >
+          <button onClick={() => setAdmin({ ...admin, register: true })} disabled={admin.editMode} >
             Register New User
           </button>
           </nav>
           <div className="admin-area">
             <div className="left-side">
               {!admin.register && (<FetchForm onFetchedUser={(fetchedUser) => {setFetchedUser(fetchedUser); setAdmin({ ...admin, display: true})}}/>)}
-              {admin.display && <UserDisplay userdata={fetchedUser as IUser} onEdit={() => setAdmin({ ...admin, edit: true })} onClose={() => setAdmin({ ...admin, display: true })} />}
+              {admin.display && <UserDisplay userdata={fetchedUser as IUser} onEdit={() => setAdmin({ ...admin, editMode: true })} onClose={() => setAdmin({ ...admin, display: true })} />}
             </div>
             <div className="right-side">
               {admin.register  && <UserForm legend="Register User" onClose={() => setAdmin({ ...admin, register: true })} action = "register"/>}

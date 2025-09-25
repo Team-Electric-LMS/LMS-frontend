@@ -27,7 +27,7 @@ export function UserDisplay({ userdata, onClose, onEdit }: UserDisplayProps): Re
         <li>Last Name: {userdata.lastName}</li>
         <li>Role: {userdata.role ?? "No role assigned"}</li>
       </ul>
-      <button onClick={onClose}>Close</button>
+      <button onClick={onClose} disabled={true}>Close</button>
       <button onClick={onEdit}>Edit</button>
     </div>
   );
