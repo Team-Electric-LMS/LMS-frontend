@@ -26,7 +26,10 @@ export const Header: React.FC = () => {
             <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
           </div>
         ) : (
-          <button className={styles.logoutBtn}>Register</button> // TODO: Placeholder for register button
+          // button that has a link to the register page, but for now links to the /login page
+          <Link to="/login">
+            <button className={styles.logoutBtn}>Register</button>
+          </Link>
         )}
       </nav>
     </header>
