@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useContext, useEffect, useState } from "react";
 import { IUser } from "../types";
-import { AdminContext } from "./adminContext";
+import { AdminContext } from ".";
 
 interface AdminProviderProps {
   children: ReactNode;

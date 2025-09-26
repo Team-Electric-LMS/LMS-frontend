@@ -1,23 +1,28 @@
 .admin-page {
-  background-color: #ededed;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: start;
   padding-block: 2rem;
-  height: 100vh;
 }
 .admin-area {
+  background: linear-gradient(90deg, #e3eafc 0%, #f8faff 100%);
+  border-radius: 14px;
   width: 80%;
+  height: 650px;
   display: flex;
   justify-content: left;
   align-items:flex-start;
 }
 
- button {
+.admin-area button {
   cursor: pointer;
 }
 
+.admin-page legend {
+  color: rgb(219, 7, 7);
+  font-family: "Roboto", sans-serif;
+}
 
 .admin-page nav button {
   background-color: #3182ce;
@@ -33,17 +38,25 @@
 }
 
 .admin-page h1 {
+  color:#dc3545;
   text-align: center;
   padding-block: 1rem;
 }
 
 .admin-page .form-wrapper {
-  background-color: #ffffff;
+  background-color: #e02c2c;
   padding: 2rem;
   border-radius: 8px;
 }
 
+.admin-page fieldset {
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(80, 7, 7, 0.2);
+  width: 400px;
+}
+
 .admin-page .form {
+   margin: 1rem;
   width: 400px;
 }
 
