@@ -1,107 +1,140 @@
-import { CustomError } from '../../shared/classes';
-import { BASE_URL } from '../../shared/constants';
-import { IUser } from '../types';
+import { CustomError } from "../../shared/classes";
+import { BASE_URL } from "../../shared/constants";
+import { IUser } from "../types";
 
-export async function RegistrationReq(password: string, email: string, username: string, role: string, firstname: string, lastname: string): Promise<any> {
+export async function RegistrationReq(
+  user: IUser,
+  token: string
+): Promise<IUser> {
   const url = `${BASE_URL}/auth`;
   const res: Response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ password, email, username, role, firstname, lastname }),
+    body: JSON.stringify(user),
   });
-  
-  if (!res.ok) {
-    throw new CustomError(res.status, 'Could not Register a new user');
-  }
-  console.log(res)
-  return (await res);
 
-  // return (await res.json()) as IRegisterUser;
+  if (res.status === 400) {
+    throw new Error("User already registered!");
+  }
+
+  if (!res.ok) {
+    throw new CustomError(res.status, "Registration failed.");
+  }
+  return (await res.json()) as IUser;
 }
 
-
-export async function EditUserReq(id: string, email: string, username: string, role: string, firstname: string, lastname: string): Promise<any> {
+export async function EditUserReq(user: IUser, token: string): Promise<IUser> {
+  console.log("sending", user);
   const url = `${BASE_URL}/auth/edit`;
   const res: Response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ id, email, username, role, firstname, lastname }),
+    body: JSON.stringify(user),
   });
-  console.log("updating")
-  
-  if (!res.ok) {
-    throw new CustomError(res.status, 'Could not update a user');
-  }
 
-  return (await res);
+  if (!res.ok) {
+    throw new CustomError(res.status, "Failed to update.");
+  }
+  return (await res.json()) as IUser;
 }
 
-
-export async function fetchUserByUserName(username: string, token: string): Promise<IUser | null> {
-  const url = `${BASE_URL}/users/username/${encodeURIComponent(username)}`;
+export async function fetchUserByUserName(
+  username: string,
+  token: string
+): Promise<IUser | null> {
+  const url = `${BASE_URL}/users/${encodeURIComponent(username)}`;
 
   const res: Response = await fetch(url, {
-    method: 'GET',
-     headers: {
-      'Authorization': `Bearer ${token}`,
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   });
 
-   if (res.status === 404) {
+  if (res.status === 404) {
     return null;
   }
-  
+
   if (!res.ok) {
-    throw new CustomError(res.status, 'Could not fetch a user');
+    throw new CustomError(res.status, "Could not fetch a user");
   }
 
   return (await res.json()) as IUser;
 }
 
-export async function checkEmailExists(email: string, token: string): Promise<boolean> {
-  const url = `${BASE_URL}/auth/check-email/${email}`;
-  
+export async function fetchUserExtended(
+  username: string,
+  token: string
+): Promise<IUser | null> {
+  const url = `${BASE_URL}/users/extended?email=${encodeURIComponent(username)}`;
 
   const res: Response = await fetch(url, {
-    method: 'GET',
-     headers: {
-      'Authorization': `Bearer ${token}`,
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 404) {
+    return null;
+  }
+
+  if (!res.ok) {
+    throw new CustomError(res.status, "Could not fetch a user");
+  }
+
+  return (await res.json()) as IUser;
+}
+
+
+export async function checkEmailTaken(
+  email: string,
+  token: string
+): Promise<boolean> {
+  const url = `${BASE_URL}/auth/check-email/${email}`;
+
+  const res: Response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!res.ok) {
     throw new Error("Failed to check email");
   }
 
-  const data = await res.json();
-  console.log("Checked adress:", url, data);
-  return data;
+  return await res.json();
 }
 
+export async function assignToCourse(
+  userId: string,
+  courseId: string,
+  unassign: boolean,
+  token: string
+): Promise<any> {
+  var url = `${BASE_URL}/users/${userId}/assign?unassign=${unassign}`;
 
-export async function assignToCourse(userId: string, courseId: string, unassign: boolean, token: string): Promise<any> {
-  const url = `${BASE_URL}/users/${userId}/assign`;
-  if (unassign)
-    url + `?unassign=true`
-  
-
-  const res: Response = await fetch(url, {
-    method: 'POST',
-     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-      
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ courseId }),
   });
- // if (!res.ok) {
-   // throw new Error("Failed to check email");
- // }
+  if (!res.ok) {
+    throw new Error("Failed to check email");
+  }
 
-  const data = await res;
-  console.log("Checked adress:", data);
-  return data;
+   if (res.status !== 204) { 
+    const data = await res.json();
+    console.log("Checked address:", data);
+    return data;
+  }
 }

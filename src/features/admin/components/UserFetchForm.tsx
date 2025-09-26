@@ -1,48 +1,36 @@
 import { FormEventHandler, ReactElement, useState } from "react";
-import { IUser } from "../types";
-import { fetchUserByUserName } from "../api";
+import { fetchUserExtended } from "../api";
 import "../css/styles.css";
+import { useAdmin } from "../context/adminProvider";
 
-interface FormProps {
-  onFetchedUser: (user: IUser) => void;
-}
 
-const emptyUser: IUser = {
-  id:"",
-  userName: "",
-  email: "",
-  firstName: "",
-  lastName: "",
-  role: ""
-};
-
-export function FetchForm({ onFetchedUser }: FormProps): ReactElement {
+export function FetchForm(): ReactElement {
   const [username, setUsername] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
+  const { setUser, token } = useAdmin();
+
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    const raw = localStorage.getItem("tokens");
-    const tokens = raw ? JSON.parse(raw) : null;
-
-    if (tokens?.accessToken) {
+    if (!token) {
+      console.error("No token available");
+      return;
+    }
       try {
-        const updUser: IUser | null = await fetchUserByUserName(
-          username,
-          tokens.accessToken
-        );
-        if (!updUser) {
-          setNotFound(true)
+        const fetchedUser = await fetchUserExtended(username, token);
+
+        if (!fetchedUser) {
+          setNotFound(true);
         } else {
-          setNotFound(false)
-          if (updUser.role == null) updUser.role = "";
-          onFetchedUser(updUser);
+          setNotFound(false);
+          if (!fetchedUser.role == null) fetchedUser.role = "";
+          setUser(fetchedUser);
         }
       } catch (err) {
         console.error("Error fetching user", err);
       }
-    }
+    
   };
 
   return (
