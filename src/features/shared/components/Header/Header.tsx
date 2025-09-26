@@ -20,11 +20,16 @@ export const Header: React.FC = () => {
           {user && <Link to="/dashboard">Dashboard</Link>}
           {/* additional links here */}
         </div>
-        {user && (
+        {user ? (
           <div className={styles.userSection}>
             <span className={styles.username}>{user.username}</span>
             <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
           </div>
+        ) : (
+          // button that has a link to the register page, but for now links to the /login page
+          <Link to="/login">
+            <button className={styles.logoutBtn}>Register</button>
+          </Link>
         )}
       </nav>
     </header>
