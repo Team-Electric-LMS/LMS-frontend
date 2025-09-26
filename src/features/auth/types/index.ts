@@ -13,6 +13,19 @@ export interface Course {
   endDate: string;   // ISO string or DateOnly
 }
 
+export interface Module {
+  id: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  courseId: string;
+}
+
+export interface CourseWithModules extends Course {
+  modules: Module[];
+}
+
 export interface IAuthContext {
   isLoggedIn: boolean;
   login: (username: string, password: string) => Promise<void>;
