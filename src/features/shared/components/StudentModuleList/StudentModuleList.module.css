@@ -68,3 +68,12 @@
   font-size: 1rem;
   margin: 16px 0;
 }
+
+.link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+

@@ -6,7 +6,11 @@ import { CourseWithModules } from '../../../auth/types';
 import { ModuleList } from './ModuleList';
 import { BASE_URL } from '../../constants';
 
-export const StudentModuleList: React.FC = () => {
+interface StudentModuleListProps {
+  onSelectModule?: (moduleId: string) => void;
+}
+
+export const StudentModuleList: React.FC<StudentModuleListProps> = ({ onSelectModule }) => {
   const { user } = useAuthContext();
   const studentId = user?.id;
   const endpoint = studentId ? `${BASE_URL}/student/${studentId}/course-with-modules` : '';
@@ -27,7 +31,7 @@ export const StudentModuleList: React.FC = () => {
   return (
     <div>
       {data.modules && data.modules.length > 0 ? (
-        <ModuleList modules={data.modules} />
+        <ModuleList modules={data.modules} onSelectModule={onSelectModule} />
       ) : (
         <p className={styles.message}>No modules found for this course.</p>
       )}
