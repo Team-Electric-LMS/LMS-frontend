@@ -17,12 +17,14 @@ export function StudentActivityCard({
 }: StudentActivityCardProps) {
   return (
     <div className={styles['student-activity-card']}>
-      <p className={styles['student-activity-card-title']}>{activityTitle}</p>
-      <p>{description}</p>
-      <p>Type: {activityTypeName}</p>
-      <p>
-        {startDate}   {endDate}
-      </p>
+      <div className={styles['student-activity-card-title']}>
+        {activityTitle}
+      </div>
+      <div>{description}</div>
+      <div>Type: {activityTypeName}</div>
+      <div>
+        <span>Start: {startDate}</span> | <span>End: {endDate}</span>
+      </div>
     </div>
   );
 }

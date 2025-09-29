@@ -53,10 +53,12 @@ export function StudentModuleActivities({
   return (
     <div className={styles['student-module-activities-card']}>
       <h2 className={styles['student-module-activities-title']}>
-        Activities for module {moduleTitle}
+        Activities for {moduleTitle}
       </h2>
 
-      {data.map((activity) => (
+      {data
+      .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+      .map((activity) => (
         <StudentActivityCard
           key={activity.id}
           activityTitle={activity.activityTitle}
