@@ -2,13 +2,13 @@ import { useEffect, useRef } from "react";
 import { useUserForm } from "../hooks/useUserForm";
 import { SelectInput, TextInput } from ".";
 import { FormProps } from "../types";
-import { useAdmin } from "../context/adminProvider";
+import { useAdminContext } from "../context/adminProvider";
 
 export function AdminForm({
   legend,
   onClose,
 }: FormProps) {
-  const { user, setUser, token } = useAdmin();
+  const { user, setUser, token } = useAdminContext();
   const {
     form,
     setFormField,

@@ -1,13 +1,16 @@
 import { FormEventHandler, ReactElement, useState } from "react";
-import { fetchUserExtended } from "../api";
 import "../css/styles.css";
-import { useAdmin } from "../context/adminProvider";
+import { useAdminContext } from "../context/adminProvider";
+import { FormProps } from "../types";
+import { getUserByUsername } from "../helpers/getUser";
 
 
-export function FetchForm(): ReactElement {
+export function FetchForm({
+  legend,
+}: FormProps): ReactElement {
   const [username, setUsername] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
-  const { setUser, token } = useAdmin();
+  const {setUser, token} = useAdminContext();
 
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -17,27 +20,22 @@ export function FetchForm(): ReactElement {
       console.error("No token available");
       return;
     }
-      try {
-        const fetchedUser = await fetchUserExtended(username, token);
-
-        if (!fetchedUser) {
-          setNotFound(true);
-        } else {
-          setNotFound(false);
-          if (!fetchedUser.role == null) fetchedUser.role = "";
-          setUser(fetchedUser);
-        }
-      } catch (err) {
-        console.error("Error fetching user", err);
-      }
     
+    const fetchedUser = await getUserByUsername(username, token);
+
+    if (!fetchedUser) {
+      setNotFound(true);
+    } else {
+      setNotFound(false);
+      setUser(fetchedUser);
+    }
   };
 
   return (
     <main className="form-page">
       <form className="form" onSubmit={handleOnSubmit}>
         <fieldset>
-          <legend>Find a student</legend>
+          <legend>{legend}</legend>
           <label htmlFor="username">E-mail</label>
           <input
             id="username"

@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import "../css/styles.css";
-import { useAdmin } from "../context/adminProvider";
+import { useAdminContext } from "../context/adminProvider";
 
 interface UserDisplayProps {
   legend: string;
@@ -14,7 +14,7 @@ export function UserDisplay({
   onEdit,
   onReassign,
 }: UserDisplayProps): ReactElement {
-  const { user, setUser } = useAdmin();
+  const { user, setUser } = useAdminContext();
 
   if (!user) {
     return (
@@ -39,7 +39,7 @@ export function UserDisplay({
               {user.role === "Teacher"
                 ? "Not shown for teachers"
                 : user.course
-                ? `${user.course.name} (${user.course.id})`
+                ? `${user.course.name}`
                 : "No course assigned"}
             </li>
           </ul>

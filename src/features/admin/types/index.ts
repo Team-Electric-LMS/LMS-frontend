@@ -1,7 +1,7 @@
 export * from './forms';
 export * from './users';
 
-export interface AdminState {
+export interface AdminPanelState {
   fetch: boolean;
   display: boolean;
   register: boolean;

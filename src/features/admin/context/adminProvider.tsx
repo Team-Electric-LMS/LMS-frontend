@@ -30,7 +30,7 @@ export function AdminProvider({ children }: AdminProviderProps): ReactElement {
   );
 }
 
-export const useAdmin = () => {
+export const useAdminContext = () => {
   const context = useContext(AdminContext);
   if (!context) throw new Error("useAdmin must be used within AdminProvider");
   return context;

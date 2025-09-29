@@ -112,6 +112,27 @@ export async function checkEmailTaken(
   return await res.json();
 }
 
+export async function fetchAllCourses(
+  token: string
+): Promise<any> {
+  var url = `${BASE_URL}/courses`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }});
+  if (!res.ok) {
+    throw new Error("Failed to fetch all courses");
+  }
+
+   if (res.status !== 204) { 
+    const data = await res.json();
+    return data;
+  }
+}
+
+
 export async function assignToCourse(
   userId: string,
   courseId: string,

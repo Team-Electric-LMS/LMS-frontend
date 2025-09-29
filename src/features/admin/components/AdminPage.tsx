@@ -1,14 +1,14 @@
 import { ReactElement, useState } from "react";
-import { AdminState } from "../types";
+import { AdminPanelState } from "../types";
 import { FetchForm } from "./UserFetchForm";
 import { AssignCourse } from "./UserAssignForm";
 import { UserDisplay } from "./FetchResults";
 import { AdminForm } from "./UserAdminForm";
 import "../css/admin.css";
-import { useAdmin } from "../context/adminProvider";
+import { useAdminContext } from "../context/adminProvider";
 
 export function AdminPage(): ReactElement {
-  const [admin, setAdmin] = useState<AdminState>({
+  const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
     fetch: false,
     display: false,
     register: false,
@@ -16,7 +16,7 @@ export function AdminPage(): ReactElement {
     assign: false,
   });
 
-  const { user, setUser } = useAdmin();
+  const { user, setUser } = useAdminContext();
 
   return (
     <main className="admin-page g-container">
@@ -25,62 +25,62 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setUser(undefined);
-            setAdmin({ ...admin, fetch: !admin.fetch });
+            setAdminPanel({ ...adminPanel, fetch: !adminPanel.fetch });
           }}
-          disabled={admin.register}
+          disabled={adminPanel.register}
         >
           Find a User
         </button>
         <button
           onClick={() => {
             setUser(undefined);
-            setAdmin({ ...admin, register: !admin.register});
+            setAdminPanel({ ...adminPanel, register: !adminPanel.register});
           }}
-          disabled={admin.editMode}
+          disabled={adminPanel.editMode}
         >
           Register New User
         </button>
       </nav>
       <div className="admin-area">
         <div className="left-side">
-          {admin.fetch && !admin.register && (
+          {adminPanel.fetch && !adminPanel.register && (
             <FetchForm
               legend={"Find a student"}
-              onClose={() => setAdmin({ ...admin, fetch: false })}
+              onClose={() => setAdminPanel({ ...adminPanel, fetch: false })}
             />
           )}
-          {user && !admin.register && (
+          {user && !adminPanel.register && (
             <UserDisplay
               legend="User Info"
-              onEdit={() => setAdmin({ ...admin, editMode: true })}
-              onClose={() => setAdmin({ ...admin, display: false })}
+              onEdit={() => setAdminPanel({ ...adminPanel, editMode: true })}
+              onClose={() => setAdminPanel({ ...adminPanel, display: false })}
               onReassign={() =>
-                setAdmin({ ...admin, assign: true, editMode: false })
+                setAdminPanel({ ...adminPanel, assign: true, editMode: false })
               }
             />
           )}
         </div>
         <div className="right-side">
-          {admin.editMode && !admin.register && (
+          {adminPanel.editMode && !adminPanel.register && (
             <AdminForm
               legend="Edit User"
-              onClose={() => setAdmin({ ...admin, editMode: false })}
+              onClose={() => setAdminPanel({ ...adminPanel, editMode: false })}
             />
           )}
-          {admin.register && (
+          {adminPanel.register && (
             <AdminForm
               legend="Register User"
               onClose={() =>
-                setAdmin({ ...admin, register: false, display: true })
+                setAdminPanel({ ...adminPanel, register: false, display: true })
               }
             />
           )}
         </div>
         <div>
-          {admin.assign && (
+          {adminPanel.assign && (
             <AssignCourse
               legend="Assign Course"
-              onClose={() => setAdmin({ ...admin, assign: false })}
+              onClose={() => setAdminPanel({ ...adminPanel, assign: false })}
             />
           )}
         </div>
