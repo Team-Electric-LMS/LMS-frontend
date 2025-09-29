@@ -1,0 +1,70 @@
+.courseCard {
+  background: linear-gradient(90deg, #e3eafc 0%, #f8faff 100%);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+  padding: 28px 32px 18px 32px;
+  margin-bottom: 28px;
+  border: 1px solid #cfd8e3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.courseTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a2a4d;
+  margin-bottom: 8px;
+}
+.courseDescription {
+  font-size: 1.08rem;
+  color: #3a4a6b;
+  margin-bottom: 10px;
+}
+.courseDates {
+  font-size: 0.98rem;
+  color: #5a6a8b;
+  margin-bottom: 2px;
+}
+
+.moduleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.moduleItem {
+  flex: 1 1 300px;
+  min-width: 260px;
+  max-width: 350px;
+  padding: 18px 20px;
+  margin: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.2s;
+}
+.moduleItem:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  border-color: #b3b3b3;
+}
+
+.moduleItem strong {
+  font-size: 1.15rem;
+  color: #2a3a5e;
+}
+.moduleItem div {
+  font-size: 0.98rem;
+  color: #444;
+}
+.message {
+  color: #555;
+  font-size: 1rem;
+  margin: 16px 0;
+}
