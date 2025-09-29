@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEventHandler, ReactElement, useEffect, useState } from "react";
 import { ICourse } from "../types";
-import { Input, Textarea } from "../../shared/components";
+import { Input } from "../../shared/components/Input";
+import { Textarea } from "../../shared/components/Textarea";
 
 interface CourseFormProps {
   course?: ICourse;
@@ -28,30 +29,30 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
     }
   }, [course]);
 
-  const validateForm = ({ name, description, startDate, endDate }: typeof data): string[] => {
+  const validateForm = ({ name, description, startDate, endDate }: typeof data, isEdit: boolean = false): string[] => {
     const errors: string[] = [];
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    if (!name.trim()) errors.push("Kursnamn är obligatoriskt");
-    if (!description.trim()) errors.push("Beskrivning är obligatorisk");
+    if (!name.trim()) errors.push("Name is required");
+    if (!description.trim()) errors.push("Description is required");
 
     if (!startDate.trim()) {
-      errors.push("Startdatum är obligatoriskt");
+      errors.push("Start date is required");
     } else {
       const date = new Date(startDate);
-      if (isNaN(date.getTime())) errors.push("Ogiltigt startdatum");
-      else if (date < today) errors.push("Startdatum kan inte vara i det förflutna");
+      if (isNaN(date.getTime())) errors.push("Invalid start date");
+      else if (!isEdit && date < today) errors.push("Start date cannot be in the past");
     }
 
     if (!endDate.trim()) {
-      errors.push("Slutdatum är obligatoriskt");
+      errors.push("End date is required");
     } else {
       const date = new Date(endDate);
-      if (isNaN(date.getTime())) errors.push("Ogiltigt slutdatum");
-      else if (date < today) errors.push("Slutdatum kan inte vara i det förflutna");
+      if (isNaN(date.getTime())) errors.push("Invalid end date");
+      else if (!isEdit && date < today) errors.push("End date cannot be in the past");
       else if (startDate.trim() && !isNaN(new Date(startDate).getTime()) && date < new Date(startDate)) {
-        errors.push("Slutdatum kan inte vara före startdatum");
+        errors.push("End date cannot be before start date");
       }
     }
 
@@ -66,7 +67,8 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const formErrors = validateForm(data);
+    const isEdit = !!course;
+    const formErrors = validateForm(data, isEdit);
     setErrors(formErrors);
     if (formErrors.length > 0) return;
 
@@ -75,7 +77,7 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
       await onSubmit(data);
       if (!course) setData({ name: "", description: "", startDate: "", endDate: "" });
     } catch {
-      setErrors(["Ett fel uppstod vid sparande av kursen"]);
+      setErrors(["An error occurred while saving the course"]);
     } finally {
       setIsSubmitting(false);
     }
@@ -84,9 +86,9 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
   const isValid = data.name.trim() && data.description.trim() && data.startDate.trim() && data.endDate.trim();
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
+    <form className="create-course-form" onSubmit={handleSubmit}>
       <Input
-        label="Namn"
+        label="Name"
         name="name"
         type="text"
         value={data.name}
@@ -96,7 +98,7 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
         autoComplete="on"
       />
       <Textarea
-        label="Beskrivning"
+        label="Description"
         name="description"
         value={data.description}
         onChange={handleChange}
@@ -105,7 +107,7 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
         autoComplete="on"
       />
       <Input
-        label="Startdatum"
+        label="Start date"
         name="startDate"
         type="date"
         value={data.startDate}
@@ -115,7 +117,7 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
         autoComplete="on"
       />
       <Input
-        label="Slutdatum"
+        label="End date"
         name="endDate"
         type="date"
         value={data.endDate}
@@ -136,7 +138,7 @@ export const CourseForm = ({ course, onSubmit }: CourseFormProps): ReactElement 
       )}
 
       <button type="submit" disabled={!isValid || isSubmitting}>
-        {isSubmitting ? "Sparar..." : course ? "Uppdatera kurs" : "Skapa kurs"}
+        {isSubmitting ? "Saving..." : course ? "Update course" : "Create course"}
       </button>
     </form>
   );
