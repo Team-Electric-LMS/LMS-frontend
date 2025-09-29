@@ -1,0 +1,83 @@
+.admin-page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  padding-block: 2rem;
+}
+.admin-area {
+  background: linear-gradient(90deg, #e3eafc 0%, #f8faff 100%);
+  border-radius: 14px;
+  width: 80%;
+  height: 650px;
+  display: flex;
+  justify-content: left;
+  align-items:flex-start;
+}
+
+.admin-area button {
+  cursor: pointer;
+}
+
+.admin-page legend {
+  color: rgb(219, 7, 7);
+  font-family: "Roboto", sans-serif;
+}
+
+.admin-page nav button {
+  background-color: #3182ce;
+  color: whitesmoke;
+  padding: 0.8rem;
+  cursor: pointer;
+}
+
+.admin-page nav button:disabled {
+  background-color: #3182ce;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.admin-page h1 {
+  color:#dc3545;
+  text-align: center;
+  padding-block: 1rem;
+}
+
+.admin-page .form-wrapper {
+  background-color: #e02c2c;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.admin-page fieldset {
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(80, 7, 7, 0.2);
+  width: 400px;
+}
+
+.admin-page .form {
+   margin: 1rem;
+  width: 400px;
+}
+
+.admin-page .form input,
+.admin-page .form select,
+.admin-page .form button,
+.user-display .form button{
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 20px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.admin-page .form .errors {
+  margin: 10px 0;
+}
+
+.admin-page .form .error-message {
+  color: #dc3545;
+  padding-bottom: 0.8rem;
+}
