@@ -3,7 +3,7 @@ import { type ChangeEvent, type ReactElement } from "react";
 interface InputProps {
   label: string;
   name: string;
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | "date";
   value: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   autoFocus: boolean;
