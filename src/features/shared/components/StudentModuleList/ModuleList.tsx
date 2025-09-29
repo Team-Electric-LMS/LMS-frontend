@@ -4,7 +4,7 @@ import { Module } from '../../../auth/types';
 
 interface ModuleListProps {
   modules: Module[];
-  onSelectModule?: (moduleId: string) => void;
+  onSelectModule?: (module: { id: string; moduleTitle: string }) => void;
 }
 
 export const ModuleList: React.FC<ModuleListProps> = ({
@@ -21,7 +21,7 @@ export const ModuleList: React.FC<ModuleListProps> = ({
         <li
           key={module.id}
           className={styles.moduleItem}
-          onClick={() => onSelectModule?.(module.id)}
+          onClick={() => onSelectModule?.({ id: module.id, moduleTitle: module.name })}
           style={{ cursor: 'pointer' }}
         >
           <div>

@@ -7,14 +7,19 @@ import { ModuleList } from './ModuleList';
 import { BASE_URL } from '../../constants';
 
 interface StudentModuleListProps {
-  onSelectModule?: (moduleId: string) => void;
+  onSelectModule?: (module: { id: string; moduleTitle: string }) => void;
 }
 
-export const StudentModuleList: React.FC<StudentModuleListProps> = ({ onSelectModule }) => {
+export const StudentModuleList: React.FC<StudentModuleListProps> = ({
+  onSelectModule,
+}) => {
   const { user } = useAuthContext();
   const studentId = user?.id;
-  const endpoint = studentId ? `${BASE_URL}/student/${studentId}/course-with-modules` : '';
-  const { data, error, isLoading, requestFunc } = useFetchWithToken<CourseWithModules>(endpoint);
+  const endpoint = studentId
+    ? `${BASE_URL}/student/${studentId}/course-with-modules`
+    : '';
+  const { data, error, isLoading, requestFunc } =
+    useFetchWithToken<CourseWithModules>(endpoint);
 
   useEffect(() => {
     if (studentId) {
@@ -23,9 +28,11 @@ export const StudentModuleList: React.FC<StudentModuleListProps> = ({ onSelectMo
   }, [studentId]);
 
   if (!studentId) return <p className={styles.message}>No student ID found.</p>;
-  if (isLoading) return <p className={styles.message}>Loading course and modules...</p>;
+  if (isLoading)
+    return <p className={styles.message}>Loading course and modules...</p>;
   if (error) return <p className={styles.message}>Error: {error.message}</p>;
-  if (!data) return <p className={styles.message}>No course found for this student.</p>;
+  if (!data)
+    return <p className={styles.message}>No course found for this student.</p>;
 
   // Render the list of modules that belong to the student's course
   return (
@@ -38,4 +45,3 @@ export const StudentModuleList: React.FC<StudentModuleListProps> = ({ onSelectMo
     </div>
   );
 };
-

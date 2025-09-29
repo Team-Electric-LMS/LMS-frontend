@@ -4,14 +4,20 @@ import { StudentCourseCard } from '../shared/components/student-course-card/Stud
 import { StudentModuleActivities } from '../shared/components/StudentModuleActivities/StudentModuleActivities';
 
 export const StudentDashboardSection: React.FC = () => {
-  const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
+  const [selectedModule, setSelectedModule] = useState<{
+    id: string;
+    moduleTitle: string;
+  } | null>(null);
 
   return (
     <div>
       <StudentCourseCard />
-      <StudentModuleList onSelectModule={setSelectedModuleId} />
-      {selectedModuleId && (
-        <StudentModuleActivities moduleId={selectedModuleId} />
+      <StudentModuleList onSelectModule={setSelectedModule} />
+      {selectedModule && (
+        <StudentModuleActivities
+          moduleId={selectedModule.id}
+          moduleTitle={selectedModule.moduleTitle}
+        />
       )}
     </div>
   );
