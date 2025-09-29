@@ -1,0 +1,26 @@
+.user-display {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 1rem auto;
+  max-width: 500px;
+}
+
+.user-display h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.user-display ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.user-display li {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+  color: #444;
+}
