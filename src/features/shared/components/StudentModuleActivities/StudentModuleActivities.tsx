@@ -35,10 +35,7 @@ export function StudentModuleActivities({
 
   useEffect(() => {
     if (moduleId && studentId) {
-      console.log('Fetching activities from:', endpoint);
-      requestFunc().then(() => {
-        console.log('Fetched activities data:', data);
-      });
+      requestFunc().then(() => {});
     }
   }, [moduleId, studentId]);
 
@@ -57,17 +54,20 @@ export function StudentModuleActivities({
       </h2>
 
       {data
-      .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
-      .map((activity) => (
-        <StudentActivityCard
-          key={activity.id}
-          activityTitle={activity.activityTitle}
-          description={activity.description}
-          startDate={activity.startDate}
-          endDate={activity.endDate}
-          activityTypeName={activity.activityTypeName}
-        />
-      ))}
+        .sort(
+          (a, b) =>
+            new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+        )
+        .map((activity) => (
+          <StudentActivityCard
+            key={activity.id}
+            activityTitle={activity.activityTitle}
+            description={activity.description}
+            startDate={activity.startDate}
+            endDate={activity.endDate}
+            activityTypeName={activity.activityTypeName}
+          />
+        ))}
     </div>
   );
 }
