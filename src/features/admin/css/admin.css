@@ -73,6 +73,12 @@
   width: 100%;
 }
 
+.admin-page .form .checkbox {
+  display: flex;
+  align-items:center;
+  width: 100px;
+}
+
 .admin-page .form .errors {
   margin: 10px 0;
 }
@@ -81,3 +87,5 @@
   color: #dc3545;
   padding-bottom: 0.8rem;
 }
+
+
