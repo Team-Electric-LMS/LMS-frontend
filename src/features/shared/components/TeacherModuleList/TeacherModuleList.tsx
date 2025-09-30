@@ -7,16 +7,12 @@ import styles from './TeacherModuleList.module.css';
 
 interface TeacherModuleListProps {
   courseId: string;
+  courseName: string;
 }
 
-export function TeacherModuleList({ courseId }: TeacherModuleListProps) {
+export function TeacherModuleList({ courseId, courseName }: TeacherModuleListProps) {
   const endpoint = `${BASE_URL}/courses/${courseId}/modules`;
-  const {
-    data: modules,
-    error,
-    isLoading,
-    requestFunc,
-  } = useFetchWithToken<Module[]>(endpoint);
+  const { data: modules, error, isLoading, requestFunc } = useFetchWithToken<Module[]>(endpoint);
 
   useEffect(() => {
     if (courseId) {
@@ -25,15 +21,24 @@ export function TeacherModuleList({ courseId }: TeacherModuleListProps) {
   }, [courseId]);
 
   if (isLoading) return <p className={styles.message}>Loading modules...</p>;
-  if (error) return <p className={styles.message}>Error: {error.message}</p>;
+  if (error) return <p className={styles.message}>Error loading modules.</p>;
   if (!modules || modules.length === 0)
     return <p className={styles.message}>No modules found.</p>;
 
   return (
-    <ul className={styles.moduleList}>
-      {modules.map((module: Module) => (
-        <ModuleListItem key={module.id} module={module} />
-      ))}
-    </ul>
+    <div className={styles.moduleListCard}>
+        <h2>Moduler för kursen: {courseName}</h2>
+      {isLoading && <p className={styles.message}>Loading modules...</p>}
+      {error && <p className={styles.message}>Error loading modules.</p>}
+      {!modules || modules.length === 0 ? (
+        <p className={styles.message}>No modules found.</p>
+      ) : (
+        <ul className={styles.moduleList}>
+          {modules.map((module: Module) => (
+            <ModuleListItem key={module.id} module={module} />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

@@ -6,6 +6,9 @@ export const TeacherDashboardSection: React.FC = () => (
   <>
     <TeachersCoursesList />
     {/* <TeacherModuleList courseId={''} /> */}
-    <TeacherModuleList courseId='bed88584-2f62-4593-ab4f-13c9e62b931a' />
+    <TeacherModuleList
+      courseId="bed88584-2f62-4593-ab4f-13c9e62b931a"
+      courseName="testkurs"
+    />
   </>
 );
