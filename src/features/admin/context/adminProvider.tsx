@@ -1,6 +1,8 @@
 import { ReactElement, ReactNode, useContext, useEffect, useState } from "react";
 import { IUser } from "../types";
 import { AdminContext } from ".";
+import { useAuthContext } from "../../auth/hooks";
+import { Navigate } from "react-router-dom";
 
 interface AdminProviderProps {
   children: ReactNode;
@@ -9,6 +11,9 @@ interface AdminProviderProps {
 export function AdminProvider({ children }: AdminProviderProps): ReactElement {
   const [user, setUser] = useState<IUser | undefined>(undefined);
   const [token, setToken] = useState<string>();
+
+  const { user: authUser } = useAuthContext();
+  const role = authUser?.role?.toLowerCase();
 
 
   useEffect(() => {
@@ -22,6 +27,10 @@ export function AdminProvider({ children }: AdminProviderProps): ReactElement {
       console.error("Failed to parse token from localStorage", err);
     }
   }, []);
+
+    if (role === "student") {
+    return <Navigate to="/dashboard" replace />;
+  }
   
   return (
     <AdminContext.Provider value={{ user, setUser, token, setToken }}>

@@ -9,7 +9,7 @@ import { useAdminContext } from "../context/adminProvider";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
-    fetch: false,
+    fetch: true,
     display: false,
     register: false,
     editMode: false,
@@ -20,7 +20,7 @@ export function AdminPage(): ReactElement {
 
   return (
     <main className="admin-page g-container">
-      <h1>Teachers Admin Panel</h1>
+      <h1>Admin Panel</h1>
       <nav className="nav-panel">
         <button
           onClick={() => {
