@@ -3,8 +3,11 @@ import { CourseForm } from "./CourseForm";
 import { Course } from "../../auth/types";
 import { BASE_URL } from "../../shared/constants";
 import { fetchWithToken } from "../../shared/utilities";
+import { useRequireRole } from "../../auth/hooks/useRequireRole";
 
 export const CourseCreate = (): ReactElement => {
+  useRequireRole({ role: "teacher" });
+
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 

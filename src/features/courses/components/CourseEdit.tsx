@@ -6,8 +6,11 @@ import { useParams } from "react-router";
 import { BASE_URL } from "../../shared/constants";
 import { Course } from "../../auth/types";
 import { fetchWithToken } from "../../shared/utilities";
+import { useRequireRole } from "../../auth/hooks/useRequireRole";
 
 export const CourseEdit = (): ReactElement => {
+  useRequireRole({ role: "teacher" });
+
   const { course } = useLoaderData<ICourseLoader>();
   const { id } = useParams();
 
