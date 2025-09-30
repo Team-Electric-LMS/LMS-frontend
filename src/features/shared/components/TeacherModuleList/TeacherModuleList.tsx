@@ -1,0 +1,39 @@
+import { useEffect } from 'react';
+import { Module } from '../../../auth/types';
+import { useFetchWithToken } from '../../../shared/hooks';
+import { BASE_URL } from '../../../shared/constants';
+import { ModuleListItem } from './ModuleListItem';
+import styles from './TeacherModuleList.module.css';
+
+interface TeacherModuleListProps {
+  courseId: string;
+}
+
+export function TeacherModuleList({ courseId }: TeacherModuleListProps) {
+  const endpoint = `${BASE_URL}/courses/${courseId}/modules`;
+  const {
+    data: modules,
+    error,
+    isLoading,
+    requestFunc,
+  } = useFetchWithToken<Module[]>(endpoint);
+
+  useEffect(() => {
+    if (courseId) {
+      requestFunc();
+    }
+  }, [courseId]);
+
+  if (isLoading) return <p className={styles.message}>Loading modules...</p>;
+  if (error) return <p className={styles.message}>Error: {error.message}</p>;
+  if (!modules || modules.length === 0)
+    return <p className={styles.message}>No modules found.</p>;
+
+  return (
+    <ul className={styles.moduleList}>
+      {modules.map((module: Module) => (
+        <ModuleListItem key={module.id} module={module} />
+      ))}
+    </ul>
+  );
+}
