@@ -43,6 +43,7 @@ export function AdminPage(): ReactElement {
       </nav>
       <div className="admin-area">
         <div className="left-side">
+          {!adminPanel.fetch && !adminPanel.register && (<h2>Welcome!</h2>)}
           {adminPanel.fetch && !adminPanel.register && (
             <FetchForm
               legend={"Find a student"}

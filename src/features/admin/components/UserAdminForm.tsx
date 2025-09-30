@@ -51,18 +51,11 @@ export function AdminForm({
       <form className="form" onSubmit={handleSubmit}>
         <fieldset>
           <legend>{legend}</legend>
-          <TextInput
-            label="Username"
-            name="username"
-            value={form.userName}
-            onChange={(value) => setFormField("userName", value)}
-            required
-          />
-          <TextInput
+                  <TextInput
             label="Email"
             name="email"
             value={form.email}
-            onChange={(value) => setFormField("email", value)}
+            onChange={(value) => {setFormField("email", value); setFormField("userName", value)}}
             required
             error={
               form.email && !patternValid
