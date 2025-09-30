@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StudentModuleList } from '../shared/components/StudentModuleList/StudentModuleList';
 import { StudentCourseCard } from '../shared/components/student-course-card/StudentCourseCard';
+import { StudentModuleActivities } from '../shared/components/StudentModuleActivities/StudentModuleActivities';
 
-export const StudentDashboardSection: React.FC = () => (
-  <div>
-    <StudentCourseCard />
-    <StudentModuleList />
-  </div>
-);
+export const StudentDashboardSection: React.FC = () => {
+  const [selectedModule, setSelectedModule] = useState<{
+    id: string;
+    moduleTitle: string;
+  } | null>(null);
+
+  return (
+    <div>
+      <StudentCourseCard />
+      <StudentModuleList onSelectModule={setSelectedModule} />
+      {selectedModule && (
+        <StudentModuleActivities
+          moduleId={selectedModule.id}
+          moduleTitle={selectedModule.moduleTitle}
+        />
+      )}
+    </div>
+  );
+};
