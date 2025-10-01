@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TeachersCoursesList } from '../shared/components/CourseList/TeachersCoursesList';
 import { TeacherModuleList } from '../shared/components/TeacherModuleList/TeacherModuleList';
 
-export const TeacherDashboardSection: React.FC = () => (
-  <>
-    <TeachersCoursesList />
-    {/* <TeacherModuleList courseId={''} /> */}
-    <TeacherModuleList
-      courseId="bed88584-2f62-4593-ab4f-13c9e62b931a"
-      courseName="testkurs"
-    />
-  </>
-);
+export const TeacherDashboardSection: React.FC = () => {
+  const [selectedCourse, setSelectedCourse] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+
+  return (
+    <div>
+      <TeachersCoursesList onSelectCourse={setSelectedCourse} />
+      {selectedCourse && (
+        <TeacherModuleList
+          courseId={selectedCourse.id}
+          courseName={selectedCourse.name}
+        />
+      )}
+    </div>
+  );
+};

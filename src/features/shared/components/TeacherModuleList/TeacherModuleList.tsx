@@ -10,9 +10,17 @@ interface TeacherModuleListProps {
   courseName: string;
 }
 
-export function TeacherModuleList({ courseId, courseName }: TeacherModuleListProps) {
+export function TeacherModuleList({
+  courseId,
+  courseName,
+}: TeacherModuleListProps) {
   const endpoint = `${BASE_URL}/courses/${courseId}/modules`;
-  const { data: modules, error, isLoading, requestFunc } = useFetchWithToken<Module[]>(endpoint);
+  const {
+    data: modules,
+    error,
+    isLoading,
+    requestFunc,
+  } = useFetchWithToken<Module[]>(endpoint);
 
   useEffect(() => {
     if (courseId) {
@@ -27,7 +35,7 @@ export function TeacherModuleList({ courseId, courseName }: TeacherModuleListPro
 
   return (
     <div className={styles.moduleListCard}>
-        <h2>Moduler för kursen: {courseName}</h2>
+      <h2>Modules for the course: {courseName}</h2>
       {isLoading && <p className={styles.message}>Loading modules...</p>}
       {error && <p className={styles.message}>Error loading modules.</p>}
       {!modules || modules.length === 0 ? (
