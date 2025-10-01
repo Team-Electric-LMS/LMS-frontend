@@ -6,7 +6,7 @@ import { UserDisplay } from "./FetchResults";
 import { AdminForm } from "./UserAdminForm";
 import "../css/admin.css";
 import { useAdminContext } from "../context/adminProvider";
-import { useNavigate } from "react-router";
+import { CourseCreate } from "../../courses/components";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -19,7 +19,6 @@ export function AdminPage(): ReactElement {
   });
 
   const { user, setUser } = useAdminContext();
-  const navigate = useNavigate();
 
   return (
     <main className="admin-page g-container">
@@ -44,7 +43,7 @@ export function AdminPage(): ReactElement {
           Register New User
         </button>
         <button
-          onClick={() => navigate("/courses/new")}
+          onClick={() => setAdminPanel({ ...adminPanel, registerCourse: !adminPanel.registerCourse, fetch: false})}
           disabled={adminPanel.editMode}
         >
           Register New Course
@@ -92,6 +91,9 @@ export function AdminPage(): ReactElement {
               legend="Assign Course"
               onClose={() => setAdminPanel({ ...adminPanel, assign: false })}
             />
+          )}
+          {adminPanel.registerCourse && (
+            <CourseCreate/>
           )}
         </div>
       </div>

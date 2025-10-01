@@ -14,9 +14,11 @@ export function AdminForm({
     setFormField,
     emailAvailable,
     patternValid,
+    passwordValid,
     emailChanged,
     error,
     checkEmail,
+    checkPassword,
     submit,
   } = useUserForm(user);
 
@@ -35,20 +37,20 @@ export function AdminForm({
     };
   }, [form.email, token]); 
 
+  useEffect(() => {
+    if (form.password !== undefined) {
+      checkPassword();
+    }
+  }, [form.password]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!token) return;
     const updatedUser = await submit(token);
-    if (updatedUser && user) {
-    if (user.role === "Student" && user.course) {
-      updatedUser.course = user.course;
+    if (updatedUser) {
+      if (user && user.course) updatedUser.course = user?.course;
+      setUser(updatedUser);
     }
-    if (user.role === "Teacher" && user.coursesTaught) {
-      updatedUser.coursesTaught = user.coursesTaught;
-    }
-
-    setUser(updatedUser);
-  }
       onClose();
   };
 
@@ -57,7 +59,7 @@ export function AdminForm({
       <form className="form" onSubmit={handleSubmit}>
         <fieldset>
           <legend>{legend}</legend>
-                  <TextInput
+          <TextInput
             label="Email"
             name="email"
             value={form.email}
@@ -79,6 +81,11 @@ export function AdminForm({
               onChange={(value) => setFormField("password", value)}
               type="password"
               required
+              error={
+                form.password && !passwordValid
+                  ? "Password must be at least 4 characters"
+                  : undefined
+              }
             />
           )}
           <TextInput
@@ -101,7 +108,7 @@ export function AdminForm({
             options={["Student", "Teacher"]}
           />
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" disabled={emailChanged && !emailAvailable}>
+          <button type="submit" disabled={!emailAvailable || !passwordValid}>
             {user ? "Update" : "Register"}
           </button>
           <button type="button" onClick={onClose}>
