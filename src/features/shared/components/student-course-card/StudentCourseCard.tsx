@@ -51,7 +51,7 @@ export function StudentCourseCard() {
   if (authContext.user.role.toLowerCase() !== "student")
     return <p>You dont't have access to course.</p>;
   if (isLoading) return <p>Loading course information...</p>;
-  if (error) return <p>Error occured: {error.message}</p>;
+  //if (error) return <p>Error occured: {error.message}</p>;
   if (!course) return <p>No course found.</p>;
 
   // Render out student course card

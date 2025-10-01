@@ -39,10 +39,16 @@ export function AdminForm({
     e.preventDefault();
     if (!token) return;
     const updatedUser = await submit(token);
-    if (updatedUser) {
-      if (user && user.course) updatedUser.course = user?.course;
-      setUser(updatedUser);
+    if (updatedUser && user) {
+    if (user.role === "Student" && user.course) {
+      updatedUser.course = user.course;
     }
+    if (user.role === "Teacher" && user.coursesTaught) {
+      updatedUser.coursesTaught = user.coursesTaught;
+    }
+
+    setUser(updatedUser);
+  }
       onClose();
   };
 

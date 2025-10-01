@@ -30,7 +30,7 @@ export const StudentModuleList: React.FC<StudentModuleListProps> = ({
   if (!studentId) return <p className={styles.message}>No student ID found.</p>;
   if (isLoading)
     return <p className={styles.message}>Loading course and modules...</p>;
-  if (error) return <p className={styles.message}>Error: {error.message}</p>;
+  //if (error) return <p className={styles.message}>Error: {error.message}</p>;
   if (!data)
     return <p className={styles.message}>No course found for this student.</p>;
 
