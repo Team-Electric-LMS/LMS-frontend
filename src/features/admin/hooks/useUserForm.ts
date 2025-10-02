@@ -7,9 +7,11 @@ interface UseUserFormReturn {
   form: IUserFormInput;
   setFormField: (field: keyof IUserFormInput, value: string) => void;
   checkEmail: (token: string) => Promise<void>;
+  checkPassword: () => void;
   emailChanged: boolean;
   emailAvailable: boolean;
   patternValid: boolean;
+  passwordValid: boolean;
   error: string | null;
   submit: (token: string) => Promise<IUser | null>;
 }
@@ -26,6 +28,7 @@ export function useUserForm(user?: IUser): UseUserFormReturn {
 
   const [emailChanged, setEmailChanged] = useState(true);
   const [patternValid, setPatternValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
   const [emailAvailable, setEmailAvailable] = useState(true);
 
   const [error, setError] = useState<string | null>(null);
@@ -55,11 +58,19 @@ export function useUserForm(user?: IUser): UseUserFormReturn {
       }
   };
 
+  const checkPassword = (value: string | undefined  = form.password) => {
+    setPasswordValid(value!.length > 3);
+  };
+
   const submit = async (token: string): Promise<IUser | null> => {
     setError(null);
     try {
       if (!patternValid) throw new Error("Invalid email format");
       if (!emailAvailable) throw new Error("Email is already taken");
+
+      if (!user) { 
+        if (!passwordValid) throw new Error("Password is too short");
+      }
 
       if (user) {
         return await EditUserReq({ ...user, ...form }, token);
@@ -78,9 +89,11 @@ export function useUserForm(user?: IUser): UseUserFormReturn {
     setFormField,
     emailAvailable,
     patternValid,
+    passwordValid,
     emailChanged,
     error,
     checkEmail,
+    checkPassword,
     submit,
   };
 };
