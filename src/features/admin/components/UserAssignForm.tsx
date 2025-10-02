@@ -71,10 +71,6 @@ export function AssignCourse({ legend, onClose }: FormProps) {
     }
   };
 
-  const selectedCourseName = allCourses.find(
-    (c) => c.id === selectedCourse
-  )?.id;
-
   return (
     <main className="form-page">
       <form className="form" onSubmit={handleSubmit}>
@@ -107,13 +103,13 @@ export function AssignCourse({ legend, onClose }: FormProps) {
             required={!unassign}
           />
 
-          {reassigned && (
+          { selectedCourse && (
             <p style={{ color: "green" }}>
               {unassign
-                ? `Removed ${selectedCourseName ?? "course"} from ${
+                ? `Remove ${selectedCourse ?? "course"} from ${
                     user.userName
-                  }`
-                : `Assigned ${selectedCourseName} to ${user.userName}`}
+                  }?`
+                : `Assign ${selectedCourse} to ${user.userName}?`}
             </p>
           )}
 

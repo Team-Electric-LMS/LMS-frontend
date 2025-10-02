@@ -6,6 +6,7 @@ import { UserDisplay } from "./FetchResults";
 import { AdminForm } from "./UserAdminForm";
 import "../css/admin.css";
 import { useAdminContext } from "../context/adminProvider";
+import { CourseCreate } from "../../courses/components";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -14,6 +15,7 @@ export function AdminPage(): ReactElement {
     register: false,
     editMode: false,
     assign: false,
+    registerCourse: false,
   });
 
   const { user, setUser } = useAdminContext();
@@ -40,12 +42,19 @@ export function AdminPage(): ReactElement {
         >
           Register New User
         </button>
+        <button
+          onClick={() => setAdminPanel({ ...adminPanel, registerCourse: !adminPanel.registerCourse, fetch: false})}
+          disabled={adminPanel.editMode}
+        >
+          Register New Course
+        </button>
       </nav>
       <div className="admin-area">
         <div className="left-side">
+          {!adminPanel.fetch && !adminPanel.register && (<h2>Welcome!</h2>)}
           {adminPanel.fetch && !adminPanel.register && (
             <FetchForm
-              legend={"Find a student"}
+              legend={"Find an account"}
               onClose={() => setAdminPanel({ ...adminPanel, fetch: false })}
             />
           )}
@@ -82,6 +91,9 @@ export function AdminPage(): ReactElement {
               legend="Assign Course"
               onClose={() => setAdminPanel({ ...adminPanel, assign: false })}
             />
+          )}
+          {adminPanel.registerCourse && (
+            <CourseCreate/>
           )}
         </div>
       </div>
