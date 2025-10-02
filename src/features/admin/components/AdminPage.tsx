@@ -30,37 +30,68 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setUser(undefined);
-            setAdminPanel({ ...adminPanel, fetch: !adminPanel.fetch });
+            setShowModuleForm(false);
+            setAdminPanel({
+              fetch: true,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+              registerCourse: false,
+            });
           }}
-          disabled={adminPanel.register}
         >
           Find a User
         </button>
         <button
           onClick={() => {
             setUser(undefined);
-            setAdminPanel({ ...adminPanel, register: !adminPanel.register});
+            setShowModuleForm(false);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: true,
+              editMode: false,
+              assign: false,
+              registerCourse: false,
+            });
           }}
-          disabled={adminPanel.editMode}
         >
           Register New User
         </button>
         <button
-          onClick={() => setAdminPanel({ ...adminPanel, registerCourse: !adminPanel.registerCourse, fetch: false})}
-          disabled={adminPanel.editMode}
+          onClick={() => {
+            setShowModuleForm(false);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+              registerCourse: true,
+            });
+          }}
         >
           Register New Course
         </button>
         <button
-          onClick={() => setShowModuleForm(true)}
-          disabled={adminPanel.editMode}
+          onClick={() => {
+            setShowModuleForm(true);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+              registerCourse: false,
+            });
+          }}
         >
           Create New Module
         </button>
       </nav>
       <div className="admin-area">
         <div className="left-side">
-          {!adminPanel.fetch && !adminPanel.register && (<h2>Welcome!</h2>)}
           {adminPanel.fetch && !adminPanel.register && (
             <FetchForm
               legend={"Find an account"}
