@@ -27,7 +27,6 @@ export function useFetchWithToken<T>(
     const requestInit: RequestInit = addTokenToRequestInit(accessToken, options);
     const response: Response = await fetch(url, requestInit);
 
-      
     if (response.ok === false) {
       throw new CustomError(response.status, response.statusText);
     }
