@@ -1,0 +1,32 @@
+.moduleListCard {
+  position: relative;
+  padding: 16px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.moduleList {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+}
+
+.button-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button-close:hover {
+  background: #475b86;
+}
