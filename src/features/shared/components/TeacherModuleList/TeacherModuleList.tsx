@@ -36,7 +36,7 @@ export function TeacherModuleList({
   if (isLoading) return <p className={styles.message}>Loading modules...</p>;
   if (error) return <p className={styles.message}>Error loading modules.</p>;
   if (!modules || modules.length === 0)
-    return <p className={styles.message}>No modules found.</p>;
+    return <p className={styles.message}>No modules found for {courseName}</p>;
 
   return (
     <div className={styles.moduleListCard}>
@@ -45,17 +45,11 @@ export function TeacherModuleList({
       <button className={styles['button-close']} onClick={onClose}>
         Close
       </button>
-      {isLoading && <p className={styles.message}>Loading modules...</p>}
-      {error && <p className={styles.message}>Error loading modules.</p>}
-      {!modules || modules.length === 0 ? (
-        <p className={styles.message}>No modules found.</p>
-      ) : (
-        <ul className={styles.moduleList}>
-          {modules.map((module: Module) => (
-            <ModuleListItem key={module.id} module={module} />
-          ))}
-        </ul>
-      )}
+      <ul className={styles.moduleList}>
+        {modules.map((module: Module) => (
+          <ModuleListItem key={module.id} module={module} />
+        ))}
+      </ul>
     </div>
   );
 }
