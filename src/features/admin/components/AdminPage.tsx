@@ -51,6 +51,12 @@ export function AdminPage(): ReactElement {
         >
           Register New Course
         </button>
+        <button
+          onClick={() => setShowModuleForm(true)}
+          disabled={adminPanel.editMode}
+        >
+          Create New Module
+        </button>
       </nav>
       <div className="admin-area">
         <div className="left-side">
