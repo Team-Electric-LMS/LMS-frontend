@@ -61,17 +61,17 @@ export function UserDisplay({
             
           </ul>
           <button type="button" onClick={() => setUser(undefined)}>
-            Close
+            Close Info
           </button>
           <button type="button" onClick={onEdit}>
-            Edit
+            Edit Profile
           </button>
           <button
             type="button"
             onClick={onReassign}
             disabled={user.role == null}
           >
-            Reassign
+            Assign Course
           </button>
         </fieldset>
       </form>

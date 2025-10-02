@@ -14,9 +14,11 @@ export function AdminForm({
     setFormField,
     emailAvailable,
     patternValid,
+    passwordValid,
     emailChanged,
     error,
     checkEmail,
+    checkPassword,
     submit,
   } = useUserForm(user);
 
@@ -35,6 +37,12 @@ export function AdminForm({
     };
   }, [form.email, token]); 
 
+  useEffect(() => {
+    if (form.password !== undefined) {
+      checkPassword();
+    }
+  }, [form.password]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!token) return;
@@ -52,17 +60,10 @@ export function AdminForm({
         <fieldset>
           <legend>{legend}</legend>
           <TextInput
-            label="Username"
-            name="username"
-            value={form.userName}
-            onChange={(value) => setFormField("userName", value)}
-            required
-          />
-          <TextInput
             label="Email"
             name="email"
             value={form.email}
-            onChange={(value) => setFormField("email", value)}
+            onChange={(value) => {setFormField("email", value); setFormField("userName", value)}}
             required
             error={
               form.email && !patternValid
@@ -80,6 +81,11 @@ export function AdminForm({
               onChange={(value) => setFormField("password", value)}
               type="password"
               required
+              error={
+                form.password && !passwordValid
+                  ? "Password must be at least 4 characters"
+                  : undefined
+              }
             />
           )}
           <TextInput
@@ -102,7 +108,7 @@ export function AdminForm({
             options={["Student", "Teacher"]}
           />
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" disabled={emailChanged && !emailAvailable}>
+          <button type="submit" disabled={!emailAvailable || !passwordValid}>
             {user ? "Update" : "Register"}
           </button>
           <button type="button" onClick={onClose}>

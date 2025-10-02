@@ -7,6 +7,7 @@ import { UserDisplay } from "./FetchResults";
 import { AdminForm } from "./UserAdminForm";
 import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
+import { CourseCreate } from "../../courses/components";
 import "../css/admin.css";
 
 export function AdminPage(): ReactElement {
@@ -16,6 +17,7 @@ export function AdminPage(): ReactElement {
     register: false,
     editMode: false,
     assign: false,
+    registerCourse: false,
   });
   const [showModuleForm, setShowModuleForm] = useState(false);
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
@@ -44,35 +46,30 @@ export function AdminPage(): ReactElement {
           Register New User
         </button>
         <button
-          onClick={() => {
-            setEditModule(undefined);
-            setShowModuleForm(true);
-          }}
+          onClick={() => setAdminPanel({ ...adminPanel, registerCourse: !adminPanel.registerCourse, fetch: false})}
+          disabled={adminPanel.editMode}
         >
-          Create Module
+          Register New Course
         </button>
       </nav>
       <div className="admin-area">
         <div className="left-side">
-          {!showModuleForm && (
-            <>
-              {adminPanel.fetch && !adminPanel.register && (
-                <FetchForm
-                  legend={"Find a student"}
-                  onClose={() => setAdminPanel({ ...adminPanel, fetch: false })}
-                />
-              )}
-              {user && !adminPanel.register && (
-                <UserDisplay
-                  legend="User Info"
-                  onEdit={() => setAdminPanel({ ...adminPanel, editMode: true })}
-                  onClose={() => setAdminPanel({ ...adminPanel, display: false })}
-                  onReassign={() =>
-                    setAdminPanel({ ...adminPanel, assign: true, editMode: false })
-                  }
-                />
-              )}
-            </>
+          {!adminPanel.fetch && !adminPanel.register && (<h2>Welcome!</h2>)}
+          {adminPanel.fetch && !adminPanel.register && (
+            <FetchForm
+              legend={"Find an account"}
+              onClose={() => setAdminPanel({ ...adminPanel, fetch: false })}
+            />
+          )}
+          {user && !adminPanel.register && (
+            <UserDisplay
+              legend="User Info"
+              onEdit={() => setAdminPanel({ ...adminPanel, editMode: true })}
+              onClose={() => setAdminPanel({ ...adminPanel, display: false })}
+              onReassign={() =>
+                setAdminPanel({ ...adminPanel, assign: true, editMode: false })
+              }
+            />
           )}
         </div>
         <div className="right-side">
@@ -113,6 +110,9 @@ export function AdminPage(): ReactElement {
               legend="Assign Course"
               onClose={() => setAdminPanel({ ...adminPanel, assign: false })}
             />
+          )}
+          {adminPanel.registerCourse && (
+            <CourseCreate/>
           )}
         </div>
       </div>
