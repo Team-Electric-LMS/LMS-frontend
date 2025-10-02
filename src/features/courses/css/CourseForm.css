@@ -1,3 +1,8 @@
+/* CourseForm.css
+    Styles for the course creation form
+    TODO: CreateCourseForm should be using the admin.css like the rest of the admin panel
+*/
+
 #create-course {
   display: flex;
   flex-direction: column;
