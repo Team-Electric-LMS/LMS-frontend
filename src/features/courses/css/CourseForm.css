@@ -12,7 +12,7 @@
 
 #create-course .form-wrapper {
   background-color: var(--base-body-color);
-  padding: 2rem;
+  padding: 0;
   border-radius: 8px;
   margin: 0 auto;
 }
