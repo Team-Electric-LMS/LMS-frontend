@@ -33,14 +33,14 @@ export const CourseCreate = (): ReactElement => {
   return (
     <>
       <main className="form-page" id="create-course">
-        <fieldset>
-          <legend>Create Course</legend>
-          <div className="form-wrapper">
-            {successMessage && <div className="alert alert-success">{successMessage}</div>}
-            {errorMessage && <div className="alert alert-error">{errorMessage}</div>}
-            <CourseForm onSubmit={handleOnSubmit} />
-          </div>
-        </fieldset>
+          <fieldset>
+            <legend>Create Course</legend>
+            <div className="form-wrapper">
+              {successMessage && <div className="alert alert-success">{successMessage}</div>}
+              {errorMessage && <div className="alert alert-error">{errorMessage}</div>}
+              <CourseForm onSubmit={handleOnSubmit} />
+            </div>
+          </fieldset>
       </main>
     </>
   );
