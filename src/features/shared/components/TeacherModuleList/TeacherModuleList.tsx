@@ -8,13 +8,17 @@ import styles from './TeacherModuleList.module.css';
 interface TeacherModuleListProps {
   courseId: string;
   courseName: string;
+  onClose: () => void;
 }
 
 export function TeacherModuleList({
   courseId,
   courseName,
+  onClose,
 }: TeacherModuleListProps) {
   const endpoint = `${BASE_URL}/courses/${courseId}/modules`;
+
+  // Fetch modules for the given course
   const {
     data: modules,
     error,
@@ -22,6 +26,7 @@ export function TeacherModuleList({
     requestFunc,
   } = useFetchWithToken<Module[]>(endpoint);
 
+  // Trigger data fetch on courseId change
   useEffect(() => {
     if (courseId) {
       requestFunc();
@@ -36,6 +41,10 @@ export function TeacherModuleList({
   return (
     <div className={styles.moduleListCard}>
       <h2>Modules for the course: {courseName}</h2>
+      {/* Close button, calls parent handler (TeacherDashboardSection) to hide this component */}
+      <button className={styles['button-close']} onClick={onClose}>
+        Close
+      </button>
       {isLoading && <p className={styles.message}>Loading modules...</p>}
       {error && <p className={styles.message}>Error loading modules.</p>}
       {!modules || modules.length === 0 ? (

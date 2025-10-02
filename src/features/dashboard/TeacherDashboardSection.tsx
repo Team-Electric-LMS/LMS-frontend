@@ -15,6 +15,7 @@ export const TeacherDashboardSection: React.FC = () => {
         <TeacherModuleList
           courseId={selectedCourse.id}
           courseName={selectedCourse.name}
+          onClose={() => setSelectedCourse(null)}
         />
       )}
     </div>
