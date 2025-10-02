@@ -67,11 +67,13 @@ export function ModuleForm({ courseId, module, token, onClose, onSuccess }: Modu
             required
           />
           <label htmlFor="description">Description</label>
-          <input
+          <textarea
             id="description"
             name="description"
             value={form.description || ""}
             onChange={(e) => handleChange("description", e.target.value)}
+            rows={4}
+            style={{resize: "vertical", width: "100%", boxSizing: "border-box", padding: "0.5rem", fontSize: "1rem", border: "1px solid #ccc", borderRadius: "4px"}}
           />
           <label htmlFor="startDate">Start Date</label>
           <input
