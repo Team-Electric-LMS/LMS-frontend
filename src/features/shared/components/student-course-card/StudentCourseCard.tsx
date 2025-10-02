@@ -64,7 +64,7 @@ export function StudentCourseCard() {
           <p className={styles['student-course-date']}>Start date: {course.startDate}</p>
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
         </div>
-        <button className={styles['student-course-button']}>View course</button>
+        <button className={styles['student-course-button'] }>View students</button>
       </div>
     </div>
   );
