@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEventHandler, ReactElement, useEffect, useState } from "react";
 import { ICourse } from "../types";
-import { Input } from "../../shared/components/Input";
-import { Textarea } from "../../shared/components/Textarea";
+import { Input } from "../../../shared/components/Input";
+import { Textarea } from "../../../shared/components/Textarea";
 
 interface CourseFormProps {
   course?: ICourse;

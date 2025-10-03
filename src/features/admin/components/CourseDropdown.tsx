@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ICourse } from "../../courses/types";
-import { getCourses } from "../../courses/api";
+import { ICourse } from "../courses/types";
+import { getCourses } from "../courses/api";
 
 interface CourseDropdownProps {
   token: string;

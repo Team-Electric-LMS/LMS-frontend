@@ -20,9 +20,9 @@ export function StudentActivityCard({
       <div className={styles['student-activity-card-title']}>
         {activityTitle}
       </div>
-      <div>{description}</div>
-      <div>Type: {activityTypeName}</div>
-      <div>
+      <div className={styles['activity-info-block']}>{description}</div>
+      <div className={styles['activity-info-block']}>Type: {activityTypeName}</div>
+      <div className={styles['activity-info-block']}>
         <span>Start: {startDate}</span> | <span>End: {endDate}</span>
       </div>
     </div>

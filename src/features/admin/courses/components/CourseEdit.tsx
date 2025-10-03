@@ -1,11 +1,11 @@
 import { ReactElement, Suspense, useState } from "react";
 import { CourseForm } from "./CourseForm";
 import { Await, useLoaderData } from "react-router";
-import { ICourse, ICourseLoader } from "../types";
+import { ICourse, ICourseLoader } from "../../types";
 import { useParams } from "react-router";
-import { BASE_URL } from "../../shared/constants";
-import { Course } from "../../auth/types";
-import { fetchWithToken } from "../../shared/utilities";
+import { BASE_URL } from "../../../shared/constants";
+import { Course } from "../../../auth/types";
+import { fetchWithToken } from "../../../shared/utilities";
 
 export const CourseEdit = (): ReactElement => {
   const { course } = useLoaderData<ICourseLoader>();

@@ -7,7 +7,7 @@ import { UserDisplay } from "./FetchResults";
 import { AdminForm } from "./UserAdminForm";
 import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
-import { CourseCreate } from "../../courses/components";
+import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
 
 export function AdminPage(): ReactElement {
