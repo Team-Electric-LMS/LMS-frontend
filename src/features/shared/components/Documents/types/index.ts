@@ -13,21 +13,21 @@ export interface IDocument {
   activityId?: string;
 }
 
-export interface Activity {
+export interface IActivity {
   id: string;
   name: string;
 }
 
-export interface Module {
+export interface IModule {
   id: string;
   name: string;
-  activities: Activity[];
+  activities: IActivity[];
 }
 
-export interface Course {
+export interface ICourse {
   id: string;
   name: string;
-  modules: Module[];
+  modules: IModule[];
 }
 
 export type SelectionType = "course" | "module" | "activity";
@@ -43,9 +43,3 @@ export interface DocumentUploadForm {
   uploadedById: string;
   file: File | null;
 }
-
-export interface DocumentUploadFormProps {
-  selections: SelectionDto[];
-  uploadedById: string;
-}
-

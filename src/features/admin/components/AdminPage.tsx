@@ -132,7 +132,7 @@ export function AdminPage(): ReactElement {
           )}
         </div>
         <div className="right-side">
-          {showUploadDocument && (<DocumentUploadForm token={token!}/>)}
+          {showUploadDocument && (<DocumentUploadForm legend={"Upload document"} token={token!}/>)}
   
           {adminPanel.editMode && !adminPanel.register && (
             <AdminForm

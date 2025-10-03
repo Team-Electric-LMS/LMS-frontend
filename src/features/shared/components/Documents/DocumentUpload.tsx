@@ -1,38 +1,34 @@
-import { ReactElement, useState, useEffect, FormEvent } from "react";
-import { Activity, Course, Module, SelectionDto, SelectionType } from "./types";
+import { ReactElement, useState, FormEvent, useRef } from "react";
+import {  SelectionDto } from "./types";
 import { useAuthContext } from "../../../auth/hooks";
-import { getCoursesExtended, uploadFile } from "./api";
+import { uploadFile } from "./api";
+import { TargetDropdown } from "./helpers/targetDropdown";
 
 interface DocumentUploadFormProps {
+  legend: string;
   token: string;
 }
 
-export function DocumentUploadForm({ token }: DocumentUploadFormProps): ReactElement {
+export function DocumentUploadForm({
+  legend,
+  token,
+}: DocumentUploadFormProps): ReactElement {
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<SelectionDto | null>(null);
-  const [treeData, setTreeData] = useState<Course[]>([]);
+  const [success, setSuccess] = useState(false);
 
   const authContext = useAuthContext();
   const uploadedById = authContext?.user?.id;
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const data = await getCoursesExtended(token);
-        setTreeData(data);
-      } catch (err) {
-        console.error("Failed to fetch courses:", err);
-      }
-    };
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    fetchCourses();
-  }, [token]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!file || !selectedLevel) return alert("Please select a file and a target.");
+    if (!file || !selectedLevel)
+      return alert("Please select a file and a target.");
 
     try {
       const formData = new FormData();
@@ -44,64 +40,40 @@ export function DocumentUploadForm({ token }: DocumentUploadFormProps): ReactEle
 
       await uploadFile(formData, token);
 
-      alert("File uploaded successfully!");
+      setSuccess(true);
       setFile(null);
       setName("");
       setDescription("");
       setSelectedLevel(null);
+
+      if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
     } catch (err) {
       console.error(err);
       alert("Upload failed");
     }
   };
 
-  // Recursive renderOptions
-  const renderOptions = (courses: Course[], depth = 1): ReactElement[] => {
-    return courses.flatMap(course => {
-      const courseOption: ReactElement = (
-        <option key={`course-${course.id}`} value={course.id} data-type="course">
-          {`${"-".repeat(depth)} ${course.name}`}
-        </option>
-      );
-
-      const moduleOptions: ReactElement[] = course.modules.flatMap((m: Module) => {
-        const modOption: ReactElement = (
-          <option key={`module-${m.id}`} value={m.id} data-type="module">
-            {`${"-".repeat(depth + 1)} ${m.name}`}
-          </option>
-        );
-
-        const activityOptions: ReactElement[] = m.activities.map((a: Activity) => (
-          <option key={`activity-${a.id}`} value={a.id} data-type="activity">
-            {`${"-".repeat(depth + 2)} ${a.name}`}
-          </option>
-        ));
-
-        return [modOption, ...activityOptions];
-      });
-
-      return [courseOption, ...moduleOptions];
-    });
-  };
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const opt = e.target.selectedOptions[0];
-    setSelectedLevel({ id: opt.value, type: opt.getAttribute("data-type") as SelectionType });
-  };
-
   return (
     <main className="form-page">
       <form className="form" onSubmit={handleSubmit}>
         <fieldset>
-          <legend>Upload Document</legend>
+          <legend>{legend}</legend>
 
-          <label>Name</label>
-          <input value={name} onChange={e => setName(e.target.value)} required />
+          <label htmlFor="name">File Name</label>
+          <input
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-          <label>Description</label>
+          <label htmlFor="description">Description</label>
           <textarea
+            id="description"
             value={description}
-            onChange={e => setDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
             rows={3}
             style={{
               resize: "vertical",
@@ -113,22 +85,26 @@ export function DocumentUploadForm({ token }: DocumentUploadFormProps): ReactEle
               borderRadius: "4px",
             }}
           />
+          <TargetDropdown token={token} onSelect={(level) => setSelectedLevel(level)}
+        />
 
-          <label>Target</label>
-          <select
-            value={selectedLevel?.id || ""}
-            onChange={handleSelectChange}
+          <label htmlFor="file">File</label>
+          <input
+            id="file"
+            type="file"
+            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
             required
-            className="select-input"
-          >
-            <option value="">-- Select Course / Module / Activity --</option>
-            {renderOptions(treeData)}
-          </select>
+          />
+          {selectedLevel && file && (
+            <p style={{ color: "green" }}>
+              Ready to upload <strong>{name || "document"}</strong> to the chosen {selectedLevel.type}.
+            </p>
+          )}
 
-          <label>File</label>
-          <input type="file" onChange={e => setFile(e.target.files?.[0] ?? null)} required />
-
-          <button type="submit">Upload</button>
+          <button type="submit" disabled={!selectedLevel || !file || !name}>Upload</button>
+          {success && (
+              <p style={{ color: "green" }}>File uploaded successfully!</p>
+            )}
         </fieldset>
       </form>
     </main>

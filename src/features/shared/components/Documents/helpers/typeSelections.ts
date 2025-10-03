@@ -1,9 +1,9 @@
-import { SelectionDto, SelectionType, Course, Module, Activity } from "../types";
+import { SelectionDto, SelectionType, ICourse, IModule, IActivity } from "../types";
 
-export function getSelectedNodes(tree: Course[], selectedIds: string[]): SelectionDto[] {
+export function getSelectedNodes(tree: ICourse[], selectedIds: string[]): SelectionDto[] {
   const result: SelectionDto[] = [];
 
-  function traverse(node: Course | Module | Activity, type: SelectionType) {
+  function traverse(node: ICourse | IModule | IActivity, type: SelectionType) {
     if (selectedIds.includes(node.id)) {
       result.push({ id: node.id, type });
     }

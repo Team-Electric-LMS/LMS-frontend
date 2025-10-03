@@ -4,6 +4,7 @@ import { useAuthContext } from "../../../auth/hooks/useAuthContext";
 import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../constants";
 import styles from "./StudentCourseCard.module.css";
+import { DocumentList } from "../Documents/DocumentList";
 
 // Component to list a student course
 export function StudentCourseCard() {
@@ -63,6 +64,7 @@ export function StudentCourseCard() {
           <p className={styles['student-course-description']}>{course.description}</p>
           <p className={styles['student-course-date']}>Start date: {course.startDate}</p>
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
+          <DocumentList level='course' id={course.id}/>
         </div>
         <button className={styles['student-course-button']}>View course</button>
       </div>

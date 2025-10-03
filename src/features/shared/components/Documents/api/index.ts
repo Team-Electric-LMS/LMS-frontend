@@ -1,6 +1,6 @@
 import { CustomError } from "../../../classes";
 import { BASE_URL } from "../../../constants";
-import { Course, DocumentMeta } from "../types";
+import { ICourse, DocumentMeta } from "../types";
 
 
 export async function fetchDocuments(level: string, id: string, token: string): Promise<DocumentMeta[]> {
@@ -29,7 +29,7 @@ export async function uploadFile(formData: FormData, token: string): Promise<any
   return res.json();
 }
 
-export async function getCoursesExtended(token: string): Promise<Course[]> {
+export async function getCoursesExtended(token: string): Promise<ICourse[]> {
   const res = await fetch(`${BASE_URL}/courses/courses-tree`, {
     headers: { Authorization: `Bearer ${token}` },
   });

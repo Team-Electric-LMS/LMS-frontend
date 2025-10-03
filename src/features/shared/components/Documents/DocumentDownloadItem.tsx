@@ -30,24 +30,6 @@ export function DocumentDownload({ documentId, name, link, token }: DocumentDown
     }
   };
 
-  return (
-    <button
-      type="button"
-      onClick={handleDownload}
-      disabled={loading}
-      className="download-button"
-      style={{
-        width: "200px",        
-        textAlign: "left",     
-        padding: "0.5rem 1rem",
-        border: "1px solid #007bff",
-        borderRadius: "4px",
-        background: "none",
-        color: "#007bff",
-        cursor: loading ? "not-allowed" : "pointer"
-      }}
-    >
-      {loading ? "Downloading..." : `${name} ⬇️`}
-    </button>
-  );
+  return (<div className="doc-list-item" onClick={handleDownload}>{name}<span className="material-symbols-outlined"> download </span></div>)
 }
+
