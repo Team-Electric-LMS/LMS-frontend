@@ -36,8 +36,8 @@ export const StudentModuleList: React.FC<StudentModuleListProps> = ({
 
   // Render the list of modules that belong to the student's course
   return (
-    <div>
-  <h3 className={styles.courseModulesHeader}>Course Modules</h3>
+    <div className={styles.courseModulesContainer}>
+      <h2 className={styles.courseModulesHeader}>Course Modules</h2>
       {data.modules && data.modules.length > 0 ? (
         <ModuleList modules={data.modules} onSelectModule={onSelectModule} />
       ) : (

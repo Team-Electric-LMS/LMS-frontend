@@ -24,6 +24,7 @@
   font-size: 1.08rem;
   color: #3a4a6b;
   margin-bottom: 10px;
+  max-width: 90vh;
 }
 
 .student-course-date {
