@@ -19,8 +19,7 @@ export const StudentDashboardSection: React.FC = () => {
 
   return (
     <div>
-      <StudentCourseCard />
-      <StudentModuleList onSelectModule={handleSelectModule} />
+      <StudentCourseCard onSelectModule={handleSelectModule} />
       {selectedModule && (
         <StudentModuleActivities
           moduleId={selectedModule.id}
