@@ -1,5 +1,5 @@
 @import url("./base.css");
 @import url("./global.css");
 @import url("../features/auth/css/styles.css");
-@import url("../features/courses/css/styles.css");
+@import url("../features/admin/courses/css/styles.css");
 @import url("../features/shared/css/styles.css");
