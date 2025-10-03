@@ -16,7 +16,7 @@
   align-items: flex-start;
   font-size: 2rem;
   color: #1a2a4d;
-  margin-bottom: 8px;
+  margin-bottom: 80px;
   width: 100%;
 }
 
@@ -24,6 +24,7 @@
   font-size: 1.08rem;
   color: #3a4a6b;
   margin-bottom: 10px;
+  max-width: 90vh;
 }
 
 .student-course-date {

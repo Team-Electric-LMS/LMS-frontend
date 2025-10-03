@@ -26,11 +26,10 @@ export const Header: React.FC = () => {
             <span className={styles.username}>{user.username}</span>
             <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
           </div>
-        ) : ( false && (
-          // button that has a link to the register page, but for now links to the /login page
+        ) : (
           <Link to="/login">
-            <button className={styles.logoutBtn}>Register</button>
-          </Link>)
+            <button className={styles.logoutBtn}>Login</button>
+          </Link>
         )}
       </nav>
     </header>

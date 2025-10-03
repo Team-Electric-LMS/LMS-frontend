@@ -4,10 +4,23 @@ import { useAuthContext } from "../../../auth/hooks/useAuthContext";
 import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../constants";
 import styles from "./StudentCourseCard.module.css";
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
+=======
+import { StudentModuleList } from "../StudentModuleList/StudentModuleList";
+>>>>>>> 0bed203216345901d14f2b34898b2258ac5c7991
 
 // Component to list a student course
-export function StudentCourseCard() {
+interface StudentCourseCardProps {
+  onSelectModule?: (module: { id: string; moduleTitle: string }) => void;
+}
+
+export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
+  const [showModules, setShowModules] = useState(false);
+
+  const handleToggleModules = () => {
+    setShowModules((prev) => !prev);
+  };
   const authContext = useAuthContext();
   const studentId = authContext.user?.id;
   const userRole = authContext.user?.role;
@@ -67,8 +80,20 @@ export function StudentCourseCard() {
           <p className={styles['student-course-date']}>Start date: {course.startDate}</p>
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
         </div>
+<<<<<<< HEAD
         <button className={styles['student-course-button'] } onClick={() => navigate("/course/students", { replace: true })}>View students</button>
+=======
+        <button className={styles['student-course-button']} onClick={handleToggleModules}>
+          {showModules ? 'Hide Course Modules' : 'Show Course Modules'}
+        </button>
+>>>>>>> 0bed203216345901d14f2b34898b2258ac5c7991
       </div>
+      {/* Only show modules when toggled */}
+      {showModules ? (
+        <div className={styles['student-course-modules']}>
+          <StudentModuleList onSelectModule={onSelectModule} />
+        </div>
+      ) : null}
     </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { ReactElement, useState } from "react";
 import { CourseDropdown } from "./CourseDropdown";
-import { ICourse } from "../../courses/types";
+import { ICourse } from "../courses/types";
 import { IModule } from '../types/modules';
 import { useModuleForm } from '../hooks/useModuleForm';
 
