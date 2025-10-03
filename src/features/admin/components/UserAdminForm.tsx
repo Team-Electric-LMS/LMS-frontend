@@ -63,7 +63,7 @@ export function AdminForm({
             label="Email"
             name="email"
             value={form.email}
-            onChange={(value) => {setFormField("email", value); setFormField("userName", value)}}
+            onChange={(value: string) => {setFormField("email", value); setFormField("userName", value)}}
             required
             error={
               form.email && !patternValid
@@ -78,7 +78,7 @@ export function AdminForm({
               label="Password"
               name="password"
               value={form.password || ""}
-              onChange={(value) => setFormField("password", value)}
+              onChange={(value: string) => setFormField("password", value)}
               type="password"
               required
               error={
@@ -92,19 +92,19 @@ export function AdminForm({
             label="First Name"
             name="firstname"
             value={form.firstName}
-            onChange={(value) => setFormField("firstName", value)}
+            onChange={(value: string) => setFormField("firstName", value)}
           />
           <TextInput
             label="Last Name"
             name="lastname"
             value={form.lastName}
-            onChange={(value) => setFormField("lastName", value)}
+            onChange={(value: string) => setFormField("lastName", value)}
           />
           <SelectInput
             label="Role"
             name="role"
             value={form.role}
-            onChange={(value) => setFormField("role", value)}
+            onChange={(value: string) => setFormField("role", value)}
             options={["Student", "Teacher"]}
           />
           {error && <p className="error-message">{error}</p>}

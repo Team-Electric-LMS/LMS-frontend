@@ -1,7 +1,13 @@
+/* CourseForm.css
+    Styles for the course creation form
+    TODO: CreateCourseForm should be using the admin.css like the rest of the admin panel
+*/
+
 #create-course {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 1rem;
 }
 
 #create-course h1 {
@@ -10,8 +16,8 @@
 }
 
 #create-course .form-wrapper {
-  background-color: #ffffff;
-  padding: 2rem;
+  background-color: var(--base-body-color);
+  padding: 0;
   border-radius: 8px;
   margin: 0 auto;
 }
