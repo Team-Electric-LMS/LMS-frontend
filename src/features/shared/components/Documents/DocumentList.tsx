@@ -32,6 +32,8 @@ export function DocumentList({ level, id }: DocumentListProps): ReactElement {
     getDocs();
   }, [level, id, token]);
 
+  if (error) return <div>{error}</div>;
+
   return (
     <main className="document-list">
       <ul className="doc-list-ul">

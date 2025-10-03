@@ -30,6 +30,8 @@ export function DocumentDownload({ documentId, name, link, token }: DocumentDown
     }
   };
 
+  if (loading) return <div>Loading file...</div>;
+
   return (<div className="doc-list-item" onClick={handleDownload}>{name}<span className="material-symbols-outlined"> download </span></div>)
 }
 

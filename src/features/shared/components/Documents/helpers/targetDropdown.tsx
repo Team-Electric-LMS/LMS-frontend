@@ -14,15 +14,16 @@ export function TargetDropdown({ token, onSelect }: TargetDropdownProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string>("");
-  const [selectedType, setSelectedType] = useState<SelectionType | "">("");
-
+  
     useEffect(() => {
       const fetchCourses = async () => {
         try {
+          setLoading(true)
           const data = await getCoursesExtended(token);
           setCourses(data);
+          setLoading(false)
         } catch (err) {
-          console.error("Failed to fetch courses:", err);
+          setError("Failed to fetch courses");
         }
       };
   
@@ -33,7 +34,7 @@ export function TargetDropdown({ token, onSelect }: TargetDropdownProps) {
     const id = e.target.value;
     const type = e.target.selectedOptions[0].dataset.type as SelectionType;
     setSelectedId(id);
-    setSelectedType(type);
+    (type);
     if (id && type) onSelect({ id, type });
   };
 
