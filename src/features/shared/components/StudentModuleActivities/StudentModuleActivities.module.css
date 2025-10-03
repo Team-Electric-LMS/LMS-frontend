@@ -9,10 +9,10 @@
 }
 
 .student-module-activities-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  justify-items: center;
+  align-items: center;
 }
 
 .student-module-activities-title {
