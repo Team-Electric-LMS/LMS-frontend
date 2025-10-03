@@ -8,6 +8,7 @@ import { courseLoader } from "../features/courses/loaders/courseLoader";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { AdminProvider } from "../features/admin/context";
 import { AdminPage } from "../features/admin/components";
+import { CourseStudents } from "../features/courses/components/CourseStudents";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ export const router = createBrowserRouter(
       <Route element={<CourseCreate />} path="courses/new" />
       <Route element={<CourseEdit />} path="courses/:id/edit" loader={courseLoader} />
       <Route element={<Login />} path="login" />
+      <Route element={<CourseStudents />} path="/course/students" />
     </Route>
   )
 );

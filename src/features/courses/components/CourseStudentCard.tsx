@@ -9,20 +9,23 @@ interface CourseStudentCardProps {
 }
 
 export function CourseStudentCard({
-  userName,
+  //userName,
   firstName,
   lastName,
   email
 }: CourseStudentCardProps) {
   return (
+    <div className={styles['landing-page-bg']}>
     <div className={styles['student-activity-card']}>
-      <div>FirstName: {firstName}</div>
-      <div>Surname: {lastName}</div>
       <div>
-         
+        <span className={styles['prefix']}> Name: </span> 
+        <span>{firstName} {lastName}</span>
       </div>
-      <div>Username: {userName}</div>
-      <div>Email: {email}</div>
+      <div>
+        <span className={styles['prefix']}> Email: </span> 
+        <span>{email}</span>
+      </div>
+    </div>
     </div>
   );
 }

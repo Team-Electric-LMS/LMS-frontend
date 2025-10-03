@@ -4,6 +4,7 @@ import { useAuthContext } from "../../../auth/hooks/useAuthContext";
 import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../constants";
 import styles from "./StudentCourseCard.module.css";
+import { useNavigate } from 'react-router-dom';
 
 // Component to list a student course
 export function StudentCourseCard() {
@@ -16,6 +17,7 @@ export function StudentCourseCard() {
 
   const [hasFetched, setHasFetched] = useState(false);
   const [course, setCourse] = useState<Course | null>(null);
+  const navigate = useNavigate();
 
   // Helper function
   function mapCourseResponse(response: any): Course {
@@ -56,6 +58,7 @@ export function StudentCourseCard() {
 
   // Render out student course card
   return (
+    <div className={styles['landing-page-bg']}>"
     <div className={styles['student-course-card']}>
       <div className={styles['student-course-header']}>
         <div>
@@ -64,8 +67,9 @@ export function StudentCourseCard() {
           <p className={styles['student-course-date']}>Start date: {course.startDate}</p>
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
         </div>
-        <button className={styles['student-course-button'] }>View students</button>
+        <button className={styles['student-course-button'] } onClick={() => navigate("/course/students", { replace: true })}>View students</button>
       </div>
+    </div>
     </div>
   );
 }

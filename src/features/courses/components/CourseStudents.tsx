@@ -26,7 +26,6 @@ export function CourseStudents() {
 
 
   if (!studentId) return <p className={styles.message}>No student with this ID found. </p>;
-  console.log("Fetched students data: ", " ", data, " ",  studentId, " ", endpoint);
   if (isLoading) return <p className={styles.message}>Loading...</p>;
   if (error) return <p className={styles.message}>Error: {error.message}</p>;
   if (!data || data.length === 0)
