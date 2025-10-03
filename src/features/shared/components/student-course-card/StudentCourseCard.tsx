@@ -4,10 +4,20 @@ import { useAuthContext } from "../../../auth/hooks/useAuthContext";
 import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../constants";
 import styles from "./StudentCourseCard.module.css";
+import { StudentModuleList } from "../StudentModuleList/StudentModuleList";
 import { DocumentList } from "../Documents/DocumentList";
 
 // Component to list a student course
-export function StudentCourseCard() {
+interface StudentCourseCardProps {
+  onSelectModule?: (module: { id: string; moduleTitle: string }) => void;
+}
+
+export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
+  const [showModules, setShowModules] = useState(false);
+
+  const handleToggleModules = () => {
+    setShowModules((prev) => !prev);
+  };
   const authContext = useAuthContext();
   const studentId = authContext.user?.id;
   const userRole = authContext.user?.role;
@@ -66,8 +76,16 @@ export function StudentCourseCard() {
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
           <DocumentList level='course' id={course.id}/>
         </div>
-        <button className={styles['student-course-button']}>View course</button>
+        <button className={styles['student-course-button']} onClick={handleToggleModules}>
+          {showModules ? 'Hide Course Modules' : 'Show Course Modules'}
+        </button>
       </div>
+      {/* Only show modules when toggled */}
+      {showModules ? (
+        <div className={styles['student-course-modules']}>
+          <StudentModuleList onSelectModule={onSelectModule} />
+        </div>
+      ) : null}
     </div>
   );
 }

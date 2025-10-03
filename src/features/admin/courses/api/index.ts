@@ -1,5 +1,5 @@
-import { CustomError } from "../../shared/classes";
-import { BASE_URL } from "../../shared/constants";
+import { CustomError } from "../../../shared/classes";
+import { BASE_URL } from "../../../shared/constants";
 import { ICourse } from "../types";
 
 // Create a new course (admin/teacher view)
