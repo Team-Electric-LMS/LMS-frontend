@@ -9,10 +9,18 @@ export const StudentDashboardSection: React.FC = () => {
     moduleTitle: string;
   } | null>(null);
 
+  const handleSelectModule = (module: { id: string; moduleTitle: string }) => {
+    if (selectedModule?.id === module.id) {
+      setSelectedModule(null);
+    } else {
+      setSelectedModule(module);
+    }
+  };
+
   return (
     <div>
       <StudentCourseCard />
-      <StudentModuleList onSelectModule={setSelectedModule} />
+      <StudentModuleList onSelectModule={handleSelectModule} />
       {selectedModule && (
         <StudentModuleActivities
           moduleId={selectedModule.id}
