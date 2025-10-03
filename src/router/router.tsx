@@ -8,7 +8,7 @@ import { courseLoader } from "../features/admin/courses/loaders/courseLoader";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { AdminProvider } from "../features/admin/context";
 import { AdminPage } from "../features/admin/components";
-import { CourseStudents } from "../features/courses/components/CourseStudents";
+import { CourseStudents } from "../features/shared/components/CourseStudents/CourseStudents";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

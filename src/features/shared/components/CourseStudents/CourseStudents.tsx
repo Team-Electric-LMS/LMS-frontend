@@ -1,6 +1,6 @@
-import { useFetchWithToken } from '../../shared/hooks';
-import { useAuthContext } from '../../auth/hooks/useAuthContext';
-import { BASE_URL } from '../../shared/constants';
+import { useFetchWithToken } from '../../hooks/useFetchWithToken';
+import { useAuthContext } from '../../../auth/hooks/useAuthContext';
+import { BASE_URL } from '../../../shared/constants';
 import styles from './CourseStudentCard.module.css';
 import { CourseStudentCard } from './CourseStudentCard.tsx';
 import { useEffect } from 'react';
