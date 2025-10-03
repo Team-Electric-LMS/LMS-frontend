@@ -5,3 +5,23 @@
   border-radius: 4px;
   font-size: 1rem;
 }
+
+.message {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.infoMessage {
+  color: #007acc; /* blå för info */
+}
+
+.errorMessage {
+  color: #d32f2f; /* röd för fel */
+  font-weight: bold;
+}
+
+.emptyMessage {
+  color: #555; /* neutral grå */
+  font-style: italic;
+}
