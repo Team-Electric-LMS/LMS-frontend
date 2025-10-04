@@ -1,8 +1,8 @@
 import { ReactElement, useState } from "react";
 import { CourseForm } from "./CourseForm";
-import { Course } from "../../auth/types";
-import { BASE_URL } from "../../shared/constants";
-import { fetchWithToken } from "../../shared/utilities";
+import { Course } from "../../../auth/types";
+import { BASE_URL } from "../../../shared/constants";
+import { fetchWithToken } from "../../../shared/utilities";
 
 export const CourseCreate = (): ReactElement => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
