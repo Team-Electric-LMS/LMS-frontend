@@ -3,12 +3,13 @@ import { type ChangeEvent, type ReactElement } from "react";
 interface InputProps {
   label: string;
   name: string;
-  type: "text" | "email" | "password" | "date";
+  type: "text" | "email" | "password" | "date" | "radio";
   value: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   autoFocus: boolean;
   disabled: boolean;
   autoComplete?: string;
+  checked?: boolean
 }
 
 export const Input = ({
@@ -20,6 +21,7 @@ export const Input = ({
   autoFocus,
   disabled,
   autoComplete,
+  checked,
 }: InputProps): ReactElement => {
   const id = `${name.toLowerCase().replace(/\s+/g, "-")}`;
 
@@ -37,6 +39,7 @@ export const Input = ({
           required
           autoFocus={autoFocus}
           disabled={disabled}
+          checked={checked}
         />
       </label>
     </>

@@ -9,6 +9,7 @@ import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
 import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
+import { EventForm } from "../../shared/components/ActivitiesCreateUpdate/CreateUpdateForm";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -20,6 +21,7 @@ export function AdminPage(): ReactElement {
     registerCourse: false,
   });
   const [showModuleForm, setShowModuleForm] = useState(false);
+  const [showActivityForm, setShowActivityForm] = useState(false);
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
   const { user, setUser, token } = useAdminContext();
 
@@ -89,6 +91,14 @@ export function AdminPage(): ReactElement {
         >
           Create New Module
         </button>
+        <button
+          onClick={() => {
+            setShowActivityForm(true);
+            
+          }}
+        >
+          Create New Activity
+        </button>
       </nav>
       <div className="admin-area">
         <div className="left-side">
@@ -133,6 +143,21 @@ export function AdminPage(): ReactElement {
                   setEditModule(undefined);
                 }}
                 module={editModule}
+                onSuccess={() => {
+                  setEditModule(undefined);
+                  // Optionally refresh module list here
+                }}
+              />
+            </div>
+          )}
+          {showActivityForm && (
+            <div style={{flex: 1}}>
+              <EventForm
+                token={token ?? ""}
+                onClose={() => {
+                  setShowActivityForm(false);
+                }}
+               
                 onSuccess={() => {
                   setEditModule(undefined);
                   // Optionally refresh module list here
