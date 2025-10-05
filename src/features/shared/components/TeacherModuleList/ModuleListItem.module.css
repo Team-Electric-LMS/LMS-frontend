@@ -12,16 +12,20 @@
   font-size: 1.1rem;
 }
 
+.moduleCard:hover{
+  background: #efeeee;
+}
+
 .infoMessage {
-  color: #007acc; /* blå för info */
+  color: #007acc; /* blue for info */
 }
 
 .errorMessage {
-  color: #d32f2f; /* röd för fel */
+  color: #d32f2f; /* red for wrong */
   font-weight: bold;
 }
 
 .emptyMessage {
-  color: #555; /* neutral grå */
+  color: #555; /* neutral gray */
   font-style: italic;
 }
