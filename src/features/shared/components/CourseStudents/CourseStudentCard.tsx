@@ -15,7 +15,6 @@ export function CourseStudentCard({
   email
 }: CourseStudentCardProps) {
   return (
-    <div className={styles['landing-page-bg']}>
     <div className={styles['student-activity-card']}>
       <div>
         <span className={styles['prefix']}> Name: </span> 
@@ -25,7 +24,6 @@ export function CourseStudentCard({
         <span className={styles['prefix']}> Email: </span> 
         <span>{email}</span>
       </div>
-    </div>
     </div>
   );
 }

@@ -1,27 +1,11 @@
-.course-student-card1 {
-  background: white;
-  border: 1px solid #e4e2e2;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 600px;
-  margin: 1rem auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  columns: 100px;
-}
 .course-student-card {
   background: linear-gradient(90deg, #e3eafc 0%, #f8faff 100%);
   border-radius: 14px;
   box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
   padding: 28px 32px 18px 32px;
-  margin-bottom: 28px;
+  margin-bottom: 11px;
   border: 1px solid #cfd8e3;
-  display: flex;
-  flex-wrap: wrap;
-  columns: 100px;
+  width: 100%;
 }
 
 .prefix {
@@ -29,13 +13,11 @@
   padding-left: 3.5rem;
   line-height: 1.5;
 }
-
-
-.landing-page-bg {
-  background: var(--base-body-color);
+.course-students-card-container {
+  display: grid;
   height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100vh;
+  margin: 0 auto;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }

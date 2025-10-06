@@ -34,19 +34,18 @@ export function CourseStudents() {
   // Sort courses alphabetically and render
   const sortedStudents = [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
   return (
-     <div>
-        <h2>Other students in your course:</h2>
-    <ul >
+    <div className={styles['course-students-card-container']}>
+
       {sortedStudents.map((student: Student) => (
         <div className={styles['course-student-card']}>
-        <CourseStudentCard
+          <CourseStudentCard
             userName={student.userName}
             firstName={student.firstName}
             lastName={student.lastName}
             email={student.email}
-        /></div>
+        />
+      </div>
       ))}
-    </ul>
     </div>
   );
 }
