@@ -68,7 +68,7 @@ export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
 
   // Render out student course card
   return (
-    <div className={styles['landing-page-bg']}>"
+    <div className={styles['landing-page-bg']}>
     <div className={styles['student-course-card']}>
       <div className={styles['student-course-header']}>
         <div>
