@@ -3,6 +3,6 @@ export interface IEvent {
   description?: string;
   startDate?: string;
   endDate?: string;
-  type?: string;
+  activityTypeName?: string;
   id: string;
 }

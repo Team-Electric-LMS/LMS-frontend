@@ -10,6 +10,7 @@ interface InputProps {
   disabled: boolean;
   autoComplete?: string;
   checked?: boolean
+  required?: boolean
 }
 
 export const Input = ({
@@ -22,6 +23,7 @@ export const Input = ({
   disabled,
   autoComplete,
   checked,
+  required,
 }: InputProps): ReactElement => {
   const id = `${name.toLowerCase().replace(/\s+/g, "-")}`;
 
@@ -36,7 +38,7 @@ export const Input = ({
           value={value}
           onChange={onChange}
           autoComplete={autoComplete}
-          required
+          required = {required}
           autoFocus={autoFocus}
           disabled={disabled}
           checked={checked}

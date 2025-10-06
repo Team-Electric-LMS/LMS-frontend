@@ -9,7 +9,7 @@ import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
 import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
-import { EventForm } from "../../shared/components/ActivitiesCreateUpdate/CreateUpdateForm";
+import { ActivityEditForm } from "../../shared/components/ActivitiesCreateUpdate/ActivityEditForm";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -18,8 +18,8 @@ export function AdminPage(): ReactElement {
     register: false,
     editMode: false,
     assign: false,
-    registerCourse: false,
   });
+  const [showCourseForm, setShowCourseForm] = useState(false);
   const [showModuleForm, setShowModuleForm] = useState(false);
   const [showActivityForm, setShowActivityForm] = useState(false);
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
@@ -32,14 +32,15 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setUser(undefined);
+            setShowCourseForm(false);
             setShowModuleForm(false);
+            setShowActivityForm(false);
             setAdminPanel({
               fetch: true,
               display: false,
               register: false,
               editMode: false,
               assign: false,
-              registerCourse: false,
             });
           }}
         >
@@ -47,15 +48,16 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
-            setUser(undefined);
+            setShowCourseForm(false);
             setShowModuleForm(false);
+            setShowActivityForm(false);
+            setUser(undefined);
             setAdminPanel({
               fetch: false,
               display: false,
               register: true,
               editMode: false,
               assign: false,
-              registerCourse: false,
             });
           }}
         >
@@ -63,14 +65,15 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setShowCourseForm(true);
             setShowModuleForm(false);
+            setShowActivityForm(false);
             setAdminPanel({
               fetch: false,
               display: false,
               register: false,
               editMode: false,
               assign: false,
-              registerCourse: true,
             });
           }}
         >
@@ -78,14 +81,15 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setShowCourseForm(false);
             setShowModuleForm(true);
+            setShowActivityForm(false);
             setAdminPanel({
               fetch: false,
               display: false,
               register: false,
               editMode: false,
               assign: false,
-              registerCourse: false,
             });
           }}
         >
@@ -93,7 +97,16 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setShowCourseForm(false);
+            setShowModuleForm(false);
             setShowActivityForm(true);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+            });
             
           }}
         >
@@ -152,8 +165,8 @@ export function AdminPage(): ReactElement {
           )}
           {showActivityForm && (
             <div style={{flex: 1}}>
-              <EventForm
-                token={token ?? ""}
+              <ActivityEditForm
+                legend =  {"Create Activity"}
                 onClose={() => {
                   setShowActivityForm(false);
                 }}
@@ -173,7 +186,7 @@ export function AdminPage(): ReactElement {
               onClose={() => setAdminPanel({ ...adminPanel, assign: false })}
             />
           )}
-          {adminPanel.registerCourse && (
+          {showCourseForm && (
             <CourseCreate/>
           )}
         </div>

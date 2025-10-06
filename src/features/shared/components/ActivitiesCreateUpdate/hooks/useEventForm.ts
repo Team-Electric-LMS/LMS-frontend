@@ -24,11 +24,11 @@ export function useEventForm(token: string) {
     }
   }
 
-  async function updateActivity(activityId: string, activityData: Partial<IEvent>) {
+  async function updateActivity(activityData: Partial<IEvent>) {
     setLoading(true);
     setError(null);
     try {
-      const module = await updateModuleActivity(activityId, activityData, token);
+      const module = await updateModuleActivity(activityData, token);
       setUpdatedActivity(module);
       return module;
     } catch (err: any) {

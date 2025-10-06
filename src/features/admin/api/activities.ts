@@ -20,15 +20,15 @@ export async function getActivities(activityId: string, token: string): Promise<
 }
 
 // Create a new activity for a module
-export async function createModuleActivity(courseId: string, moduleData: Partial<IEvent>, token: string): Promise<IEvent> {
-  const url = `${BASE_URL}/activities/courses/${courseId}/modules`;
+export async function createModuleActivity(moduleId: string, moduleData: Partial<IEvent>, token: string): Promise<IEvent> {
+  const url = `${BASE_URL}/activities/`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({...moduleData, id: {courseId}}),
+    body: JSON.stringify({...moduleData, moduleId}),
   });
   if (!response.ok) {
     let errorMsg = 'Failed to create module';
@@ -45,8 +45,8 @@ export async function createModuleActivity(courseId: string, moduleData: Partial
 }
 
 // Update an existing module
-export async function updateModuleActivity(moduleId: string, moduleData: Partial<IEvent>, token: string): Promise<IEvent> {
-  const url = `${BASE_URL}/activities/${moduleId}`;
+export async function updateModuleActivity(moduleData: Partial<IEvent>, token: string): Promise<any> {
+  const url = `${BASE_URL}/activities/`;
   const response = await fetch(url, {
     method: 'PUT',
     headers: {
@@ -55,7 +55,7 @@ export async function updateModuleActivity(moduleId: string, moduleData: Partial
     },
     body: JSON.stringify(moduleData),
   });
-  if (!response.ok) {
+  if (response.status !== 204) {
     let errorMsg = 'Failed to update module';
     try {
       const errorBody = await response.json();
@@ -66,5 +66,4 @@ export async function updateModuleActivity(moduleId: string, moduleData: Partial
     } catch {}
     throw new CustomError(response.status, errorMsg);
   }
-  return await response.json();
 }
