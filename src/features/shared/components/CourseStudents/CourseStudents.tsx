@@ -35,7 +35,7 @@ export function CourseStudents() {
   const sortedStudents = [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
   return (
     <div className={styles['course-students-card-container']}>
-
+      <h2 className={styles['CourseStudentContainerTitle']}>Course Students</h2>
       {sortedStudents.map((student: Student) => (
         <div className={styles['course-student-card']}>
           <CourseStudentCard
