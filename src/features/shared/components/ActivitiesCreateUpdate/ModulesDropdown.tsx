@@ -38,7 +38,7 @@ export const ModulesDropdown: React.FC<ModuleDropdownProps> = ({ id, token, onSe
   // Render module selection dropdown
   return (
     <div>
-      <label htmlFor="course-select">Select Module:</label>
+      <label htmlFor="course-select"></label>
       <select id="course-select" value={selectedId} onChange={handleChange}>
         <option value="">-- Choose a module --</option>
         {modules.map((module) => (
