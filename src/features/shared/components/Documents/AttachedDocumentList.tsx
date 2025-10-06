@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { DocumentDownload } from "./DocumentDownloadItem";
+import { DocumentViewOrDownload } from "./ViewOrDownloadItem";
 import { DocumentMeta, SelectionType } from "./types";
 import { fetchDocuments } from "./api";
 import { useAdminContext } from "../../../admin/context";
@@ -11,7 +11,7 @@ interface DocumentListProps {
   id: string
 }
 
-export function DocumentList({ level, id }: DocumentListProps): ReactElement {
+export function AttachedDocumentsList({ level, id }: DocumentListProps): ReactElement {
   const [documents, setDocuments] = useState<DocumentMeta[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAdminContext();
@@ -37,10 +37,10 @@ export function DocumentList({ level, id }: DocumentListProps): ReactElement {
   return (
     <main className="document-list">
       <ul className="doc-list-ul">
-        {!documents.length &&  (<div>No documents found</div>)}
+        {!documents.length && (<div>*No documents attached</div>)}
         {documents.map((doc) => (
           <li key={doc.id}>
-            <DocumentDownload
+            <DocumentViewOrDownload
               documentId={doc.id}
               name={doc.name}
               link={doc.link}

@@ -5,7 +5,7 @@ import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../constants";
 import styles from "./StudentCourseCard.module.css";
 import { StudentModuleList } from "../StudentModuleList/StudentModuleList";
-import { DocumentList } from "../Documents/DocumentList";
+import { AttachedDocumentsList } from "../Documents/AttachedDocumentList";
 
 // Component to list a student course
 interface StudentCourseCardProps {
@@ -74,7 +74,7 @@ export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
           <p className={styles['student-course-description']}>{course.description}</p>
           <p className={styles['student-course-date']}>Start date: {course.startDate}</p>
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
-          <DocumentList level='course' id={course.id}/>
+          <AttachedDocumentsList level='course' id={course.id}/>
         </div>
         <button className={styles['student-course-button']} onClick={handleToggleModules}>
           {showModules ? 'Hide Course Modules' : 'Show Course Modules'}
