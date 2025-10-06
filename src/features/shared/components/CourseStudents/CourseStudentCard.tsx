@@ -1,15 +1,12 @@
 import styles from './CourseStudentCard.module.css';
-//import {Student} from './CourseStudents.tsx';
 
 interface CourseStudentCardProps {
-  userName: string;
   firstName: string;
   lastName: string;
   email: string;
 }
 
 export function CourseStudentCard({
-  //userName,
   firstName,
   lastName,
   email
