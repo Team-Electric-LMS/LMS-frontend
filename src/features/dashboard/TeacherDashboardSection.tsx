@@ -4,10 +4,15 @@ import { TeacherModuleList } from '../shared/components/TeacherModuleList/Teache
 import TeacherModuleActivities from '../shared/components/TeacherModuleActivities/TeacherModuleActivities';
 
 export const TeacherDashboardSection: React.FC = () => {
-  const [selectedCourse, setSelectedCourse] =
-    useState<{ id: string; name: string } | null>(null);
-  const [selectedModule, setSelectedModule] =
-    useState<{ id: string; moduleTitle: string } | null>(null);
+    const [selectedCourse, setSelectedCourse] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+
+  const [selectedModule, setSelectedModule] = useState<{ 
+    id: string; 
+    moduleTitle: string; 
+  } | null>(null);
 
   const handleSelectCourse = (course: { id: string; name: string }) => {
     setSelectedCourse(course);
