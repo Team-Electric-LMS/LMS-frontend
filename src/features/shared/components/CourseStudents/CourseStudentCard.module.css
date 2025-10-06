@@ -5,7 +5,6 @@ background: linear-gradient(90deg, #e3eafc 0%, #f8faff 100%);
   padding: 28px 32px 18px 20px;
   margin-bottom: 11px;
   border: 1px solid #cfd8e3;
-  width: 60vh;
 }
 
 .prefix {
@@ -15,9 +14,12 @@ background: linear-gradient(90deg, #e3eafc 0%, #f8faff 100%);
 }
 .course-students-card-container {
   display: grid;
-  height: 100vh;
   width: 60%;
   margin: 0 auto;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin: 2rem auto;
+  padding: 2rem 2.5rem;
 }
