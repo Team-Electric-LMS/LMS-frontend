@@ -1,5 +1,5 @@
 import { Dashboard } from "../features/dashboard/Dashboard";
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router";
+import { createBrowserRouter, createRoutesFromElements, Outlet, Route } from "react-router";
 import { App } from "../features/app";
 import { Login } from "../features/auth/components";
 import { requireAuthLoader } from "../features/auth/loaders";
@@ -20,30 +20,21 @@ export const router = createBrowserRouter(
         <Route
           element={
             <RequireRole roles={["teacher"]}>
+              <Outlet />
+            </RequireRole>
+          }
+        >
+          <Route path="courses/new" element={<CourseCreate />} />
+          <Route path="courses/:id/edit" element={<CourseEdit />} loader={courseLoader} />
+          <Route
+            path="admin"
+            element={
               <AdminProvider>
                 <AdminPage />
               </AdminProvider>
-            </RequireRole>
-          }
-          path="admin"
-        />
-        <Route
-          element={
-            <RequireRole roles={["teacher"]}>
-              <CourseCreate />
-            </RequireRole>
-          }
-          path="courses/new"
-        />
-        <Route
-          element={
-            <RequireRole roles={["teacher"]}>
-              <CourseEdit />
-            </RequireRole>
-          }
-          path="courses/:id/edit"
-          loader={courseLoader}
-        />
+            }
+          />
+        </Route>
         <Route element={<CourseStudents />} path="/course/students" />
       </Route>
       <Route element={<Login />} path="login" />
