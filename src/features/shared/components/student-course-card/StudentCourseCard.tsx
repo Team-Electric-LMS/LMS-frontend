@@ -5,7 +5,9 @@ import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../constants";
 import styles from "./StudentCourseCard.module.css";
 import { StudentModuleList } from "../StudentModuleList/StudentModuleList";
+import { useNavigate } from "react-router-dom";
 import { AttachedDocumentsList } from "../Documents/AttachedDocumentList";
+
 
 // Component to list a student course
 interface StudentCourseCardProps {
@@ -27,6 +29,7 @@ export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
 
   const [hasFetched, setHasFetched] = useState(false);
   const [course, setCourse] = useState<Course | null>(null);
+  const navigate = useNavigate();
 
   // Helper function
   function mapCourseResponse(response: any): Course {
@@ -67,6 +70,7 @@ export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
 
   // Render out student course card
   return (
+    <div className={styles['landing-page-bg']}>
     <div className={styles['student-course-card']}>
       <div className={styles['student-course-header']}>
         <div>
@@ -76,6 +80,7 @@ export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
           <AttachedDocumentsList level='course' id={course.id}/>
         </div>
+        <button className={styles['student-course-button'] } onClick={() => navigate("/course/students", { replace: true })}>View students</button>
         <button className={styles['student-course-button']} onClick={handleToggleModules}>
           {showModules ? 'Hide Course Modules' : 'Show Course Modules'}
         </button>
@@ -86,6 +91,7 @@ export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
           <StudentModuleList onSelectModule={onSelectModule} />
         </div>
       ) : null}
+    </div>
     </div>
   );
 }
