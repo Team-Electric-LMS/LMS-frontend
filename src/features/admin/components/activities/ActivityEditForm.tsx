@@ -56,6 +56,14 @@ export function ActivityForm({
     }
   }, [editSpecific, selectedActivity]);
 
+    useEffect(() => {
+    if (selectedCourse) {
+      setselectedModule(undefined);
+      setselectedActivity(undefined);
+      setForm({});
+    }
+  }, [selectedCourse]);
+
   useEffect(() => {
     if (selectedModule) {
       setselectedActivity(undefined);
@@ -71,24 +79,30 @@ export function ActivityForm({
   }, [selectedModule]);
 
   useEffect(() => {
-    if (selectedCourse) {
-      setselectedModule(undefined);
-      setselectedActivity(undefined);
-      setForm({});
-    }
-  }, [selectedCourse]);
-
-  useEffect(() => {
     if (!editSpecific) {
       setselectedActivity(undefined);
       setForm({});
     }
   }, [editSpecific]);
 
+  useEffect(() => {
+  if (form.startDate && form.endDate) {
+    const start = new Date(form.startDate);
+    const end = new Date(form.endDate);
+
+    if (end < start) {
+      setForm((prev) => ({
+        ...prev,
+        endDate: prev.startDate
+      }));
+    }
+  }
+}, [form.startDate, form.endDate]);
+
   const handleChange = (field: keyof IEvent, value: string) => {
-    setSuccess(false);
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
+  setSuccess(false);
+  setForm((prev) => ({ ...prev, [field]: value }));
+};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -287,7 +301,7 @@ export function ActivityForm({
           </button>
           {loading && <div>Updating ....</div>}
           {success && (
-            <p style={{ color: "green" }}>{form.name} Change successfull!</p>
+            <p style={{ color: "green" }}>{form.name} change successfully!</p>
           )}
         </fieldset>
       </form>
