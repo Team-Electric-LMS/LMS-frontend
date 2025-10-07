@@ -12,6 +12,7 @@ interface ModuleFormProps {
   token: string;
   onClose: () => void;
   onSuccess?: (module: IModule, course?: ICourse) => void;
+  selectedCourse?: ICourse;
 }
 
 export function ModuleForm({ courseId, module, token, onClose, onSuccess }: ModuleFormProps): ReactElement {
