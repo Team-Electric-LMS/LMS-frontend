@@ -37,3 +37,9 @@
 .radio-choice > label > input {
     margin: 5px;
 }
+
+.edit-option {
+  display: flex;
+    justify-content: left;
+    align-items: center;
+}

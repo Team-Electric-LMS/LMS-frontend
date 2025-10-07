@@ -22,9 +22,7 @@ export function ActivityEditForm({
   onSuccess,
 }: UnitFormProps): ReactElement {
   const isEdit = !!eventObj;
-  const [editSpecific, setEditSpecific] = useState<boolean>(
-    false
-  );
+  const [editSpecific, setEditSpecific] = useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<IEvent | undefined>(
     undefined
   );
@@ -45,49 +43,49 @@ export function ActivityEditForm({
   );
 
   useEffect(() => {
-  if (editSpecific && selectedActivity) {
-    setForm({
-      name: selectedActivity.name,
-      description: selectedActivity.description,
-      startDate: selectedActivity.startDate,
-      endDate: selectedActivity.endDate,
-      activityTypeName: selectedActivity.activityTypeName,
-      id: selectedActivity.id, 
-    });
-  }
-}, [editSpecific, selectedActivity]);
+    if (editSpecific && selectedActivity) {
+      setForm({
+        name: selectedActivity.name,
+        description: selectedActivity.description,
+        startDate: selectedActivity.startDate,
+        endDate: selectedActivity.endDate,
+        activityTypeName: selectedActivity.activityTypeName,
+        id: selectedActivity.id,
+      });
+    }
+  }, [editSpecific, selectedActivity]);
 
-useEffect(() => {
-  if (selectedModule) {
-    setselectedActivity(undefined);
-    setForm((prev) => ({
-      ...prev,
-      startDate: "",
-      endDate: "",
-      name: "",
-      description: "",
-      activityTypeName: "",
-    }));
-  }
-}, [selectedModule]);
+  useEffect(() => {
+    if (selectedModule) {
+      setselectedActivity(undefined);
+      setForm((prev) => ({
+        ...prev,
+        startDate: "",
+        endDate: "",
+        name: "",
+        description: "",
+        activityTypeName: "",
+      }));
+    }
+  }, [selectedModule]);
 
-useEffect(() => {
-  if (selectedCourse) {
-    setselectedModule(undefined);
-    setselectedActivity(undefined);
-    setForm({});
-  }
-}, [selectedCourse]);
+  useEffect(() => {
+    if (selectedCourse) {
+      setselectedModule(undefined);
+      setselectedActivity(undefined);
+      setForm({});
+    }
+  }, [selectedCourse]);
 
-useEffect(() => {
-  if (!editSpecific) {
-    setselectedActivity(undefined);
-    setForm({});
-  }
-}, [editSpecific]);
-
+  useEffect(() => {
+    if (!editSpecific) {
+      setselectedActivity(undefined);
+      setForm({});
+    }
+  }, [editSpecific]);
 
   const handleChange = (field: keyof IEvent, value: string) => {
+    setSuccess(false);
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -97,40 +95,52 @@ useEffect(() => {
     let result: IEvent | null = null;
     if ((isEdit && eventObj?.id) || editSpecific) {
       result = await updateActivity(form);
+      setSuccess(true);
     } else {
       if (!selectedModule) return;
       result = await createActivity(selectedModule.id, form);
     }
     if (result) {
       setSuccess(true);
+      setselectedActivity(undefined);
+      setselectedModule(undefined);
+      setSelectedCourse(undefined);
+      setForm({});
     }
     if (result && onSuccess) onSuccess(result);
   };
-  if (selectedModule) console.log(selectedModule!.id)
+  if (selectedModule) console.log(selectedModule!.id);
 
   return (
     <main className="form-page">
       <form className="form" onSubmit={handleSubmit}>
         <fieldset>
           <legend>{legend}</legend>
-          <div className="checkbox">
-            <input
-              type="checkbox"
-              checked={editSpecific}
-              onChange={(e) => {
-                setEditSpecific(e.target.checked);
+          <div className="edit-option">
+            <p>Edit?</p>
+            <div className="checkbox">
+              <input
+                type="checkbox"
+                checked={editSpecific}
+                onChange={(e) => {
+                  setSuccess(false);
+                  setEditSpecific(e.target.checked);
+                }}
+              />
+            </div>
+          </div>
+
+          {!isEdit && (
+            <CourseDropdown
+              token={token!}
+              onSelect={(course) => {
+                setSuccess(false);
+                setSelectedCourse(course);
               }}
             />
-            <p>Edit?</p>
-          </div> 
-          
-          {!isEdit && (
-            <CourseDropdown token={token!} onSelect={setSelectedCourse} />
           )}
           {!selectedCourse && (
-            <select
-              disabled={true}
-            >
+            <select disabled={true}>
               <option value="">-- Choose a module --</option>
             </select>
           )}
@@ -138,22 +148,25 @@ useEffect(() => {
             <ModulesDropdown
               id={selectedCourse!.id}
               token={token!}
-              onSelect={setselectedModule}
+              onSelect={(module) => {
+                setSuccess(false);
+                setselectedModule(module);
+              }}
             />
           )}
           {!selectedModule && editSpecific && (
-            <select
-              disabled={true}
-            >
+            <select disabled={true}>
               <option value=""></option>
             </select>
           )}
 
-           {!isEdit && selectedModule && editSpecific && (
+          {!isEdit && selectedModule && editSpecific && (
             <ActivitiesDropdown
               id={selectedModule!.id}
               token={token!}
-              onSelect={setselectedActivity}
+              onSelect={(activity) => {
+                setSuccess(false);
+                setselectedActivity(activity);}}
             />
           )}
 
@@ -256,8 +269,11 @@ useEffect(() => {
             </div>
           </div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" disabled={!selectedModule || !form.activityTypeName}>
-            {(isEdit || editSpecific) ? "Update Activity" : "Create Activity"}
+          <button
+            type="submit"
+            disabled={!selectedModule || !form.activityTypeName}
+          >
+            {isEdit || editSpecific ? "Update Activity" : "Create Activity"}
           </button>
           <button type="button" onClick={() => onClose?.()}>
             Cancel
