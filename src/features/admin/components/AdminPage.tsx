@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { AdminPanelState } from "../types";
+import { AdminPanelState, ICourse } from "../types";
 import { IModule } from "../types/modules";
 import { FetchForm } from "./UserFetchForm";
 import { AssignCourse } from "./UserAssignForm";
@@ -24,6 +24,7 @@ export function AdminPage(): ReactElement {
   const [showModuleForm, setShowModuleForm] = useState(false);
   const [showFindCourse, setShowFindCourse] = useState(false);
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
+  const [editCourse, setEditCourse] = useState<ICourse | undefined>(undefined);
   const { user, setUser, token } = useAdminContext();
 
   return (
@@ -136,7 +137,7 @@ export function AdminPage(): ReactElement {
           {showFindCourse && (
             <CourseFetchForm
               onEdit={(course) => {
-                console.log(course.id);
+                setEditCourse(course);
                 setAdminPanel({ ...adminPanel, editCourse: true });
               }}
             />
@@ -174,7 +175,7 @@ export function AdminPage(): ReactElement {
             <AssignCourse legend="Assign Course" onClose={() => setAdminPanel({ ...adminPanel, assign: false })} />
           )}
           {adminPanel.registerCourse && <CourseCreate />}
-          {adminPanel.editCourse && <CourseEdit />}
+          {adminPanel.editCourse && editCourse && <CourseEdit course={editCourse} />}
         </div>
       </div>
     </main>
