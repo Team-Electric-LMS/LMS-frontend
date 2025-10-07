@@ -12,7 +12,7 @@ export function DocumentViewOrDownload({
   documentId,
   name,
   link,
-  token,
+  token
 }: DocumentDownloadProps): ReactElement {
   const {
     loading,

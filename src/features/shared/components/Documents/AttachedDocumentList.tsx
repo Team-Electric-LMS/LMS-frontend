@@ -15,17 +15,17 @@ export function AttachedDocumentsList({ level, id }: DocumentListProps): ReactEl
   const [documents, setDocuments] = useState<DocumentMeta[]>([]);
   const [error, setError] = useState<string | null>(null);
   
-  //temp solution
   const raw = localStorage.getItem("tokens");
   const tokens = JSON.parse(raw!) as ITokens;
-       
+  const token = tokens.accessToken;
+  
 
   useEffect(() => {
     if (!id) return;
 
     const getDocs = async () => {
       try {
-        const data = await fetchDocuments(level, id, tokens.accessToken!);
+        const data = await fetchDocuments(level, id, token);
         setDocuments(data);
       } catch (err: any) {
         console.error(err);
@@ -34,7 +34,7 @@ export function AttachedDocumentsList({ level, id }: DocumentListProps): ReactEl
     };
 
     getDocs();
-  }, [level, id, tokens.accessToken]);
+  }, [level, id, token]);
 
   if (error) return <div>{error}</div>;
 
