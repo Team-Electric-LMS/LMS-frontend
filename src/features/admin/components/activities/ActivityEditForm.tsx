@@ -85,20 +85,6 @@ export function ActivityForm({
     }
   }, [editSpecific]);
 
-  useEffect(() => {
-  if (form.startDate && form.endDate) {
-    const start = new Date(form.startDate);
-    const end = new Date(form.endDate);
-
-    if (end < start) {
-      setForm((prev) => ({
-        ...prev,
-        endDate: prev.startDate
-      }));
-    }
-  }
-}, [form.startDate, form.endDate]);
-
   const handleChange = (field: keyof IEvent, value: string) => {
   setSuccess(false);
   setForm((prev) => ({ ...prev, [field]: value }));
