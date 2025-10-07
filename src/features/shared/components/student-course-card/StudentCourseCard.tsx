@@ -4,9 +4,20 @@ import { useAuthContext } from "../../../auth/hooks/useAuthContext";
 import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../constants";
 import styles from "./StudentCourseCard.module.css";
+import { StudentModuleList } from "../StudentModuleList/StudentModuleList";
+import { useNavigate } from "react-router-dom";
 
 // Component to list a student course
-export function StudentCourseCard() {
+interface StudentCourseCardProps {
+  onSelectModule?: (module: { id: string; moduleTitle: string }) => void;
+}
+
+export function StudentCourseCard({ onSelectModule }: StudentCourseCardProps) {
+  const [showModules, setShowModules] = useState(false);
+
+  const handleToggleModules = () => {
+    setShowModules((prev) => !prev);
+  };
   const authContext = useAuthContext();
   const studentId = authContext.user?.id;
   const userRole = authContext.user?.role;
@@ -16,6 +27,7 @@ export function StudentCourseCard() {
 
   const [hasFetched, setHasFetched] = useState(false);
   const [course, setCourse] = useState<Course | null>(null);
+  const navigate = useNavigate();
 
   // Helper function
   function mapCourseResponse(response: any): Course {
@@ -56,6 +68,7 @@ export function StudentCourseCard() {
 
   // Render out student course card
   return (
+    <div className={styles['landing-page-bg']}>
     <div className={styles['student-course-card']}>
       <div className={styles['student-course-header']}>
         <div>
@@ -64,8 +77,18 @@ export function StudentCourseCard() {
           <p className={styles['student-course-date']}>Start date: {course.startDate}</p>
           <p className={styles['student-course-date']}>End date: {course.endDate}</p>
         </div>
-        <button className={styles['student-course-button']}>View course</button>
+        <button className={styles['student-course-button'] } onClick={() => navigate("/course/students", { replace: true })}>View students</button>
+        <button className={styles['student-course-button']} onClick={handleToggleModules}>
+          {showModules ? 'Hide Course Modules' : 'Show Course Modules'}
+        </button>
       </div>
+      {/* Only show modules when toggled */}
+      {showModules ? (
+        <div className={styles['student-course-modules']}>
+          <StudentModuleList onSelectModule={onSelectModule} />
+        </div>
+      ) : null}
+    </div>
     </div>
   );
 }

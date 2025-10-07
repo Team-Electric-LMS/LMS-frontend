@@ -1,7 +1,8 @@
-import { CustomError } from "../../shared/classes";
-import { BASE_URL } from "../../shared/constants";
+import { CustomError } from "../../../shared/classes";
+import { BASE_URL } from "../../../shared/constants";
 import { ICourse } from "../types";
 
+// Create a new course (admin/teacher view)
 export async function createCourse(
   name: string,
   description: string,
@@ -23,4 +24,19 @@ export async function createCourse(
   }
 
   return (await response.json()) as ICourse;
+}
+
+// Fetch all courses (admin/teacher view)
+export async function getCourses(token: string): Promise<ICourse[]> {
+  const url = `${BASE_URL}/courses`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new CustomError(response.status, "Failed to fetch courses");
+  }
+  return await response.json();
 }

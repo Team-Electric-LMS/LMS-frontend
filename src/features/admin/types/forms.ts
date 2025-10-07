@@ -1,21 +1,4 @@
-import { IUser } from "./users";
-
-export interface BaseFormProps {
-  legend: string;
-  onClose: () => void;
-}
-
-export interface FetchFormProps {
-  onFetchedUser: (user: IUser) => void;
-}
-
-export interface AdminFormProps {
-  legend: string;
-  onUserReturned: (user: IUser) => void;
-  onClose: () => void;
-}
-
-export interface AssignCourseProps {
+export interface FormProps {
   legend: string;
   onClose: () => void;
 }

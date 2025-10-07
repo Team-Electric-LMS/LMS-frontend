@@ -1,3 +1,5 @@
+import { TextInputProps } from "../types/forms";
+
 export function TextInput({
   label,
   name,

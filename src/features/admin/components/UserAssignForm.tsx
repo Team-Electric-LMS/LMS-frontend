@@ -3,25 +3,24 @@ import { assignToCourse, fetchAllCourses, fetchUserExtended } from "../api";
 import { SelectInput } from "./SelectInput";
 import { FormProps, ICourse, IUser } from "../types";
 import { useAdminContext } from "../context/adminProvider";
+import "../css/styles.css";
+
 
 export function AssignCourse({ legend, onClose }: FormProps) {
   const { user, setUser, token } = useAdminContext();
-  const [courses, setCourses] = useState<ICourse[]>([]);
-  const [courseName, setCourseName] = useState<string>("");
+  const [allCourses, setAllCourses] = useState<ICourse[]>([]);
+  const [selectedCourse, setSelectedCourse] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [reassigned, setReassigned] = useState(false);
+  const [unassign, setUnassign] = useState(false);
 
-  if (!user) return;
   useEffect(() => {
-    if (!token) {
-      console.error("No token available");
-      return;
-    }
+    if (!token || !user) return;
 
     const loadCourses = async () => {
       try {
         const data = await fetchAllCourses(token);
-        setCourses(data);
+        setAllCourses(data);
       } catch (err) {
         console.error("Error fetching courses:", err);
       } finally {
@@ -30,26 +29,39 @@ export function AssignCourse({ legend, onClose }: FormProps) {
     };
 
     loadCourses();
-  }, [token]);
+  }, [token, user]);
 
-  
-  const selectedCourse = courses.find((c) => c.name === courseName);
+  if (!user) return;
 
-
+  const availableCourses = unassign
+    ? user.role === "Teacher"
+      ? user.coursesTaught || []
+      : user.course
+      ? [user.course]
+      : []
+    : allCourses.filter((course) => {
+        if (user.role === "Teacher") {
+          const taughtIds = user.coursesTaught?.map((c) => c.id) || [];
+          return !taughtIds.includes(course.id);
+        } else if (user.role === "Student") {
+          return user.course?.id !== course.id;
+        }
+        return true;
+      });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!selectedCourse) return;
-    if (!token) {
-    console.error("No token found, cannot submit");
-    return;
-  }
+    if (!token || !user) return;
 
     try {
-      const unassignFlag = !courseName;
-      await assignToCourse(user.id, selectedCourse.id, unassignFlag, token);
+      if (!selectedCourse && !unassign) return;
+      const courseId = allCourses.find((c) => c.name === selectedCourse);
+      await assignToCourse(user.id, courseId!.id, unassign, token);
 
-      const updatedUser: IUser | null = await fetchUserExtended(user.email, token);
+      const updatedUser: IUser | null = await fetchUserExtended(
+        user.email,
+        token
+      );
       if (updatedUser) setUser(updatedUser);
 
       setReassigned(true);
@@ -64,33 +76,44 @@ export function AssignCourse({ legend, onClose }: FormProps) {
       <form className="form" onSubmit={handleSubmit}>
         <fieldset>
           <legend>{legend}</legend>
-
-          {loading ? (
-            <p>Loading courses...</p>
-          ) : (
-            <SelectInput
-              label="Choose course"
-              name="course"
-              value={courseName}
-              onChange={(val) => setCourseName(val)}
-              options={courses.map((c) => c.name)}
-              required
+          <div className="checkbox">
+            
+            <input
+              type="checkbox"
+              checked={unassign}
+              onChange={(e) => {
+                setUnassign(e.target.checked);
+                setSelectedCourse("");
+              }}
             />
-          )}
+            <p>Unassign?</p>
+          </div>
+          <SelectInput
+            label={
+              user.role === "Teacher"
+                ? unassign
+                  ? "Select course to remove"
+                  : "Select course to add"
+                : "Choose Course"
+            }
+            name="course"
+            value={selectedCourse}
+            onChange={(val) => setSelectedCourse(val)}
+            options={availableCourses.map((c) => c.name)}
+            required={!unassign}
+          />
 
-          <p style={{ color: "red" }}>
-            Assigning a new course to user <strong>{user.userName}</strong>
-          </p>
-
-          {reassigned && selectedCourse && (
+          { selectedCourse && (
             <p style={{ color: "green" }}>
-              {courseName
-                ? `Assigned ${selectedCourse.name} to ${user.userName}`
-                : `Unassigned course from ${user.userName}`}
+              {unassign
+                ? `Remove ${selectedCourse ?? "course"} from ${
+                    user.userName
+                  }?`
+                : `Assign ${selectedCourse} to ${user.userName}?`}
             </p>
           )}
 
-          <button type="submit" disabled={!courseName}>
+          <button type="submit" disabled={!selectedCourse}>
             Submit
           </button>
           <button type="button" onClick={onClose}>

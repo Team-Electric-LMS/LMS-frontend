@@ -12,6 +12,10 @@
   font-size: 1rem;
 }
 
+.courseItem:hover {
+  background: #e0e0e0;
+}
+
 .message {
   color: #555;
   font-size: 1rem;

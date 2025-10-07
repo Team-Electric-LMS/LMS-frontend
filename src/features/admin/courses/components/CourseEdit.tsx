@@ -1,16 +1,13 @@
 import { ReactElement, Suspense, useState } from "react";
 import { CourseForm } from "./CourseForm";
 import { Await, useLoaderData } from "react-router";
-import { ICourse, ICourseLoader } from "../types";
+import { ICourse, ICourseLoader } from "../../types";
 import { useParams } from "react-router";
-import { BASE_URL } from "../../shared/constants";
-import { Course } from "../../auth/types";
-import { fetchWithToken } from "../../shared/utilities";
-import { useRequireRole } from "../../auth/hooks/useRequireRole";
+import { BASE_URL } from "../../../shared/constants";
+import { Course } from "../../../auth/types";
+import { fetchWithToken } from "../../../shared/utilities";
 
 export const CourseEdit = (): ReactElement => {
-  useRequireRole({ role: "teacher" });
-
   const { course } = useLoaderData<ICourseLoader>();
   const { id } = useParams();
 
@@ -48,11 +45,17 @@ export const CourseEdit = (): ReactElement => {
         <Suspense>
           <h1>Edit course</h1>
           <div className="form-wrapper">
-            {successMessage && <div className="alert alert-success">{successMessage}</div>}
-            {errorMessage && <div className="alert alert-error">{errorMessage}</div>}
+            {successMessage && (
+              <div className="alert alert-success">{successMessage}</div>
+            )}
+            {errorMessage && (
+              <div className="alert alert-error">{errorMessage}</div>
+            )}
 
             <Await resolve={course}>
-              {(course: ICourse) => <CourseForm course={course} onSubmit={handleOnSubmit} />}
+              {(course: ICourse) => (
+                <CourseForm course={course} onSubmit={handleOnSubmit} />
+              )}
             </Await>
           </div>
         </Suspense>

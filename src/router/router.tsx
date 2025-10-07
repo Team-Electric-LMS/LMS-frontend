@@ -3,11 +3,12 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import { App } from "../features/app";
 import { Login } from "../features/auth/components";
 import { requireAuthLoader } from "../features/auth/loaders";
-import { CourseEdit, CourseCreate } from "../features/courses/components";
-import { courseLoader } from "../features/courses/loaders/courseLoader";
+import { CourseEdit, CourseCreate } from "../features/admin/courses/components";
+import { courseLoader } from "../features/admin/courses/loaders/courseLoader";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { AdminProvider } from "../features/admin/context";
 import { AdminPage } from "../features/admin/components";
+import { CourseStudents } from "../features/shared/components/CourseStudents/CourseStudents";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ export const router = createBrowserRouter(
       <Route element={<CourseCreate />} path="courses/new" />
       <Route element={<CourseEdit />} path="courses/:id/edit" loader={courseLoader} />
       <Route element={<Login />} path="login" />
+      <Route element={<CourseStudents />} path="/course/students" />
     </Route>
   )
 );

@@ -29,32 +29,49 @@ export function UserDisplay({
         <fieldset>
           <legend>{legend}</legend>
           <ul>
-            <li>Username: {user.userName}</li>
-            <li>Email: {user.email}</li>
-            <li>First Name: {user.firstName}</li>
-            <li>Last Name: {user.lastName}</li>
-            <li>Role: {user.role ?? "No role assigned"}</li>
-            <li>
-              Course:{" "}
-              {user.role === "Teacher"
-                ? "Not shown for teachers"
-                : user.course
-                ? `${user.course.name}`
-                : "No course assigned"}
-            </li>
+            <p><strong>Username:</strong> {user.userName}</p>
+           <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>First Name:</strong> {user.firstName}</p>
+            <p><strong>Last Name:</strong> {user.lastName}</p>
+            <p><strong>Role:</strong> {user.role ?? "No role assigned"}</p>
+            
+              {user.role == null ? (
+                <>
+                  <strong>Course:</strong> Assign a role first
+                </>
+              ) : user.role === "Teacher" ? (
+                <>
+                  <strong>Courses Taught:</strong>{" "}
+                  {user.coursesTaught && user.coursesTaught.length > 0 ? (
+                    <ul>
+                      {user.coursesTaught.map((c) => (
+                        <li key={c.id}>{c.name}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "No courses assigned"
+                  )}
+                </>
+              ) : (
+                <>
+                  <strong>Course:</strong>{" "}
+                  {user.course ? user.course.name : "No course assigned"}
+                </>
+              )}
+            
           </ul>
           <button type="button" onClick={() => setUser(undefined)}>
-            Close
+            Close Info
           </button>
           <button type="button" onClick={onEdit}>
-            Edit
+            Edit Profile
           </button>
           <button
             type="button"
             onClick={onReassign}
-            disabled={user.role == "Teacher"}
+            disabled={user.role == null}
           >
-            Reassign
+            Assign Course
           </button>
         </fieldset>
       </form>

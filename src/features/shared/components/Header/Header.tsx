@@ -18,6 +18,7 @@ export const Header: React.FC = () => {
         <span className={styles.logo}>LMS</span>
         <div className={styles.links}>
           {user && <Link to="/dashboard">Dashboard</Link>}
+          {user?.role == "Teacher" && <Link to="/admin">Admin</Link>}
           {/* additional links here */}
         </div>
         {user ? (
@@ -26,9 +27,8 @@ export const Header: React.FC = () => {
             <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
           </div>
         ) : (
-          // button that has a link to the register page, but for now links to the /login page
           <Link to="/login">
-            <button className={styles.logoutBtn}>Register</button>
+            <button className={styles.logoutBtn}>Login</button>
           </Link>
         )}
       </nav>

@@ -9,6 +9,8 @@ export interface IUser {
   lastName: string;
   role: Role;
   course?: ICourse
+  coursesTaught?: ICourse[];
+
 }
 
 export interface ICourse {

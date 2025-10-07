@@ -52,22 +52,23 @@ export function StudentModuleActivities({
       <h2 className={styles['student-module-activities-title']}>
         Activities for {moduleTitle}
       </h2>
-
-      {data
-        .sort(
-          (a, b) =>
-            new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-        )
-        .map((activity) => (
-          <StudentActivityCard
-            key={activity.id}
-            activityTitle={activity.activityTitle}
-            description={activity.description}
-            startDate={activity.startDate}
-            endDate={activity.endDate}
-            activityTypeName={activity.activityTypeName}
-          />
-        ))}
+      <div className={styles['student-module-activities-list']}>
+        {data
+          .sort(
+            (a, b) =>
+              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          )
+          .map((activity) => (
+            <StudentActivityCard
+              key={activity.id}
+              activityTitle={activity.activityTitle}
+              description={activity.description}
+              startDate={activity.startDate}
+              endDate={activity.endDate}
+              activityTypeName={activity.activityTypeName}
+            />
+          ))}
+      </div>
     </div>
   );
 }
