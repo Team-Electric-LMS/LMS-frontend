@@ -40,3 +40,17 @@ export async function getCourses(token: string): Promise<ICourse[]> {
   }
   return await response.json();
 }
+
+export async function searchCourses(query: string, token: string): Promise<ICourse[]> {
+  const url = `${BASE_URL}/courses/search?query=${encodeURIComponent(query)}`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new CustomError(response.status, "Failed to fetch courses");
+  }
+  return await response.json();
+}

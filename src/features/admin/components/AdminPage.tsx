@@ -7,8 +7,9 @@ import { UserDisplay } from "./FetchResults";
 import { AdminForm } from "./UserAdminForm";
 import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
-import { CourseCreate } from "../courses/components";
+import { CourseCreate, CourseEdit } from "../courses/components";
 import "../css/admin.css";
+import { CourseFetchForm } from "./CourseFetchForm";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -18,8 +19,10 @@ export function AdminPage(): ReactElement {
     editMode: false,
     assign: false,
     registerCourse: false,
+    editCourse: false,
   });
   const [showModuleForm, setShowModuleForm] = useState(false);
+  const [showFindCourse, setShowFindCourse] = useState(false);
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
   const { user, setUser, token } = useAdminContext();
 
@@ -31,6 +34,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setUser(undefined);
             setShowModuleForm(false);
+            setShowFindCourse(false);
             setAdminPanel({
               fetch: true,
               display: false,
@@ -38,6 +42,7 @@ export function AdminPage(): ReactElement {
               editMode: false,
               assign: false,
               registerCourse: false,
+              editCourse: false,
             });
           }}
         >
@@ -47,6 +52,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setUser(undefined);
             setShowModuleForm(false);
+            setShowFindCourse(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -54,6 +60,7 @@ export function AdminPage(): ReactElement {
               editMode: false,
               assign: false,
               registerCourse: false,
+              editCourse: false,
             });
           }}
         >
@@ -61,7 +68,26 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setUser(undefined);
             setShowModuleForm(false);
+            setShowFindCourse(true);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+              registerCourse: false,
+              editCourse: false,
+            });
+          }}
+        >
+          Find a Course
+        </button>
+        <button
+          onClick={() => {
+            setShowModuleForm(false);
+            setShowFindCourse(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -69,6 +95,7 @@ export function AdminPage(): ReactElement {
               editMode: false,
               assign: false,
               registerCourse: true,
+              editCourse: false,
             });
           }}
         >
@@ -77,6 +104,7 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setShowModuleForm(true);
+            setShowFindCourse(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -84,6 +112,7 @@ export function AdminPage(): ReactElement {
               editMode: false,
               assign: false,
               registerCourse: false,
+              editCourse: false,
             });
           }}
         >
@@ -93,39 +122,38 @@ export function AdminPage(): ReactElement {
       <div className="admin-area">
         <div className="left-side">
           {adminPanel.fetch && !adminPanel.register && (
-            <FetchForm
-              legend={"Find an account"}
-              onClose={() => setAdminPanel({ ...adminPanel, fetch: false })}
-            />
+            <FetchForm legend={"Find an account"} onClose={() => setAdminPanel({ ...adminPanel, fetch: false })} />
           )}
           {user && !adminPanel.register && (
             <UserDisplay
               legend="User Info"
               onEdit={() => setAdminPanel({ ...adminPanel, editMode: true })}
               onClose={() => setAdminPanel({ ...adminPanel, display: false })}
-              onReassign={() =>
-                setAdminPanel({ ...adminPanel, assign: true, editMode: false })
-              }
+              onReassign={() => setAdminPanel({ ...adminPanel, assign: true, editMode: false })}
+            />
+          )}
+
+          {showFindCourse && (
+            <CourseFetchForm
+              onEdit={(course) => {
+                console.log(course.id);
+                setAdminPanel({ ...adminPanel, editCourse: true });
+              }}
             />
           )}
         </div>
         <div className="right-side">
           {adminPanel.editMode && !adminPanel.register && (
-            <AdminForm
-              legend="Edit User"
-              onClose={() => setAdminPanel({ ...adminPanel, editMode: false })}
-            />
+            <AdminForm legend="Edit User" onClose={() => setAdminPanel({ ...adminPanel, editMode: false })} />
           )}
           {adminPanel.register && (
             <AdminForm
               legend="Register User"
-              onClose={() =>
-                setAdminPanel({ ...adminPanel, register: false, display: true })
-              }
+              onClose={() => setAdminPanel({ ...adminPanel, register: false, display: true })}
             />
           )}
           {showModuleForm && (
-            <div style={{flex: 1}}>
+            <div style={{ flex: 1 }}>
               <ModuleForm
                 token={token ?? ""}
                 onClose={() => {
@@ -143,14 +171,10 @@ export function AdminPage(): ReactElement {
         </div>
         <div>
           {adminPanel.assign && (
-            <AssignCourse
-              legend="Assign Course"
-              onClose={() => setAdminPanel({ ...adminPanel, assign: false })}
-            />
+            <AssignCourse legend="Assign Course" onClose={() => setAdminPanel({ ...adminPanel, assign: false })} />
           )}
-          {adminPanel.registerCourse && (
-            <CourseCreate/>
-          )}
+          {adminPanel.registerCourse && <CourseCreate />}
+          {adminPanel.editCourse && <CourseEdit />}
         </div>
       </div>
     </main>

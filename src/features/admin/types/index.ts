@@ -1,5 +1,5 @@
-export * from './forms';
-export * from './users';
+export * from "./forms";
+export * from "./users";
 
 export interface AdminPanelState {
   fetch: boolean;
@@ -7,5 +7,6 @@ export interface AdminPanelState {
   register: boolean;
   registerCourse: boolean;
   editMode: boolean;
-  assign: boolean
+  assign: boolean;
+  editCourse: boolean;
 }
