@@ -30,7 +30,6 @@ export default function TeacherModuleActivities({ moduleId, moduleTitle }: Props
     const displayTitle = getDisplayActivityTitle(a, idx); // "Seminar Activity 1", etc.
     const withTitle: ActivityDto = { ...a, activityTitle: displayTitle };
     // TEMP: verify in console
-    // console.log('Sending title to card:', withTitle.activityTitle);
     return withTitle;
   });
 

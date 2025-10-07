@@ -4,7 +4,7 @@ import { TeacherModuleList } from '../shared/components/TeacherModuleList/Teache
 import TeacherModuleActivities from '../shared/components/TeacherModuleActivities/TeacherModuleActivities';
 
 export const TeacherDashboardSection: React.FC = () => {
-    const [selectedCourse, setSelectedCourse] = useState<{
+  const [selectedCourse, setSelectedCourse] = useState<{
     id: string;
     name: string;
   } | null>(null);
