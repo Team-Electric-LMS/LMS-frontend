@@ -43,7 +43,7 @@ export function TargetDropdown({ token, onSelect }: TargetDropdownProps) {
 
   return (
     <div className="form-control">
-      <label htmlFor="target">Target</label>
+      <label htmlFor="target"></label>
       <select
         id="target"
         value={selectedId}
@@ -51,7 +51,7 @@ export function TargetDropdown({ token, onSelect }: TargetDropdownProps) {
         required
         className="select-input"
       >
-        <option value="">- Select Course / Module / Activity -</option>
+        <option value="">-- Select Course - Module - Activity --</option>
         {renderOptions(courses)}
       </select>
     </div>

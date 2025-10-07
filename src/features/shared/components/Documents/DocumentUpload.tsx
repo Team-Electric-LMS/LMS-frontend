@@ -1,8 +1,7 @@
 import { ReactElement, useState, FormEvent, useRef } from "react";
-import {  SelectionDto } from "./types";
 import { useAuthContext } from "../../../auth/hooks";
 import { uploadFile } from "./api";
-import { TargetDropdown } from "./helpers/targetDropdown";
+import { CourseDropdown } from "../../../admin/components/CourseDropdown";
 
 interface DocumentUploadFormProps {
   legend: string;
@@ -16,7 +15,7 @@ export function DocumentUploadForm({
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState<SelectionDto | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState("");
   const [success, setSuccess] = useState(false);
 
   const authContext = useAuthContext();
@@ -24,7 +23,15 @@ export function DocumentUploadForm({
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-
+  const resetAfterSuccess = () => {
+    if (success) {
+      setSuccess(false);
+      setFile(null);
+      setName("");
+      setDescription("");
+      setSelectedLevel("");
+    }
+  };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!file || !selectedLevel)
@@ -36,7 +43,7 @@ export function DocumentUploadForm({
       formData.append("name", name);
       description && formData.append("description", description);
       uploadedById && formData.append("uploadedById", uploadedById);
-      formData.append(`${selectedLevel.type}Id`, selectedLevel.id);
+      formData.append(`CourseId`, selectedLevel);
 
       await uploadFile(formData, token);
 
@@ -44,11 +51,11 @@ export function DocumentUploadForm({
       setFile(null);
       setName("");
       setDescription("");
-      setSelectedLevel(null);
+      setSelectedLevel("");
 
       if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+        fileInputRef.current.value = "";
+      }
     } catch (err) {
       console.error(err);
       alert("Upload failed");
@@ -65,7 +72,10 @@ export function DocumentUploadForm({
           <input
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              resetAfterSuccess();
+              setName(e.target.value);
+            }}
             required
           />
 
@@ -73,7 +83,10 @@ export function DocumentUploadForm({
           <textarea
             id="description"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => {
+              resetAfterSuccess();
+              setDescription(e.target.value);
+            }}
             rows={3}
             style={{
               resize: "vertical",
@@ -85,26 +98,37 @@ export function DocumentUploadForm({
               borderRadius: "4px",
             }}
           />
-          <TargetDropdown token={token} onSelect={(level) => setSelectedLevel(level)}
-        />
+          <CourseDropdown
+              token={token!}
+              onSelect={(course) => {
+                setSuccess(false);
+                setSelectedLevel(course.id);
+              }}
+            />
 
           <label htmlFor="file">File</label>
           <input
             id="file"
             type="file"
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            accept=".jpg, .jpeg, .png, .pdf, .txt"
+            onChange={(e) => {
+              resetAfterSuccess();
+              setFile(e.target.files?.[0] ?? null);
+            }}
             required
           />
           {selectedLevel && file && (
             <p style={{ color: "green" }}>
-              Ready to upload <strong>{name || "document"}</strong> to the chosen {selectedLevel.type}.
+              Ready to upload <strong>{name || "document"}</strong>.
             </p>
           )}
 
-          <button type="submit" disabled={!selectedLevel || !file || !name}>Upload</button>
+          <button type="submit" disabled={!selectedLevel || !file || !name}>
+            Upload
+          </button>
           {success && (
-              <p style={{ color: "green" }}>File uploaded successfully!</p>
-            )}
+            <p style={{ color: "green" }}>File uploaded successfully!</p>
+          )}
         </fieldset>
       </form>
     </main>
