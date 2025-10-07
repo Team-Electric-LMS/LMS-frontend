@@ -9,6 +9,7 @@ import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
 import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
+import { DocumentUploadForm } from "../../shared/components/Documents/DocumentUpload";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -20,6 +21,7 @@ export function AdminPage(): ReactElement {
     registerCourse: false,
   });
   const [showModuleForm, setShowModuleForm] = useState(false);
+  const [showUploadDocument, setshowUploadDocument] = useState(false);
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
   const { user, setUser, token } = useAdminContext();
 
@@ -31,6 +33,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setUser(undefined);
             setShowModuleForm(false);
+            setshowUploadDocument(false)
             setAdminPanel({
               fetch: true,
               display: false,
@@ -47,6 +50,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setUser(undefined);
             setShowModuleForm(false);
+            setshowUploadDocument(false)
             setAdminPanel({
               fetch: false,
               display: false,
@@ -62,6 +66,7 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setShowModuleForm(false);
+            setshowUploadDocument(false)
             setAdminPanel({
               fetch: false,
               display: false,
@@ -77,6 +82,7 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setShowModuleForm(true);
+            setshowUploadDocument(false)
             setAdminPanel({
               fetch: false,
               display: false,
@@ -88,6 +94,22 @@ export function AdminPage(): ReactElement {
           }}
         >
           Create New Module
+        </button>
+        <button
+          onClick={() => {
+            setShowModuleForm(false);
+            setshowUploadDocument(true)
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+              registerCourse: false,
+            });
+          }}
+        >
+          Upload Document
         </button>
       </nav>
       <div className="admin-area">
@@ -110,6 +132,8 @@ export function AdminPage(): ReactElement {
           )}
         </div>
         <div className="right-side">
+          {showUploadDocument && (<DocumentUploadForm legend={"Upload document"} token={token!}/>)}
+  
           {adminPanel.editMode && !adminPanel.register && (
             <AdminForm
               legend="Edit User"
