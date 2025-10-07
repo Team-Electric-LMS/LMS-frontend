@@ -26,13 +26,14 @@ export function DocumentViewOrDownload({
   if (loading) return <div className="message">Loading file...</div>;
 
   return (
-    <div className="doc-list-item">
+    <div className="doc-list-item" title={name}>
       {name}
       <div className="icons">
-      <span className="material-symbols-outlined icon" onClick={handleView}>
+      <span className="material-symbols-outlined icon-open" title="view file" onClick={handleView}>
         open_in_full
       </span>
-      <span className="material-symbols-outlined icon" onClick={handleDownload}>
+
+      <span className="material-symbols-outlined icon-download" title="download file" onClick={handleDownload}>
         download
       </span>
       </div>

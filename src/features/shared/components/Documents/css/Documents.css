@@ -69,3 +69,7 @@
 .icon-close {
   color: #ff0000;
 }
+
+.icon-open .icon-download{
+  font-size: 1rem;
+}
