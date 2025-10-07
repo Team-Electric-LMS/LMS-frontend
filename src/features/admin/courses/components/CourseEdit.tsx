@@ -3,9 +3,9 @@ import { CourseForm } from "./CourseForm";
 import { Await, useLoaderData } from "react-router";
 import { ICourse, ICourseLoader } from "../../types";
 import { useParams } from "react-router";
-import { BASE_URL } from "../../../shared/constants";
-import { Course } from "../../../auth/types";
 import { fetchWithToken } from "../../../shared/utilities";
+import { Course } from "../../../auth/types";
+import { BASE_URL } from "../../../shared/constants";
 
 export const CourseEdit = (): ReactElement => {
   const { course } = useLoaderData<ICourseLoader>();
@@ -45,17 +45,11 @@ export const CourseEdit = (): ReactElement => {
         <Suspense>
           <h1>Edit course</h1>
           <div className="form-wrapper">
-            {successMessage && (
-              <div className="alert alert-success">{successMessage}</div>
-            )}
-            {errorMessage && (
-              <div className="alert alert-error">{errorMessage}</div>
-            )}
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {errorMessage && <div className="alert alert-error">{errorMessage}</div>}
 
             <Await resolve={course}>
-              {(course: ICourse) => (
-                <CourseForm course={course} onSubmit={handleOnSubmit} />
-              )}
+              {(course: ICourse) => <CourseForm course={course} onSubmit={handleOnSubmit} />}
             </Await>
           </div>
         </Suspense>

@@ -8,18 +8,45 @@ import { courseLoader } from "../features/admin/courses/loaders/courseLoader";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { AdminProvider } from "../features/admin/context";
 import { AdminPage } from "../features/admin/components";
+import { RequireRole } from "../features/shared/requireRole";
 import { CourseStudents } from "../features/shared/components/CourseStudents/CourseStudents";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route element={<App />} path="/">
-      <Route index element={<LandingPage />} />
-      <Route element={<Dashboard />} loader={requireAuthLoader} path="dashboard" />
-      <Route element={<AdminProvider><AdminPage /></AdminProvider>} loader={requireAuthLoader} path="admin" />
-      <Route element={<CourseCreate />} path="courses/new" />
-      <Route element={<CourseEdit />} path="courses/:id/edit" loader={courseLoader} />
+    <>
+      <Route element={<App />} loader={requireAuthLoader} path="/">
+        <Route index element={<LandingPage />} />
+        <Route element={<Dashboard />} path="dashboard" />
+        <Route
+          element={
+            <RequireRole roles={["teacher"]}>
+              <AdminProvider>
+                <AdminPage />
+              </AdminProvider>
+            </RequireRole>
+          }
+          path="admin"
+        />
+        <Route
+          element={
+            <RequireRole roles={["teacher"]}>
+              <CourseCreate />
+            </RequireRole>
+          }
+          path="courses/new"
+        />
+        <Route
+          element={
+            <RequireRole roles={["teacher"]}>
+              <CourseEdit />
+            </RequireRole>
+          }
+          path="courses/:id/edit"
+          loader={courseLoader}
+        />
+        <Route element={<CourseStudents />} path="/course/students" />
+      </Route>
       <Route element={<Login />} path="login" />
-      <Route element={<CourseStudents />} path="/course/students" />
-    </Route>
+    </>
   )
 );
