@@ -22,7 +22,7 @@ export function AdminPage(): ReactElement {
     registerCourse: false,
   });
   const [showModuleForm, setShowModuleForm] = useState(false);
-  const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
+  const [editModule, setEditModule] = useState<IModule | undefined>(undefined); 
   const [selectedCourse, setSelectedCourse] = useState<any>(undefined);
   const { user, setUser, token } = useAdminContext();
 
