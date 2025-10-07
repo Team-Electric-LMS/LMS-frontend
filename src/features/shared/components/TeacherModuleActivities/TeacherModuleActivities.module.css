@@ -1,0 +1,22 @@
+.card {
+  background: linear-gradient(90deg, #e0e0e0 0%, #f5f5f5 100%);
+  border: 1px solid #e4e2e2;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  margin: 1rem auto;
+}
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: black;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.error { color: #b91c1c; }

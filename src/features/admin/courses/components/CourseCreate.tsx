@@ -1,8 +1,8 @@
 import { ReactElement, useState } from "react";
 import { CourseForm } from "./CourseForm";
+import { fetchWithToken } from "../../../shared/utilities";
 import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../../shared/constants";
-import { fetchWithToken } from "../../../shared/utilities";
 
 export const CourseCreate = (): ReactElement => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -33,14 +33,14 @@ export const CourseCreate = (): ReactElement => {
   return (
     <>
       <main className="form-page" id="create-course">
-          <fieldset>
-            <legend>Create Course</legend>
-            <div className="form-wrapper">
-              {successMessage && <div className="alert alert-success">{successMessage}</div>}
-              {errorMessage && <div className="alert alert-error">{errorMessage}</div>}
-              <CourseForm onSubmit={handleOnSubmit} />
-            </div>
-          </fieldset>
+        <fieldset>
+          <legend>Create Course</legend>
+          <div className="form-wrapper">
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {errorMessage && <div className="alert alert-error">{errorMessage}</div>}
+            <CourseForm onSubmit={handleOnSubmit} />
+          </div>
+        </fieldset>
       </main>
     </>
   );

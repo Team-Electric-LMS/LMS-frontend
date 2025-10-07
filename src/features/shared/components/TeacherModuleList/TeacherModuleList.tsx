@@ -9,45 +9,32 @@ interface TeacherModuleListProps {
   courseId: string;
   courseName: string;
   onClose: () => void;
+  onSelectModule?: (m: { id: string; moduleTitle: string }) => void;
 }
 
 export function TeacherModuleList({
   courseId,
   courseName,
   onClose,
+  onSelectModule,
 }: TeacherModuleListProps) {
-  const endpoint = `${BASE_URL}/courses/${courseId}/modules`;
+  const { data: modules, error, isLoading, requestFunc } =
+    useFetchWithToken<Module[]>(`${BASE_URL}/courses/${courseId}/modules`);
 
-  // Fetch modules for the given course
-  const {
-    data: modules,
-    error,
-    isLoading,
-    requestFunc,
-  } = useFetchWithToken<Module[]>(endpoint);
+  useEffect(() => { requestFunc(); }, [courseId]);
 
-  // Trigger data fetch on courseId change
-  useEffect(() => {
-    if (courseId) {
-      requestFunc();
-    }
-  }, [courseId]);
-
-  if (isLoading) return <p className={styles.message}>Loading modules...</p>;
-  if (error) return <p className={styles.message}>Error loading modules.</p>;
-  if (!modules || modules.length === 0)
-    return <p className={styles.message}>No modules found for {courseName}</p>;
+  if (isLoading) return <p className={styles.message}>Loading modules…</p>;
+  if (error)     return <p className={styles.message}>Error: {error.message}</p>;
+  if (!modules?.length) return <p className={styles.message}>No modules found for {courseName}</p>;
 
   return (
     <div className={styles.moduleListCard}>
       <h2>Modules for the course: {courseName}</h2>
       {/* Close button, calls parent handler (TeacherDashboardSection) to hide this component */}
-      <button className={styles['button-close']} onClick={onClose}>
-        Close
-      </button>
+      <button className={styles['button-close']} onClick={onClose}>Close</button>
       <ul className={styles.moduleList}>
-        {modules.map((module: Module) => (
-          <ModuleListItem key={module.id} module={module} />
+        {modules.map((m) => (
+          <ModuleListItem key={m.id} module={m} onSelectModule={onSelectModule} />
         ))}
       </ul>
     </div>
