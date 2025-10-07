@@ -2,8 +2,8 @@ import { ReactElement, useEffect, useState } from "react";
 import { DocumentViewOrDownload } from "./ViewOrDownloadItem";
 import { DocumentMeta, SelectionType } from "./types";
 import { fetchDocuments } from "./api";
-import { useAdminContext } from "../../../admin/context";
 import "./css/styles.css";
+import { ITokens } from "../../../auth/types";
 
 
 interface DocumentListProps {
@@ -14,14 +14,18 @@ interface DocumentListProps {
 export function AttachedDocumentsList({ level, id }: DocumentListProps): ReactElement {
   const [documents, setDocuments] = useState<DocumentMeta[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { token } = useAdminContext();
+  
+  //temp solution
+  const raw = localStorage.getItem("tokens");
+  const tokens = JSON.parse(raw!) as ITokens;
+       
 
   useEffect(() => {
     if (!id) return;
 
     const getDocs = async () => {
       try {
-        const data = await fetchDocuments(level, id, token!);
+        const data = await fetchDocuments(level, id, tokens.accessToken!);
         setDocuments(data);
       } catch (err: any) {
         console.error(err);
@@ -30,7 +34,7 @@ export function AttachedDocumentsList({ level, id }: DocumentListProps): ReactEl
     };
 
     getDocs();
-  }, [level, id, token]);
+  }, [level, id, tokens.accessToken]);
 
   if (error) return <div>{error}</div>;
 
@@ -44,7 +48,7 @@ export function AttachedDocumentsList({ level, id }: DocumentListProps): ReactEl
               documentId={doc.id}
               name={doc.name}
               link={doc.link}
-              token={token!}
+              token={tokens.accessToken!}
             />
           </li>
         ))}
