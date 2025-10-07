@@ -21,6 +21,9 @@ export function ActivityEditForm({
   onSuccess,
 }: UnitFormProps): ReactElement {
   const isEdit = !!eventObj;
+  const [editSpecific, setEditSpecific] = useState<boolean>(
+    false
+  );
   const [selectedCourse, setSelectedCourse] = useState<IEvent | undefined>(
     undefined
   );
@@ -61,8 +64,17 @@ console.log(form)
       <form className="form" onSubmit={handleSubmit}>
         <fieldset>
           <legend>{legend}</legend>
+          <div className="checkbox">
+            <input
+              type="checkbox"
+              checked={editSpecific}
+              onChange={(e) => {
+                setEditSpecific(e.target.checked);
+              }}
+            />
+            <p>Or Edit?</p>
+          </div> 
           
-
           {!isEdit && (
             <CourseDropdown token={token!} onSelect={setSelectedCourse} />
           )}
@@ -82,6 +94,16 @@ console.log(form)
               onSelect={setselectedModule}
             />
           )}
+
+           {!isEdit && editSpecific && (
+            <ModulesDropdown
+              id={selectedCourse!.id}
+              token={token!}
+              onSelect={setselectedModule}
+            />
+          )}
+
+
 
           <label htmlFor="name">Title</label>
           <input
