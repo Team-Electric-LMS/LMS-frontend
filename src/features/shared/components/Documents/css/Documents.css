@@ -1,0 +1,75 @@
+.document-list {
+  margin-top: 0.5rem;
+  border: 0.5px dotted #007bff;
+  background: none;
+  color: #007bff;
+  width: 230px;
+}
+
+.document-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.document-list ul .doc-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  gap: 10px;
+  color: #007bff;
+}
+
+.document-list ul .doc-list-item .icons {
+  justify-content: right;
+}
+
+.document-list ul .doc-list-item:hover {
+  background: #007bff20;
+}
+
+.viewOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popUp {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.popUp .popUp-title {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.popUp > iframe {
+  width: 80vw;
+  height: 80vh;
+}
+
+.message {
+  font-size: 1rem;
+  color: #ff0000;
+}
+
+.icon-close {
+  color: #ff0000;
+}
+
+.icon-open .icon-download{
+  font-size: 1rem;
+}

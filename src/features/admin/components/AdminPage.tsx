@@ -9,7 +9,8 @@ import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
 import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
-import { ActivityEditForm } from "../../shared/components/ActivitiesEditComponent/ActivityEditForm";
+import { DocumentUploadForm } from "../../shared/components/Documents/DocumentUpload";
+import { ActivityForm } from "./activities/ActivityEditForm";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -22,6 +23,8 @@ export function AdminPage(): ReactElement {
   const [showCourseForm, setShowCourseForm] = useState(false);
   const [showModuleForm, setShowModuleForm] = useState(false);
   const [showActivityForm, setShowActivityForm] = useState(false);
+  const [showUploadDocument, setshowUploadDocument] = useState(false);
+
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
   const { user, setUser, token } = useAdminContext();
 
@@ -35,6 +38,7 @@ export function AdminPage(): ReactElement {
             setShowCourseForm(false);
             setShowModuleForm(false);
             setShowActivityForm(false);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: true,
               display: false,
@@ -52,6 +56,7 @@ export function AdminPage(): ReactElement {
             setShowModuleForm(false);
             setShowActivityForm(false);
             setUser(undefined);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -68,6 +73,7 @@ export function AdminPage(): ReactElement {
             setShowCourseForm(true);
             setShowModuleForm(false);
             setShowActivityForm(false);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -84,6 +90,7 @@ export function AdminPage(): ReactElement {
             setShowCourseForm(false);
             setShowModuleForm(true);
             setShowActivityForm(false);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -95,11 +102,14 @@ export function AdminPage(): ReactElement {
         >
           Create New Module
         </button>
+
         <button
           onClick={() => {
             setShowCourseForm(false);
             setShowModuleForm(false);
             setShowActivityForm(true);
+            setShowModuleForm(false);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -107,10 +117,28 @@ export function AdminPage(): ReactElement {
               editMode: false,
               assign: false,
             });
-            
           }}
         >
           Create New Activity
+        </button>
+
+        <button
+          onClick={() => {
+            setShowCourseForm(false);
+            setShowModuleForm(false);
+            setShowActivityForm(false);
+            setShowModuleForm(false);
+            setshowUploadDocument(true);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+            });
+          }}
+        >
+          Upload Document
         </button>
       </nav>
       <div className="admin-area">
@@ -133,6 +161,10 @@ export function AdminPage(): ReactElement {
           )}
         </div>
         <div className="right-side">
+          {showUploadDocument && (
+            <DocumentUploadForm legend={"Upload document"} token={token!} />
+          )}
+
           {adminPanel.editMode && !adminPanel.register && (
             <AdminForm
               legend="Edit User"
@@ -148,7 +180,7 @@ export function AdminPage(): ReactElement {
             />
           )}
           {showModuleForm && (
-            <div style={{flex: 1}}>
+            <div style={{ flex: 1 }}>
               <ModuleForm
                 token={token ?? ""}
                 onClose={() => {
@@ -164,16 +196,15 @@ export function AdminPage(): ReactElement {
             </div>
           )}
           {showActivityForm && (
-            <div style={{flex: 1}}>
-              <ActivityEditForm
-                legend =  {"Create Activity"}
+            <div style={{ flex: 1 }}>
+              <ActivityForm
+                legend={"Manage Activity"}
                 onClose={() => {
                   setShowActivityForm(false);
+                  setEditModule(undefined);
                 }}
-               
                 onSuccess={() => {
                   setEditModule(undefined);
-                  // Optionally refresh module list here
                 }}
               />
             </div>
@@ -186,9 +217,7 @@ export function AdminPage(): ReactElement {
               onClose={() => setAdminPanel({ ...adminPanel, assign: false })}
             />
           )}
-          {showCourseForm && (
-            <CourseCreate/>
-          )}
+          {showCourseForm && <CourseCreate />}
         </div>
       </div>
     </main>

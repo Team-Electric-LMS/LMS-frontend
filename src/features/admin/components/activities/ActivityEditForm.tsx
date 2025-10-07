@@ -1,12 +1,13 @@
 import { ReactElement, useEffect, useState } from "react";
 import { IEvent } from "./types/events";
-import { Input } from "../Input";
-import { CourseDropdown } from "../../../admin/components/CourseDropdown";
-import { ModulesDropdown } from "./ModulesDropdown";
+import { CourseDropdown } from "../CourseDropdown";
 import { useEventForm } from "./hooks/useEventForm";
-import { useAdminContext } from "../../../admin/context";
+import { useAdminContext } from "../../context";
 import "./css/styles.css";
-import { ActivitiesDropdown } from "./ActivitiesDropdown";
+import { getModules } from "../../api/modules";
+import { getModuleActivities } from "../../api/activities";
+import { FetchDropdown } from "./FetchDropdown";
+import { Input } from "../../../shared/components/Input";
 
 interface UnitFormProps {
   legend: string;
@@ -15,7 +16,7 @@ interface UnitFormProps {
   onSuccess?: (module: IEvent) => void;
 }
 
-export function ActivityEditForm({
+export function ActivityForm({
   legend,
   eventObj,
   onClose,
@@ -109,7 +110,6 @@ export function ActivityEditForm({
     }
     if (result && onSuccess) onSuccess(result);
   };
-  if (selectedModule) console.log(selectedModule!.id);
 
   return (
     <main className="form-page">
@@ -145,9 +145,12 @@ export function ActivityEditForm({
             </select>
           )}
           {!isEdit && selectedCourse && (
-            <ModulesDropdown
+            <FetchDropdown
               id={selectedCourse!.id}
               token={token!}
+              fetchFunction={getModules}
+              placeholder="-- Choose a module --"
+              emptyMessage="-- No modules available --"
               onSelect={(module) => {
                 setSuccess(false);
                 setselectedModule(module);
@@ -161,12 +164,16 @@ export function ActivityEditForm({
           )}
 
           {!isEdit && selectedModule && editSpecific && (
-            <ActivitiesDropdown
+            <FetchDropdown
               id={selectedModule!.id}
               token={token!}
+              fetchFunction={getModuleActivities}
+              placeholder="-- Choose an activity --"
+              emptyMessage="-- No activities available --"
               onSelect={(activity) => {
                 setSuccess(false);
-                setselectedActivity(activity);}}
+                setselectedActivity(activity);
+              }}
             />
           )}
 
@@ -280,9 +287,7 @@ export function ActivityEditForm({
           </button>
           {loading && <div>Updating ....</div>}
           {success && (
-            <div className="success-message">
-              {form.name} changed successfully!
-            </div>
+            <p style={{ color: "green" }}>{form.name} Change successfull!</p>
           )}
         </fieldset>
       </form>

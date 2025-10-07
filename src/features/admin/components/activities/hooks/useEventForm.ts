@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IEvent } from "../types/events";
 
-import { createModuleActivity, updateModuleActivity} from "../../../../admin/api/activities";
+import { createModuleActivity, updateModuleActivity} from "../../../api/activities";
 
 export function useEventForm(token: string) {
   const [loading, setLoading] = useState(false);

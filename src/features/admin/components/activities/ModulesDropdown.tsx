@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IEvent } from "./types/events";
-import { getModules } from "../../../admin/api/modules";
+import { getModules } from "../../api/modules";
 
 
 interface ModuleDropdownProps {
@@ -39,8 +39,12 @@ export const ModulesDropdown: React.FC<ModuleDropdownProps> = ({ id, token, onSe
   return (
     <div>
       <label htmlFor="course-select"></label>
-      <select id="course-select" value={selectedId} onChange={handleChange}>
-        <option value="">-- Choose a module --</option>
+      <select id="course-select" value={selectedId} onChange={handleChange} disabled={modules.length === 0}>
+        <option value="">
+          {modules.length === 0
+            ? "-- No modules available --"
+            : "-- Choose an module --"}
+        </option>
         {modules.map((module) => (
           <option key={module.id} value={module.id}>
             {module.name}

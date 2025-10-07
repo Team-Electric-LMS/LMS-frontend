@@ -11,7 +11,6 @@ export function AssignCourse({ legend, onClose }: FormProps) {
   const [allCourses, setAllCourses] = useState<ICourse[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [reassigned, setReassigned] = useState(false);
   const [unassign, setUnassign] = useState(false);
 
   useEffect(() => {
@@ -64,7 +63,6 @@ export function AssignCourse({ legend, onClose }: FormProps) {
       );
       if (updatedUser) setUser(updatedUser);
 
-      setReassigned(true);
       onClose();
     } catch (err) {
       console.error("Error assigning user to course:", err);
@@ -113,7 +111,7 @@ export function AssignCourse({ legend, onClose }: FormProps) {
             </p>
           )}
 
-          <button type="submit" disabled={!selectedCourse}>
+          <button type="submit" disabled={!selectedCourse || loading}>
             Submit
           </button>
           <button type="button" onClick={onClose}>
