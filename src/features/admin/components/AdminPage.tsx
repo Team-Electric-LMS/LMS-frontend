@@ -9,7 +9,7 @@ import { ModuleForm } from "./ModuleForm";
 import { useAdminContext } from "../context/adminProvider";
 import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
-import { ActivityEditForm } from "../../shared/components/ActivitiesCreateUpdate/ActivityEditForm";
+import { ActivityEditForm } from "../../shared/components/ActivitiesEditComponent/ActivityEditForm";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({

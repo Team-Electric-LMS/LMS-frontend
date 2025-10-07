@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { IEvent } from "./types/events";
 import { Input } from "../Input";
 import { CourseDropdown } from "../../../admin/components/CourseDropdown";
@@ -6,6 +6,7 @@ import { ModulesDropdown } from "./ModulesDropdown";
 import { useEventForm } from "./hooks/useEventForm";
 import { useAdminContext } from "../../../admin/context";
 import "./css/styles.css";
+import { ActivitiesDropdown } from "./ActivitiesDropdown";
 
 interface UnitFormProps {
   legend: string;
@@ -31,6 +32,10 @@ export function ActivityEditForm({
     undefined
   );
 
+  const [selectedActivity, setselectedActivity] = useState<IEvent | undefined>(
+    undefined
+  );
+
   const [form, setForm] = useState<Partial<IEvent>>(eventObj || {});
   const [success, setSuccess] = useState(false);
 
@@ -38,6 +43,49 @@ export function ActivityEditForm({
   const { createActivity, updateActivity, loading, error } = useEventForm(
     token!
   );
+
+  useEffect(() => {
+  if (editSpecific && selectedActivity) {
+    setForm({
+      name: selectedActivity.name,
+      description: selectedActivity.description,
+      startDate: selectedActivity.startDate,
+      endDate: selectedActivity.endDate,
+      activityTypeName: selectedActivity.activityTypeName,
+      id: selectedActivity.id, 
+    });
+  }
+}, [editSpecific, selectedActivity]);
+
+useEffect(() => {
+  if (selectedModule) {
+    setselectedActivity(undefined);
+    setForm((prev) => ({
+      ...prev,
+      startDate: "",
+      endDate: "",
+      name: "",
+      description: "",
+      activityTypeName: "",
+    }));
+  }
+}, [selectedModule]);
+
+useEffect(() => {
+  if (selectedCourse) {
+    setselectedModule(undefined);
+    setselectedActivity(undefined);
+    setForm({});
+  }
+}, [selectedCourse]);
+
+useEffect(() => {
+  if (!editSpecific) {
+    setselectedActivity(undefined);
+    setForm({});
+  }
+}, [editSpecific]);
+
 
   const handleChange = (field: keyof IEvent, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -47,7 +95,7 @@ export function ActivityEditForm({
     e.preventDefault();
 
     let result: IEvent | null = null;
-    if (isEdit && eventObj?.id) {
+    if ((isEdit && eventObj?.id) || editSpecific) {
       result = await updateActivity(form);
     } else {
       if (!selectedModule) return;
@@ -58,7 +106,8 @@ export function ActivityEditForm({
     }
     if (result && onSuccess) onSuccess(result);
   };
-console.log(form)
+  if (selectedModule) console.log(selectedModule!.id)
+
   return (
     <main className="form-page">
       <form className="form" onSubmit={handleSubmit}>
@@ -72,7 +121,7 @@ console.log(form)
                 setEditSpecific(e.target.checked);
               }}
             />
-            <p>Or Edit?</p>
+            <p>Edit?</p>
           </div> 
           
           {!isEdit && (
@@ -80,8 +129,6 @@ console.log(form)
           )}
           {!selectedCourse && (
             <select
-              id="course-select"
-              value={"-- Choose a module --"}
               disabled={true}
             >
               <option value="">-- Choose a module --</option>
@@ -94,16 +141,21 @@ console.log(form)
               onSelect={setselectedModule}
             />
           )}
-
-           {!isEdit && editSpecific && (
-            <ModulesDropdown
-              id={selectedCourse!.id}
-              token={token!}
-              onSelect={setselectedModule}
-            />
+          {!selectedModule && editSpecific && (
+            <select
+              disabled={true}
+            >
+              <option value=""></option>
+            </select>
           )}
 
-
+           {!isEdit && selectedModule && editSpecific && (
+            <ActivitiesDropdown
+              id={selectedModule!.id}
+              token={token!}
+              onSelect={setselectedActivity}
+            />
+          )}
 
           <label htmlFor="name">Title</label>
           <input
@@ -119,7 +171,7 @@ console.log(form)
             name="description"
             value={form.description || ""}
             onChange={(e) => handleChange("description", e.target.value)}
-            rows={4}
+            rows={2}
             style={{
               resize: "vertical",
               width: "100%",
@@ -205,7 +257,7 @@ console.log(form)
           </div>
           {error && <p className="error-message">{error}</p>}
           <button type="submit" disabled={!selectedModule || !form.activityTypeName}>
-            {isEdit ? "Update Activity" : "Create Activity"}
+            {(isEdit || editSpecific) ? "Update Activity" : "Create Activity"}
           </button>
           <button type="button" onClick={() => onClose?.()}>
             Cancel
@@ -213,7 +265,7 @@ console.log(form)
           {loading && <div>Updating ....</div>}
           {success && (
             <div className="success-message">
-              {form.name} created successfully!
+              {form.name} changed successfully!
             </div>
           )}
         </fieldset>

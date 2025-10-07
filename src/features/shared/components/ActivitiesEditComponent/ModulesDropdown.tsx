@@ -22,7 +22,7 @@ export const ModulesDropdown: React.FC<ModuleDropdownProps> = ({ id, token, onSe
       .then(setModules)
       .catch(() => setError("Failed to fetch modules."))
       .finally(() => setLoading(false));
-  }, [token]);
+  }, [id, token]);
 
   // Handle module selection
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

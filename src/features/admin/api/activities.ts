@@ -1,5 +1,5 @@
 import { CustomError } from "../../shared/classes";
-import { IEvent } from "../../shared/components/ActivitiesCreateUpdate/types/events";
+import { IEvent } from "../../shared/components/ActivitiesEditComponent/types/events";
 import { BASE_URL } from "../../shared/constants";
 import { IModule } from "../types/modules";
 
@@ -15,6 +15,20 @@ export async function getActivities(activityId: string, token: string): Promise<
   });
   if (!response.ok) {
     throw new CustomError(response.status, 'Failed to fetch modules');
+  }
+  return await response.json();
+}
+
+export async function getModuleActivities(moduleId: string, token: string): Promise<IEvent[]> {
+  const url = `${BASE_URL}/activities/module/${moduleId}`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new CustomError(response.status, 'Failed to fetch');
   }
   return await response.json();
 }
@@ -45,7 +59,7 @@ export async function createModuleActivity(moduleId: string, moduleData: Partial
 }
 
 // Update an existing module
-export async function updateModuleActivity(moduleData: Partial<IEvent>, token: string): Promise<any> {
+export async function updateModuleActivity(activityData: Partial<IEvent>, token: string): Promise<any> {
   const url = `${BASE_URL}/activities/`;
   const response = await fetch(url, {
     method: 'PUT',
@@ -53,7 +67,7 @@ export async function updateModuleActivity(moduleData: Partial<IEvent>, token: s
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(moduleData),
+    body: JSON.stringify(activityData),
   });
   if (response.status !== 204) {
     let errorMsg = 'Failed to update module';
