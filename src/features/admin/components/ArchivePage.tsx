@@ -78,7 +78,7 @@ export function CourseArchive(): ReactElement {
             </div>
 
             <div style={{ marginTop: 10 }}>
-              <label>Start Date:</label>
+              <label>Finished between:</label>
               <input
                 type="date"
                 value={startDate}
@@ -87,7 +87,7 @@ export function CourseArchive(): ReactElement {
             </div>
 
             <div style={{ marginTop: 10 }}>
-              <label>End Date:</label>
+              <label></label>
               <input
                 type="date"
                 value={endDate}
@@ -130,6 +130,7 @@ export function CourseArchive(): ReactElement {
 
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
+      
 
         <div className="search-result">
           <ul className="course-list">
@@ -137,12 +138,13 @@ export function CourseArchive(): ReactElement {
               <CourseListItem key={course.id} course={course} />
             ))}
           </ul>
+          {pagination && pagination.totalCount == 0  && (<p style={{ color: "red" }}>No courses found!</p>)}
 
           {pagination && (
             <div style={{ marginTop: 20 }}>
               <p>
                 Page {pagination.currentPage} of {pagination.totalPages} —
-                Total: {pagination.totalCount}
+                Courses: {pagination.totalCount}
               </p>
               
               <button
