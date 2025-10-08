@@ -6,6 +6,8 @@ import { AssignCourse } from "./UserAssignForm";
 import { UserDisplay } from "./FetchResults";
 import { AdminForm } from "./UserAdminForm";
 import { ModuleForm } from "./ModuleForm";
+import { CourseDropdown } from "./CourseDropdown";
+import { ModuleList } from "./ModuleList";
 import { useAdminContext } from "../context/adminProvider";
 import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
@@ -25,7 +27,8 @@ export function AdminPage(): ReactElement {
   const [showActivityForm, setShowActivityForm] = useState(false);
   const [showUploadDocument, setshowUploadDocument] = useState(false);
 
-  const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
+  const [editModule, setEditModule] = useState<IModule | undefined>(undefined); 
+  const [selectedCourse, setSelectedCourse] = useState<any>(undefined);
   const { user, setUser, token } = useAdminContext();
 
   return (
@@ -159,6 +162,24 @@ export function AdminPage(): ReactElement {
               }
             />
           )}
+          {/* ModuleForm only, no course dropdown or module list here */}
+          {showModuleForm && (
+            <div style={{ marginTop: '1.5rem' }}>
+              <ModuleForm
+                token={token ?? ""}
+                onClose={() => {
+                  setShowModuleForm(false);
+                  setEditModule(undefined);
+                }}
+                module={editModule}
+                onSuccess={() => {
+                  setEditModule(undefined);
+                  // Optionally refresh module list here
+                }}
+                selectedCourse={selectedCourse}
+              />
+            </div>
+          )}
         </div>
         <div className="right-side">
           {showUploadDocument && (
@@ -179,21 +200,19 @@ export function AdminPage(): ReactElement {
               }
             />
           )}
-          {showModuleForm && (
-            <div style={{ flex: 1 }}>
-              <ModuleForm
-                token={token ?? ""}
-                onClose={() => {
-                  setShowModuleForm(false);
-                  setEditModule(undefined);
-                }}
-                module={editModule}
-                onSuccess={() => {
-                  setEditModule(undefined);
-                  // Optionally refresh module list here
-                }}
-              />
-            </div>
+          {/* Show course dropdown and module list only when creating a new module */}
+          {showModuleForm && selectedCourse && (
+            <ModuleList
+              courseId={selectedCourse.id}
+              token={token ?? ""}
+              onEdit={mod => {
+                setEditModule(mod);
+                setShowModuleForm(true);
+                if (mod.courseId && (!selectedCourse || selectedCourse.id !== mod.courseId)) {
+                  setSelectedCourse({ ...selectedCourse, id: mod.courseId });
+                }
+              }}
+            />
           )}
           {showActivityForm && (
             <div style={{ flex: 1 }}>

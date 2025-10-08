@@ -27,7 +27,7 @@ export function useModuleForm(courseId: string, token: string) {
     setLoading(true);
     setError(null);
     try {
-      const module = await updateCourseModule(courseId, moduleId, moduleData, token);
+      const module = await updateCourseModule(moduleId, moduleData, token);
       setUpdatedModule(module);
       return module;
     } catch (err: any) {

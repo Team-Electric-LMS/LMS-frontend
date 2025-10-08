@@ -4,4 +4,5 @@ export interface IModule {
   description?: string;
   startDate?: string;
   endDate?: string;
+  courseId?: string;
 }
