@@ -88,6 +88,9 @@ export function AdminPage(): ReactElement {
             setUser(undefined);
             setShowModuleForm(false);
             setShowFindCourse(true);
+            setShowActivityForm(false);
+            setshowUploadDocument(false);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -146,6 +149,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setShowCourseForm(false);
             setShowModuleForm(false);
+            setShowFindCourse(false);
             setShowActivityForm(true);
             setShowModuleForm(false);
             setshowUploadDocument(false);
@@ -167,6 +171,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setShowCourseForm(false);
             setShowModuleForm(false);
+            setShowFindCourse(false);
             setShowActivityForm(false);
             setShowModuleForm(false);
             setshowUploadDocument(true);
@@ -186,6 +191,7 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setShowCourseForm(false);
+            setShowFindCourse(false);
             setShowModuleForm(false);
             setShowActivityForm(false);
             setShowModuleForm(false);
@@ -218,26 +224,7 @@ export function AdminPage(): ReactElement {
             />
           )}
           {openArchive && <CourseArchive /> }
-        </div>
-        <div className="right-side">
-          {/* Only one of these will show at a time */}
-          {showUploadDocument && (
-            <DocumentUploadForm legend={"Upload document"} token={token!} />
-          )}
-          {showActivityForm && (
-            <div style={{ flex: 1 }}>
-              <ActivityForm
-                legend={"Manage Activity"}
-                onClose={() => {
-                  setShowActivityForm(false);
-                  setEditModule(undefined);
-                }}
-                onSuccess={() => {
-                  setEditModule(undefined);
-                }}
-              />
-            </div>
-          )}
+
           {showFindCourse && (
             <CourseFetchForm
               onEdit={(course) => {

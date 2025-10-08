@@ -41,12 +41,13 @@
   z-index: 1000;
 }
 
-.popUp {
+.viewOverlay > .popUp {
   background: #fff;
   padding: 1rem;
   border-radius: 8px;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  width: 800px;
 }
 
 .popUp .popUp-title {
