@@ -55,10 +55,6 @@ export function AdminForm({
       onClose();
   };
 
-  console.log("email available", emailAvailable)
-  console.log("pass valid", passwordValid)
-    console.log("pattern valid", patternValid)
-    console.log("disabled", (emailAvailable || patternValid || passwordValid))
   return (
     <main className="form-page">
       <form className="form" onSubmit={handleSubmit}>
