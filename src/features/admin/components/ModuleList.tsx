@@ -59,7 +59,6 @@ export const ModuleList: React.FC<ModuleListProps> = ({ courseId = "", token, on
             <li key={module.id}>
               <strong>{module.name}</strong>
               <button onClick={() => onEdit(module)}>Edit</button>
-              <button onClick={() => handleDelete(module.id)}>Delete</button>
             </li>
           ))}
         </ul>
