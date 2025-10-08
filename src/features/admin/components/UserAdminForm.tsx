@@ -104,9 +104,11 @@ export function AdminForm({
           <SelectInput
             label="Role"
             name="role"
+            required={user ? true : false}
             value={form.role}
             onChange={(value: string) => setFormField("role", value)}
-            options={["Student", "Teacher"]}
+            options={["Student", "Teacher"]
+            }
           />
           {error && <p className="error-message">{error}</p>}
           <button type="submit" disabled={!(emailAvailable && patternValid && passwordValid)}>
