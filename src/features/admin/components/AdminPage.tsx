@@ -60,7 +60,7 @@ export function AdminPage(): ReactElement {
             });
           }}
         >
-          Find a User
+          Manage Users
         </button>
         <button
           onClick={() => {
@@ -139,7 +139,7 @@ export function AdminPage(): ReactElement {
             });
           }}
         >
-          Create New Module
+          Manage Modules
         </button>
 
         <button
@@ -160,7 +160,7 @@ export function AdminPage(): ReactElement {
             });
           }}
         >
-          Create New Activity
+          Manage Activities
         </button>
 
         <button
