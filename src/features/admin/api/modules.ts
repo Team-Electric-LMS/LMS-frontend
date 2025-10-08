@@ -28,15 +28,22 @@ export async function createCourseModule(courseId: string, moduleData: Partial<I
 }
 
 // Update an existing module
-export async function updateCourseModule(courseId: string, moduleId: string, moduleData: Partial<IModule>, token: string): Promise<IModule> {
-  const url = `${BASE_URL}/teachers/courses/${courseId}/modules/${moduleId}`;
+export async function updateCourseModule(moduleId: string, moduleData: Partial<IModule>, token: string): Promise<IModule> {
+  const url = `${BASE_URL}/modules/${moduleId}`;
+  const safeModuleData = {
+    ...moduleData,
+    startDate: moduleData.startDate || undefined,
+    endDate: moduleData.endDate || undefined,
+  };
+  console.log('updateCourseModule safeModuleData:', safeModuleData);
+  console.log('updateCourseModule body:', JSON.stringify(safeModuleData));
   const response = await fetch(url, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(moduleData),
+    body: JSON.stringify(safeModuleData),
   });
   if (!response.ok) {
     let errorMsg = 'Failed to update module';

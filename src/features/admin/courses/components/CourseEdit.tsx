@@ -7,10 +7,11 @@ import { fetchWithToken } from "../../../shared/utilities";
 import { Course } from "../../../auth/types";
 import { BASE_URL } from "../../../shared/constants";
 
-export const CourseEdit = (): ReactElement => {
-  const { course } = useLoaderData<ICourseLoader>();
-  const { id } = useParams();
+interface CourseEditProps {
+  course: ICourse;
+}
 
+export const CourseEdit = ({ course }: CourseEditProps): ReactElement => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -21,14 +22,14 @@ export const CourseEdit = (): ReactElement => {
     endDate: string;
   }) => {
     try {
-      await fetchWithToken<Course>(`${BASE_URL}/courses/${id}`, {
+      await fetchWithToken<Course>(`${BASE_URL}/courses/${course.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...courseData,
-          id: id,
+          id: course.id,
         }),
       });
 
@@ -42,8 +43,8 @@ export const CourseEdit = (): ReactElement => {
   return (
     <>
       <main id="create-course">
-        <Suspense>
-          <h1>Edit course</h1>
+        <fieldset>
+          <legend>Edit course</legend>
           <div className="form-wrapper">
             {successMessage && <div className="alert alert-success">{successMessage}</div>}
             {errorMessage && <div className="alert alert-error">{errorMessage}</div>}
@@ -52,7 +53,7 @@ export const CourseEdit = (): ReactElement => {
               {(course: ICourse) => <CourseForm course={course} onSubmit={handleOnSubmit} />}
             </Await>
           </div>
-        </Suspense>
+        </fieldset>
       </main>
     </>
   );
