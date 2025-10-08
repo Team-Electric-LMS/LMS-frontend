@@ -197,6 +197,7 @@ export function AdminPage(): ReactElement {
               register: false,
               editMode: false,
               assign: false,
+              editCourse: false,
             });
           }}
         >
