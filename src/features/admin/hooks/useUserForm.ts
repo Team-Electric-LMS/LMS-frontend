@@ -59,7 +59,12 @@ export function useUserForm(user?: IUser): UseUserFormReturn {
   };
 
   const checkPassword = (value: string | undefined  = form.password) => {
-    setPasswordValid(value!.length > 3);
+    if (user) {
+        setPasswordValid(true);
+      } else {
+         setPasswordValid(value!.length > 3);
+      }
+   
   };
 
   const submit = async (token: string): Promise<IUser | null> => {

@@ -56,7 +56,7 @@ export function ActivityForm({
     }
   }, [editSpecific, selectedActivity]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (selectedCourse) {
       setselectedModule(undefined);
       setselectedActivity(undefined);
@@ -86,9 +86,9 @@ export function ActivityForm({
   }, [editSpecific]);
 
   const handleChange = (field: keyof IEvent, value: string) => {
-  setSuccess(false);
-  setForm((prev) => ({ ...prev, [field]: value }));
-};
+    setSuccess(false);
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -278,7 +278,10 @@ export function ActivityForm({
           {error && <p className="error-message">{error}</p>}
           <button
             type="submit"
-            disabled={!selectedModule || !form.activityTypeName}
+            disabled={
+              (isEdit && !selectedActivity) || 
+              (!isEdit && (!selectedModule || !form.activityTypeName)) 
+            }
           >
             {isEdit || editSpecific ? "Update Activity" : "Create Activity"}
           </button>
@@ -286,9 +289,7 @@ export function ActivityForm({
             Cancel
           </button>
           {loading && <div>Updating ....</div>}
-          {success && (
-            <p style={{ color: "green" }}>{form.name} Activity updated.</p>
-          )}
+          {success && <p style={{ color: "green" }}>{form.name} Success!</p>}
         </fieldset>
       </form>
     </main>

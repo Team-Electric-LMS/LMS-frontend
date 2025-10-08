@@ -105,6 +105,7 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setUser(undefined);
             setShowModuleForm(false);
             setShowFindCourse(false);
             setShowCourseForm(true);
@@ -126,6 +127,7 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setUser(undefined);
             setShowCourseForm(false);
             setShowModuleForm(true);
             setShowFindCourse(false);
@@ -147,6 +149,7 @@ export function AdminPage(): ReactElement {
 
         <button
           onClick={() => {
+            setUser(undefined);
             setShowCourseForm(false);
             setShowModuleForm(false);
             setShowFindCourse(false);
@@ -169,6 +172,7 @@ export function AdminPage(): ReactElement {
 
         <button
           onClick={() => {
+            setUser(undefined);
             setShowCourseForm(false);
             setShowModuleForm(false);
             setShowFindCourse(false);
@@ -190,6 +194,7 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setUser(undefined);
             setShowCourseForm(false);
             setShowFindCourse(false);
             setShowModuleForm(false);
