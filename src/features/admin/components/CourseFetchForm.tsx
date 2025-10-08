@@ -49,20 +49,17 @@ export function CourseFetchForm({ onEdit }: CourseFetchFormProps): ReactElement 
 
       {courses.length > 0 && (
         <div className="courses-list">
-          <h2>Found Courses ({courses.length})</h2>
           <ul>
             {courses.map((course) => (
-              <li key={course.id}>
-                <div className="course-item">
-                  <h3>{course.name}</h3>
-                  {course.description && <p>{course.description}</p>}
-                  <p>Start date: {course.startDate}</p>
-                  <p>End date: {course.endDate}</p>
-                  <button className="edit-button" onClick={() => handleEdit(course)}>
-                    Edit
-                  </button>
-                </div>
-              </li>
+              <div key={course.id} className="course-item">
+                <h3>{course.name}</h3>
+                {course.description && <p>{course.description}</p>}
+                <p>Start date: {course.startDate}</p>
+                <p>End date: {course.endDate}</p>
+                <button className="edit-button" onClick={() => handleEdit(course)}>
+                  Edit
+                </button>
+              </div>
             ))}
           </ul>
         </div>
