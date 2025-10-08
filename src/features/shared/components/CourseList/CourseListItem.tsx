@@ -1,6 +1,7 @@
 import React from 'react';
 import { Course } from '../../../auth/types';
 import styles from './TeachersCoursesList.module.css';
+import { AttachedDocumentsList } from '../Documents/AttachedDocumentList';
 
 interface CourseListItemProps {
   course: Course;
@@ -17,5 +18,7 @@ export const CourseListItem: React.FC<CourseListItemProps> = ({ course, onSelect
     <div>
       <span>Start: {course.startDate}</span> | <span>End: {course.endDate}</span>
     </div>
+    <AttachedDocumentsList level='course' id={course.id}/>
+
   </li>
 );
