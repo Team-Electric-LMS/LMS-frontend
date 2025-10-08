@@ -24,8 +24,6 @@ export const router = createBrowserRouter(
             </RequireRole>
           }
         >
-          <Route path="courses/new" element={<CourseCreate />} />
-          <Route path="courses/:id/edit" element={<CourseEdit />} loader={courseLoader} />
           <Route
             path="admin"
             element={

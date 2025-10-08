@@ -1,10 +1,11 @@
-export * from './forms';
-export * from './users';
+export * from "./forms";
+export * from "./users";
 
 export interface AdminPanelState {
   fetch: boolean;
   display: boolean;
   register: boolean;
   editMode: boolean;
-  assign: boolean
+  assign: boolean;
+  editCourse: boolean;
 }
