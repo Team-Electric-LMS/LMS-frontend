@@ -225,6 +225,7 @@ export function AdminPage(): ReactElement {
           )}
           {openArchive && <CourseArchive /> }
 
+
           {showFindCourse && (
             <CourseFetchForm
               onEdit={(course) => {
@@ -233,6 +234,7 @@ export function AdminPage(): ReactElement {
               }}
             />
           )}
+          {/* ModuleForm only, no course dropdown or module list here */}
           {showModuleForm && (
             <div style={{ marginTop: "1.5rem" }}>
               <ModuleForm
@@ -250,6 +252,10 @@ export function AdminPage(): ReactElement {
               />
             </div>
           )}
+        </div>
+        <div className="right-side">
+          {showUploadDocument && <DocumentUploadForm legend={"Upload document"} token={token!} />}
+
           {adminPanel.editMode && !adminPanel.register && (
             <AdminForm legend="Edit User" onClose={() => setAdminPanel({ ...adminPanel, editMode: false })} />
           )}
@@ -259,6 +265,7 @@ export function AdminPage(): ReactElement {
               onClose={() => setAdminPanel({ ...adminPanel, register: false, display: true })}
             />
           )}
+          {/* Show course dropdown and module list only when creating a new module */}
           {showModuleForm && selectedCourse && (
             <ModuleList
               courseId={selectedCourse.id}
@@ -271,6 +278,20 @@ export function AdminPage(): ReactElement {
                 }
               }}
             />
+          )}
+          {showActivityForm && (
+            <div style={{ flex: 1 }}>
+              <ActivityForm
+                legend={"Manage Activity"}
+                onClose={() => {
+                  setShowActivityForm(false);
+                  setEditModule(undefined);
+                }}
+                onSuccess={() => {
+                  setEditModule(undefined);
+                }}
+              />
+            </div>
           )}
         </div>
         <div>
