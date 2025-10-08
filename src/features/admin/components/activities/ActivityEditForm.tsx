@@ -287,7 +287,7 @@ export function ActivityForm({
           </button>
           {loading && <div>Updating ....</div>}
           {success && (
-            <p style={{ color: "green" }}>{form.name} change successfully!</p>
+            <p style={{ color: "green" }}>{form.name} Activity updated.</p>
           )}
         </fieldset>
       </form>
