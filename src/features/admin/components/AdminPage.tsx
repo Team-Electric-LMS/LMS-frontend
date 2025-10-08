@@ -88,6 +88,9 @@ export function AdminPage(): ReactElement {
             setUser(undefined);
             setShowModuleForm(false);
             setShowFindCourse(true);
+            setShowActivityForm(false);
+            setshowUploadDocument(false);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -146,6 +149,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setShowCourseForm(false);
             setShowModuleForm(false);
+            setShowFindCourse(false);
             setShowActivityForm(true);
             setShowModuleForm(false);
             setshowUploadDocument(false);
@@ -167,6 +171,7 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setShowCourseForm(false);
             setShowModuleForm(false);
+            setShowFindCourse(false);
             setShowActivityForm(false);
             setShowModuleForm(false);
             setshowUploadDocument(true);
@@ -186,6 +191,7 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setShowCourseForm(false);
+            setShowFindCourse(false);
             setShowModuleForm(false);
             setShowActivityForm(false);
             setShowModuleForm(false);
@@ -197,6 +203,7 @@ export function AdminPage(): ReactElement {
               register: false,
               editMode: false,
               assign: false,
+              editCourse: false,
             });
           }}
         >
@@ -217,11 +224,7 @@ export function AdminPage(): ReactElement {
             />
           )}
           {openArchive && <CourseArchive /> }
-        </div>
-        <div className="right-side">
-          {showUploadDocument && (
-            <DocumentUploadForm legend={"Upload document"} token={token!} />
-          )}
+
 
           {showFindCourse && (
             <CourseFetchForm

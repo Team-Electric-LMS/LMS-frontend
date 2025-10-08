@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useUserForm } from "../hooks/useUserForm";
 import { SelectInput, TextInput } from ".";
 import { FormProps } from "../types";
@@ -21,6 +21,8 @@ export function AdminForm({
     checkPassword,
     submit,
   } = useUserForm(user);
+    const [skipPwd, setskipPwd] = useState(false);
+  
 
   const emailTimer = useRef<number>(100);
 
@@ -41,6 +43,7 @@ export function AdminForm({
     if (form.password !== undefined) {
       checkPassword();
     }
+    if (form.password == undefined) setskipPwd(true);
   }, [form.password]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,7 +111,7 @@ export function AdminForm({
             options={["Student", "Teacher"]}
           />
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" disabled={!emailAvailable || !passwordValid}>
+          <button type="submit" disabled={!emailAvailable}>
             {user ? "Update" : "Register"}
           </button>
           <button type="button" onClick={onClose}>
