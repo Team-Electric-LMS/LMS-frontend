@@ -1,0 +1,45 @@
+.archive .archive-page {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+  align-items: flex-start; 
+  flex-wrap: nowrap;     
+}
+
+.archive .form {
+  flex: 0 0 220px;
+}
+
+.archive .search-result {
+  height: 300px;
+  flex: 1 1 auto;
+  flex-direction: row;
+
+
+}
+
+.archive .course-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.archive .course-list > li {
+    height: 200px
+}
+
+.archive .search-result > div {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.archive .material-symbols-outlined {
+    font-size: 10px;
+}

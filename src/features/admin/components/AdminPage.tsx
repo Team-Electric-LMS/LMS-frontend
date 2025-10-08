@@ -11,6 +11,7 @@ import { CourseCreate } from "../courses/components";
 import "../css/admin.css";
 import { DocumentUploadForm } from "../../shared/components/Documents/DocumentUpload";
 import { ActivityForm } from "./activities/ActivityEditForm";
+import { CourseArchive } from "./ArchivePage";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -24,6 +25,7 @@ export function AdminPage(): ReactElement {
   const [showModuleForm, setShowModuleForm] = useState(false);
   const [showActivityForm, setShowActivityForm] = useState(false);
   const [showUploadDocument, setshowUploadDocument] = useState(false);
+  const [openArchive, setOpenArchive] = useState(false);
 
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
   const { user, setUser, token } = useAdminContext();
@@ -39,6 +41,7 @@ export function AdminPage(): ReactElement {
             setShowModuleForm(false);
             setShowActivityForm(false);
             setshowUploadDocument(false);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: true,
               display: false,
@@ -57,6 +60,7 @@ export function AdminPage(): ReactElement {
             setShowActivityForm(false);
             setUser(undefined);
             setshowUploadDocument(false);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -74,6 +78,7 @@ export function AdminPage(): ReactElement {
             setShowModuleForm(false);
             setShowActivityForm(false);
             setshowUploadDocument(false);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -91,6 +96,7 @@ export function AdminPage(): ReactElement {
             setShowModuleForm(true);
             setShowActivityForm(false);
             setshowUploadDocument(false);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -110,6 +116,7 @@ export function AdminPage(): ReactElement {
             setShowActivityForm(true);
             setShowModuleForm(false);
             setshowUploadDocument(false);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -129,6 +136,7 @@ export function AdminPage(): ReactElement {
             setShowActivityForm(false);
             setShowModuleForm(false);
             setshowUploadDocument(true);
+            setOpenArchive(false);
             setAdminPanel({
               fetch: false,
               display: false,
@@ -139,6 +147,25 @@ export function AdminPage(): ReactElement {
           }}
         >
           Upload Document
+        </button>
+        <button
+          onClick={() => {
+            setShowCourseForm(false);
+            setShowModuleForm(false);
+            setShowActivityForm(false);
+            setShowModuleForm(false);
+            setshowUploadDocument(false);
+            setOpenArchive(true);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+            });
+          }}
+        >
+          Open Archive
         </button>
       </nav>
       <div className="admin-area">
@@ -159,6 +186,7 @@ export function AdminPage(): ReactElement {
               }
             />
           )}
+          {openArchive && <CourseArchive /> }
         </div>
         <div className="right-side">
           {showUploadDocument && (
