@@ -10,6 +10,8 @@ import { useAdminContext } from "../context/adminProvider";
 import { CourseCreate, CourseEdit } from "../courses/components";
 import "../css/admin.css";
 import { CourseFetchForm } from "./CourseFetchForm";
+import { DocumentUploadForm } from "../../shared/components/Documents/DocumentUpload";
+import { ActivityForm } from "./activities/ActivityEditForm";
 
 export function AdminPage(): ReactElement {
   const [adminPanel, setAdminPanel] = useState<AdminPanelState>({
@@ -18,11 +20,14 @@ export function AdminPage(): ReactElement {
     register: false,
     editMode: false,
     assign: false,
-    registerCourse: false,
     editCourse: false,
   });
+  const [showCourseForm, setShowCourseForm] = useState(false);
   const [showModuleForm, setShowModuleForm] = useState(false);
   const [showFindCourse, setShowFindCourse] = useState(false);
+  const [showActivityForm, setShowActivityForm] = useState(false);
+  const [showUploadDocument, setshowUploadDocument] = useState(false);
+
   const [editModule, setEditModule] = useState<IModule | undefined>(undefined); // For editing existing module
   const [editCourse, setEditCourse] = useState<ICourse | undefined>(undefined);
   const { user, setUser, token } = useAdminContext();
@@ -34,15 +39,17 @@ export function AdminPage(): ReactElement {
         <button
           onClick={() => {
             setUser(undefined);
+            setShowCourseForm(false);
             setShowModuleForm(false);
             setShowFindCourse(false);
+            setShowActivityForm(false);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: true,
               display: false,
               register: false,
               editMode: false,
               assign: false,
-              registerCourse: false,
               editCourse: false,
             });
           }}
@@ -51,16 +58,18 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
-            setUser(undefined);
+            setShowCourseForm(false);
             setShowModuleForm(false);
             setShowFindCourse(false);
+            setShowActivityForm(false);
+            setUser(undefined);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: false,
               display: false,
               register: true,
               editMode: false,
               assign: false,
-              registerCourse: false,
               editCourse: false,
             });
           }}
@@ -78,7 +87,6 @@ export function AdminPage(): ReactElement {
               register: false,
               editMode: false,
               assign: false,
-              registerCourse: false,
               editCourse: false,
             });
           }}
@@ -89,13 +97,16 @@ export function AdminPage(): ReactElement {
           onClick={() => {
             setShowModuleForm(false);
             setShowFindCourse(false);
+            setShowCourseForm(true);
+            setShowModuleForm(false);
+            setShowActivityForm(false);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: false,
               display: false,
               register: false,
               editMode: false,
               assign: false,
-              registerCourse: true,
               editCourse: false,
             });
           }}
@@ -104,20 +115,62 @@ export function AdminPage(): ReactElement {
         </button>
         <button
           onClick={() => {
+            setShowCourseForm(false);
             setShowModuleForm(true);
             setShowFindCourse(false);
+            setShowActivityForm(false);
+            setshowUploadDocument(false);
             setAdminPanel({
               fetch: false,
               display: false,
               register: false,
               editMode: false,
               assign: false,
-              registerCourse: false,
               editCourse: false,
             });
           }}
         >
           Create New Module
+        </button>
+
+        <button
+          onClick={() => {
+            setShowCourseForm(false);
+            setShowModuleForm(false);
+            setShowActivityForm(true);
+            setShowModuleForm(false);
+            setshowUploadDocument(false);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+              editCourse: false,
+            });
+          }}
+        >
+          Create New Activity
+        </button>
+
+        <button
+          onClick={() => {
+            setShowCourseForm(false);
+            setShowModuleForm(false);
+            setShowActivityForm(false);
+            setShowModuleForm(false);
+            setshowUploadDocument(true);
+            setAdminPanel({
+              fetch: false,
+              display: false,
+              register: false,
+              editMode: false,
+              assign: false,
+              editCourse: false,
+            });
+          }}
+        >
+          Upload Document
         </button>
       </nav>
       <div className="admin-area">
@@ -144,6 +197,8 @@ export function AdminPage(): ReactElement {
           )}
         </div>
         <div className="right-side">
+          {showUploadDocument && <DocumentUploadForm legend={"Upload document"} token={token!} />}
+
           {adminPanel.editMode && !adminPanel.register && (
             <AdminForm legend="Edit User" onClose={() => setAdminPanel({ ...adminPanel, editMode: false })} />
           )}
@@ -169,12 +224,26 @@ export function AdminPage(): ReactElement {
               />
             </div>
           )}
+          {showActivityForm && (
+            <div style={{ flex: 1 }}>
+              <ActivityForm
+                legend={"Manage Activity"}
+                onClose={() => {
+                  setShowActivityForm(false);
+                  setEditModule(undefined);
+                }}
+                onSuccess={() => {
+                  setEditModule(undefined);
+                }}
+              />
+            </div>
+          )}
         </div>
         <div>
           {adminPanel.assign && (
             <AssignCourse legend="Assign Course" onClose={() => setAdminPanel({ ...adminPanel, assign: false })} />
           )}
-          {adminPanel.registerCourse && <CourseCreate />}
+          {showCourseForm && <CourseCreate />}
           {adminPanel.editCourse && editCourse && <CourseEdit course={editCourse} />}
         </div>
       </div>
