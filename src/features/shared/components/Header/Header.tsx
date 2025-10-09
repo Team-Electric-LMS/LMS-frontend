@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <span className={styles.logo}>LMS</span>
+        <span className={styles.logo}>LMS Electric</span>
         <div className={styles.links}>
           {user && <Link to="/dashboard">Dashboard</Link>}
           {user?.role == "Teacher" && <Link to="/admin">Admin</Link>}

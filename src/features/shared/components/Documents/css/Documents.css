@@ -47,7 +47,7 @@
   border-radius: 8px;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  width: 800px;
+  width: 1000px;
 }
 
 .popUp .popUp-title {
@@ -58,7 +58,7 @@
 }
 
 .popUp > iframe {
-  width: 80vw;
+  width: 100vw;
   height: 80vh;
 }
 
