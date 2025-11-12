@@ -2,6 +2,8 @@
 
 A Learning Management System (LMS) frontend application built with React, TypeScript, and Vite. This is a personal fork and improvement of a collaborative school project.
 
+> **🚀 Quick Start**: Want to get started immediately? Check out the [QUICK_START.md](./QUICK_START.md) guide!
+
 ## 📚 About
 
 This project was originally developed as a collaborative school project by Team Electric. This personal fork represents continued development and improvements to create a robust, feature-rich learning management system.
@@ -141,6 +143,13 @@ This project is available under the MIT License - see the LICENSE file for detai
 ## 📧 Contact
 
 For questions or feedback about this personal fork, please open an issue in this repository.
+
+## 📖 Documentation
+
+- **[Quick Start Guide](./QUICK_START.md)** - Get started in 5 minutes
+- **[Detailed Setup](./SETUP.md)** - Comprehensive setup and deployment guide
+- **[Contributing](./CONTRIBUTING.md)** - How to contribute to this project
+- **[Changelog](./CHANGELOG.md)** - Version history and changes
 
 ---
 
