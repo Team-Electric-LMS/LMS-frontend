@@ -1,8 +1,22 @@
 {
-  "name": "companyapifrontend",
+  "name": "lms-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A Learning Management System frontend application built with React, TypeScript, and Vite",
   "type": "module",
+  "author": "Your Name <your.email@example.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/LMS-frontend.git"
+  },
+  "keywords": [
+    "lms",
+    "learning-management-system",
+    "react",
+    "typescript",
+    "vite",
+    "education"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
