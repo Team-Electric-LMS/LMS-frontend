@@ -21,7 +21,6 @@ export function AdminForm({
     checkPassword,
     submit,
   } = useUserForm(user);
-    const [skipPwd, setskipPwd] = useState(false);
   
 
   const emailTimer = useRef<number>(100);
@@ -43,7 +42,6 @@ export function AdminForm({
     if (form.password !== undefined) {
       checkPassword();
     }
-    if (form.password == undefined) setskipPwd(true);
   }, [form.password]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -106,14 +104,18 @@ export function AdminForm({
           <SelectInput
             label="Role"
             name="role"
+            required={user ? true : false}
             value={form.role}
             onChange={(value: string) => setFormField("role", value)}
-            options={["Student", "Teacher"]}
+            options={["Student", "Teacher"]
+            }
           />
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" disabled={!emailAvailable}>
+          <button type="submit" disabled={!(emailAvailable && patternValid && passwordValid)}>
             {user ? "Update" : "Register"}
           </button>
+
+          
           <button type="button" onClick={onClose}>
             Cancel
           </button>

@@ -41,7 +41,7 @@ export function AttachedDocumentsList({ level, id }: DocumentListProps): ReactEl
   return (
     <main className="document-list">
       <ul className="doc-list-ul">
-        {!documents.length && (<div>*No documents attached</div>)}
+        {!documents.length && (<div>no documents available</div>)}
         {documents.map((doc) => (
           <li key={doc.id}>
             <DocumentViewOrDownload
